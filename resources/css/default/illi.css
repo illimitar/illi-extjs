@@ -1,0 +1,345 @@
+@import url('../../ext-messagebox/css/messagebox.css');
+@import url('../../ext-filterbar/css/uxs.css');
+@import url('../../ext-filterbar/css/overrides.css');
+@import url('../../ext-filterbar/css/app.css');
+@import url('../../ext-multidate/css/multidate.css');
+@import url('../../ext-multidate/css/multimonth.css');
+@import url('../../ext-multidate/css/multitime.css');
+@import url('pdv.css');
+
+/*
+** Estilos ILLI: ToolTip
+*/
+.illi_tooltip {
+    background-color: #157FCC;
+    margin: 10px;
+    color:white;
+    padding: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+
+}
+.illi_tooltip_despesa {
+    background-color: #f00;
+    margin: 10px;
+    color:white;
+    padding: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.illi_tooltip_receita {
+    background-color: #2044BA;
+    margin: 10px;
+    color:white;
+    padding: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+/*
+** Estilos ILLI
+*/
+.botao-grupo {
+    background-color: transparent;
+    box-shadow: inset 150px 0px 0px 0px #3892D3;
+}
+
+.botao-grupo:hover {
+    background-color: red 
+}
+
+.botao-grupo .x-btn-inner {
+    font-size: 12px;
+    background-color: transparent;
+    box-shadow: inset 150px 0px 0px 0px #3892D3;
+}
+
+.botao-usuario {
+    background-color: transparent;
+    box-shadow: inset 150px 0px 0px 0px #3892D3;
+}
+
+.botao-usuario .x-btn-inner {
+    font-size: 12px;
+    background-color: transparent;
+    box-shadow: inset 150px 0px 0px 0px #3892D3;
+}
+
+.botao-usuario x-btn-inner:hover {
+    background-color: red;
+    font-weight: bold;
+}
+
+/*
+** Estilos ILLI
+*/
+.tituloDespesa {
+    background-color: blue;
+    color: red;
+}
+
+.tituloDespesaFinanceiro {
+    background-color: blue;
+    font-weight: bold;
+    color: red;
+}
+
+.tituloDespesaFinanceiro {
+    font-weight: bold;
+    color: white;
+    background-color: red !important;
+    text-decoration: underline;
+}
+
+.tituloReceitaFinanceiro {
+    font-weight: bold;
+    color: white;
+    background-color: blue !important;
+    text-decoration: underline;
+}
+
+.tituloDespesaVencido {
+    background-color: blue;
+    color: red;
+    text-decoration: underline;
+}
+.tituloReceitaVencido {
+    background-color: blue;
+    text-decoration: underline;
+}
+
+/*
+** Estilos ILLI
+*/
+.entrada {
+    color: blue;
+    font-weight: bold;
+}
+
+.saida {
+    color: red;
+    font-weight: bold;
+}
+
+.cancelado {
+    font-weight: bold;
+    color: #bbb;
+    /*text-decoration: line-through;*/
+}
+
+.vencido {
+    background-color: blue;
+    color: red;
+    text-decoration: underline;
+}
+
+/*
+** Estilos ILLI
+*/
+.filtro {
+    color: #157FCC;
+    font-weight: bold;
+    background: #f5f5f5 !important;
+    border-top: none;
+    font-size: 8pt;
+}
+
+.texto-negrito {
+    font-weight: bold;
+}
+
+/*
+** Estilos ILLI: Icones de Ação
+*/
+.icon-adicionar { background-image: url('../../images/icones/acao/adicionar.png') !important; background-size: 16px; }
+.icon-anexar { background-image: url('../../images/icones/acao/anexar.png') !important; background-size: 16px; }
+.icon-arquivar { background-image: url('../../images/icones/acao/arquivar.png') !important; background-size: 16px; }
+.icon-associar { background-image: url('../../images/icones/acao/associar.png') !important; background-size: 16px; }
+.icon-atualizar { background-image: url('../../images/icones/acao/atualizar.png') !important; background-size: 16px; }
+.icon-avancar { background-image: url('../../images/icones/acao/avancar.png') !important; background-size: 16px; }
+.icon-cancelar { background-image: url('../../images/icones/acao/cancelar.png') !important; background-size: 16px; }
+.icon-confirmar { background-image: url('../../images/icones/acao/confirmar.png') !important; background-size: 16px; }
+.icon-duplicar { background-image: url('../../images/icones/acao/duplicar.png') !important; background-size: 16px; }
+.icon-editar { background-image: url('../../images/icones/acao/editar.png') !important; background-size: 16px; }
+.icon-expandir { background-image: url('../../images/icones/acao/expandir.png') !important; background-size: 16px; }
+.icon-importar { background-image: url('../../images/icones/acao/importar.png') !important; background-size: 16px; }
+.icon-imprimir { background-image: url('../../images/icones/acao/imprimir.png') !important; background-size: 16px; }
+.icon-pesquisar { background-image: url('../../images/icones/acao/pesquisar.png') !important; background-size: 16px; }
+.icon-recolher { background-image: url('../../images/icones/acao/recolher.png') !important; background-size: 16px; }
+.icon-recuar { background-image: url('../../images/icones/acao/recuar.png') !important; background-size: 16px; }
+.icon-remover { background-image: url('../../images/icones/acao/remover.png') !important; background-size: 16px; }
+.icon-sair { background-image: url('../../images/icones/acao/sair.png') !important; background-size: 16px; }
+.icon-salvar { background-image: url('../../images/icones/acao/salvar.png') !important; background-size: 16px; }
+.icon-transferir { background-image: url('../../images/icones/acao/transferir.png') !important; background-size: 16px; }
+.icon-visualizar { background-image: url('../../images/icones/acao/visualizar.png') !important; background-size: 16px; }
+
+/*
+** Estilos ILLI: Icones de Estado
+*/
+.icon-ativado { background-image: url('../../images/icones/estado/ativado.png') !important; background-size: 16px; }
+.icon-bloqueado { background-image: url('../../images/icones/estado/bloqueado.png') !important; background-size: 16px; }
+.icon-cancelado { background-image: url('../../images/icones/estado/cancelado.png') !important; background-size: 16px; }
+
+/*
+** Estilos ILLI: Icones de Arquivo
+*/
+.icon-excel { background-image: url('../../images/icones/tipo/excel.png') !important; background-size: 16px; }
+.icon-pdf { background-image: url('../../images/icones/tipo/pdf.png') !important; background-size: 16px; }
+
+/*
+** Estilos ILLI: Icones de Modulo
+*/
+.icon-arquivos { background-image: url('../../images/icones/arquivos.png') !important; background-size: 16px; }
+.icon-acesso { background-image: url('../../images/icones/acesso.png') !important; background-size: 16px; }
+.icon-agencia { background-image: url('../../images/icones/agencia.png') !important; background-size: 16px; }
+.icon-ajuda { background-image: url('../../images/icones/ajuda.png') !important; background-size: 16px; }
+.icon-anotacao { background-image: url('../../images/icones/anotacao.png') !important; background-size: 16px; }
+.icon-banco { background-image: url('../../images/icones/banco.png') !important; background-size: 16px; }
+.icon-bi { background-image: url('../../images/icones/bi.png') !important; background-size: 16px; }
+.icon-boleto { background-image: url('../../images/icones/boleto.png') !important; background-size: 16px; }
+.icon-cache { background-image: url('../../images/icones/cache.png') !important; background-size: 16px; }
+.icon-categoria { background-image: url('../../images/icones/categoria.png') !important; background-size: 16px; }
+.icon-codigobarra { background-image: url('../../images/icones/codigobarra.png') !important; background-size: 16px; }
+.icon-comissao { background-image: url('../../images/icones/comissao.png') !important; background-size: 16px; }
+.icon-condicaopagamento { background-image: url('../../images/icones/condicaopagamento.png') !important; background-size: 16px; }
+.icon-configuracao { background-image: url('../../images/icones/configuracao.png') !important; background-size: 16px; }
+.icon-conta { background-image: url('../../images/icones/conta.png') !important; background-size: 16px; }
+.icon-controleacao { background-image: url('../../images/icones/controleacao.png') !important; background-size: 16px; }
+.icon-despesa { background-image: url('../../images/icones/despesa.png') !important; background-size: 16px; }
+.icon-dica { background-image: url('../../images/icones/dica.png') !important; background-size: 16px; }
+.icon-dinheiro { background-image: url('../../images/icones/dinheiro.png') !important; background-size: 16px; }
+.icon-dispositivo { background-image: url('../../images/icones/dispositivo.png') !important; background-size: 16px; }
+.icon-email { background-image: url('../../images/icones/email.png') !important; background-size: 16px; }
+.icon-entidade { background-image: url('../../images/icones/entidade.png') !important; background-size: 16px; }
+.icon-etiqueta { background-image: url('../../images/icones/etiqueta.png') !important; background-size: 16px; }
+.icon-extrato { background-image: url('../../images/icones/extrato.png') !important; background-size: 16px; }
+.icon-financeiro { background-image: url('../../images/icones/financeiro.png') !important; background-size: 16px; }
+.icon-fluxocaixa { background-image: url('../../images/icones/fluxocaixa.png') !important; background-size: 16px; }
+.icon-formulario { background-image: url('../../images/icones/formulario.png') !important; background-size: 16px; }
+.icon-funcao { background-image: url('../../images/icones/funcao.png') !important; background-size: 16px; }
+.icon-grade { background-image: url('../../images/icones/grade.png') !important; background-size: 16px; }
+.icon-grafico { background-image: url('../../images/icones/grafico.png') !important; background-size: 16px; }
+.icon-grupo { background-image: url('../../images/icones/grupo.png') !important; background-size: 16px; }
+.icon-grupoentidade { background-image: url('../../images/icones/grupoentidade.png') !important; background-size: 16px; }
+.icon-grupoparceiro { background-image: url('../../images/icones/grupoparceiro.png') !important; background-size: 16px; }
+.icon-grupousuario { background-image: url('../../images/icones/grupousuario.png') !important; background-size: 16px; }
+.icon-homem { background-image: url('../../images/icones/homem.png') !important; background-size: 16px; }
+.icon-informacao { background-image: url('../../images/icones/informacao.png') !important; background-size: 16px; }
+.icon-inicio { background-image: url('../../images/icones/inicio.png') !important; background-size: 16px; }
+.icon-lista-agenda { background-image: url('../../images/icones/lista_agenda.png') !important; background-size: 16px; }
+.icon-marca { background-image: url('../../images/icones/marca.png') !important; background-size: 16px; }
+.icon-moeda { background-image: url('../../images/icones/moeda.png') !important; background-size: 16px; }
+.icon-natureza { background-image: url('../../images/icones/natureza.png') !important; background-size: 16px; }
+.icon-operacao { background-image: url('../../images/icones/operacao.png') !important; background-size: 16px; }
+.icon-padrao { background-image: url('../../images/icones/padrao.png') !important; background-size: 16px; }
+.icon-parceiro { background-image: url('../../images/icones/parceiro.png') !important; background-size: 16px; }
+.icon-parecer { background-image: url('../../images/icones/parecer.png') !important; background-size: 16px; }
+.icon-pedido { background-image: url('../../images/icones/pedido.png') !important; background-size: 16px; }
+.icon-prazo { background-image: url('../../images/icones/prazo.png') !important; background-size: 16px; }
+.icon-preco { background-image: url('../../images/icones/preco.png') !important; background-size: 16px; }
+.icon-produto { background-image: url('../../images/icones/produto.png') !important; background-size: 16px; }
+.icon-receita { background-image: url('../../images/icones/receita.png') !important; background-size: 16px; }
+.icon-relatorio { background-image: url('../../images/icones/relatorio.png') !important; background-size: 16px; }
+.icon-relatorio-apagar { background-image: url('../../images/icones/relatorio_apagar.png') !important; background-size: 16px; }
+.icon-relatorio-receber { background-image: url('../../images/icones/relatorio_receber.png') !important; background-size: 16px; }
+.icon-remessa { background-image: url('../../images/icones/remessa.png') !important; background-size: 16px; }
+.icon-tabela-preco { background-image: url('../../images/icones/tabela_preco.png') !important; background-size: 16px; }
+.icon-tipo-codigobarra { background-image: url('../../images/icones/tipo_codigobarra.png') !important; background-size: 16px; }
+.icon-unidade { background-image: url('../../images/icones/unidade.png') !important; background-size: 16px; }
+.icon-usuario { background-image: url('../../images/icones/usuario.png') !important; background-size: 16px; }
+.icon-venda { background-image: url('../../images/icones/venda.png') !important; background-size: 16px; }
+.icon-vendarapida { background-image: url('../../images/icones/vendarapida.png') !important; background-size: 16px; }
+.icon-suporte { background-image: url('../../images/icones/suporte.png') !important; background-size: 16px; }
+
+/*
+** Estilos ILLI: Tamanho Icone
+*/
+.small { background-size: 16px; }
+.medium { background-size: 24px; }
+.large { background-size: 32px; }
+
+/*
+** Hack: Range Menu
+*/
+.ux-rangemenu-gt { background-image: url('../../images/comparadores/maior_que.png') !important }
+.ux-rangemenu-lt { background-image: url('../../images/comparadores/menor_que.png') !important }
+.ux-rangemenu-eq { background-image: url('../../images/comparadores/igual.png') !important }
+
+/*
+** Hack: FilterBar
+*/
+.x-operator-button-equal { background-image: url(../../images/operadores/operator-equal.gif) }
+.x-operator-button-not-equal { background-image: url(../../images/operadores/operator-not-equal.gif) }
+.x-operator-button-great-than { background-image: url(../../images/operadores/operator-great-than.gif) }
+.x-operator-button-less-than { background-image: url(../../images/operadores/operator-less-than.gif) }
+.x-operator-button-great-than-equal { background-image: url(../../images/operadores/operator-great-than-equal.gif) }
+.x-operator-button-less-than-equal { background-image: url(../../images/operadores/operator-less-than-equal.gif) }
+.x-operator-like { background-image: url(../../images/operadores/operator-like.gif) }
+.ext-ux-clearbutton { background-image: url(../../images/clear-text-icon.gif) }
+
+/*
+** Estilos ILLI: Botão Adicionar Item no Combo
+*/
+.trigger-add {
+    background-image: url('../../images/trigger-add.png') !important;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.trigger-ajuda {
+    background-image: url('../../images/trigger-ajuda.png') !important;
+    background-color: transparent;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+/*
+** Hack: ToolBar
+*/
+.x-toolbar-default {
+    background: rgb(246,248,249); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(246,248,249,1) 0%, rgba(192,192,192,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(246,248,249,1)), color-stop(100%,rgba(192,192,192,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(192,192,192,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(192,192,192,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(246,248,249,1) 0%,rgba(192,192,192,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(246,248,249,1) 0%,rgba(192,192,192,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#c0c0c0',GradientType=0 ); /* IE6-9 */
+}
+
+/*
+** Hack: TabBar
+*/
+.x-tab-bar-default {
+    padding-left: 5px;
+    background-color: silver;
+}
+/*.x-tab-bar-strip-top {
+    bottom: -2px;
+}*/
+
+/*
+** Hack: Botão Cancelar
+*/
+.x-row-editor-update-button {
+    background-color: #00CC00;
+    background-image: none;
+    background-image: linear-gradient(bottom, rgb(0,115,0) 42%, rgb(0,227,45) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(0,115,0) 42%, rgb(0,227,45) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(0,115,0) 42%, rgb(0,227,45) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(0,115,0) 42%, rgb(0,227,45) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(0,115,0) 42%, rgb(0,227,45) 100%);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.42, rgb(0,115,0)),color-stop(1, rgb(0,227,45)));
+}
+.x-row-editor-cancel-button {
+    background-color: #FF0000;
+    background-image: none;
+    background-image: linear-gradient(bottom, rgb(117,0,0) 42%, rgb(227,0,0) 100%);
+    background-image: -o-linear-gradient(bottom, rgb(117,0,0) 42%, rgb(227,0,0) 100%);
+    background-image: -moz-linear-gradient(bottom, rgb(117,0,0) 42%, rgb(227,0,0) 100%);
+    background-image: -webkit-linear-gradient(bottom, rgb(117,0,0) 42%, rgb(227,0,0) 100%);
+    background-image: -ms-linear-gradient(bottom, rgb(117,0,0) 42%, rgb(227,0,0) 100%);
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0.42, rgb(117,0,0)),color-stop(1, rgb(227,0,0)));
+}
+.x-row-editor-update-button .x-btn-inner, .x-row-editor-cancel-button  .x-btn-inner{
+    color: #ffffff;
+}

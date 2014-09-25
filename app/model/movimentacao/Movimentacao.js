@@ -1,0 +1,32 @@
+Ext.define('Illi.model.movimentacao.Movimentacao', {
+    extend: 'Ext.data.Model',
+    fields: [
+        {name: 'id', mapping: 'id'},
+        {name: 'numero'},
+        {name: 'cupom'},
+        {name: 'observacao'},
+        {name: 'situacao'},
+        {name: 'tipo'},
+        {name: 'p.id', mapping: 'pessoa.id'},
+        {name: 'p.nome', mapping: 'pessoa.nome'},
+        {name: 't.id', mapping: 'transportadora.id'},
+        {name: 't.nome', mapping: 'transportadora.nome'},
+        {name: 'tp.id', mapping: 'tipo_movimentacao.id'},
+        {name: 'tp.nome', mapping: 'tipo_movimentacao.nome'},
+        {name: 'v.id', mapping: 'vendedor.id'},
+        {name: 'v.nome', mapping: 'vendedor.nome'},
+        {name: 'go.id', mapping: 'grupoOperacao.id'},
+        {name: 'go.nome', mapping: 'grupoOperacao.nome'},
+        {name: 'e.id', mapping: 'entidade.id'},
+        {name: 'e.nome_destino', mapping: 'movimentacao[0].entidade.nome'},
+        {name: 'e.id_destino', mapping: 'movimentacao[0].entidade.id'},
+        {name: 'e.nome', mapping: 'entidade.nome'},
+        {name: 'data_emissao', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data_emissao.date'},
+        {name: 'data_referencia', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data_referencia.date'},
+        {name: 'data_entrega', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data_entrega.date'},
+        {name: 'data', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data.date'},
+        {name: 'valor_pago', type: 'float'},
+        {name: 'valor_desconto', type: 'float'},
+        {name: 'valor_venda', type: 'float'}
+    ]
+});
