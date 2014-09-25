@@ -2,9 +2,9 @@ Ext.Loader.setConfig({
     enabled: true,
     disableCaching: (cache ? false : true),
     paths: {
-        'Ext': '/ext/src',
-        'Ext.ux': '/app/ux',
-        'Illi': '/app'
+        'Ext': '/frontend/ext/src',
+        'Ext.ux': '/frontend/app/ux',
+        'Illi': '/frontend/app'
     }
 });
 Ext.require([
@@ -29,7 +29,7 @@ Ext.require([
 Ext.onReady(function () {
     Ext.application({
         name: 'Illi',
-        appFolder: '../app',
+        appFolder: '/frontend/app',
         stores: [
             "Illi.store.AbstractStore",
             "Illi.store.AcessoGrupoUsuarios",

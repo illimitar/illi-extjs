@@ -24,6 +24,9 @@ $(function() {
         $("#painel-login").fadeTo('fast', 0, function() {
             $("#appLoadingBackground").fadeTo('fast', 1, function() {
                 try {
+                    if (pdv) {
+                        $("#form-login").append("<input type='hidden' name='pdv' value='1' />");
+                    }
                     setTimeout(function() {
                         $.ajax({
                             type: "POST",

@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
     extend: 'Ext.window.Window',
     alias: 'widget.janelaVendaRapida',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -51,7 +51,11 @@ Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
                 }
             ]
         });
-        me.bodyStyle = "background-image: url(../resources/images/pdv/fundo.jpg) !important; background-size: cover; background-repeat: no-repeat;";
+        if (pdv) {
+            me.bodyStyle = "background-image: url(/" + frontend + "/resources/images/pdv/fundo_pdv.jpg) !important; background-size: cover; background-repeat: no-repeat;";
+        } else {
+            me.bodyStyle = "background-image: url(/" + frontend + "/resources/images/pdv/fundo.jpg) !important; background-size: cover; background-repeat: no-repeat;";
+        }
         me.callParent(arguments);
     }
 });

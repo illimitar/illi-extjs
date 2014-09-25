@@ -169,7 +169,7 @@ Ext.define('Illi.view.usuario.Menu', {
                     scale: 'small',
                     handler: function() {
                         closepage = true;
-                        window.location = "http://" + window.document.location.host;
+                        window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
                     }
                 }
             ],

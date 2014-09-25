@@ -67,7 +67,7 @@ Ext.define('Illi.view.Viewport', {
             run: function() {
                 viewport.xhrUsuarioSessao(false, function() {
                     closepage = true;
-                    window.location = "http://" + window.document.location.host;
+                    window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
                 });
             },
             interval: 300000
