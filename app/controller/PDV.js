@@ -4974,7 +4974,7 @@ Ext.define('Illi.controller.PDV', {
         //alert('PDV::janelaVendaRapidaOcultar()');
         var control = this;
         closepage = true;
-        window.location = "http://" + window.document.location.host + "/illi/inicial";
+        window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
     },
     //
     //
