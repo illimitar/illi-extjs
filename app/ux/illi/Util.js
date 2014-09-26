@@ -406,8 +406,9 @@ Ext.define('Ext.ux.illi.Util', {
         };
         return botao;
     },
-    fireKey: function (k) {
-        var oEvent = document.createEvent('KeyboardEvent');
+    fireKey: function (keyCode, ctrlKey, altKey, shiftKey) {
+        var el = document.body;
+        var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent("Events");
 
         if(eventObj.initEvent){
             eventObj.initEvent("keydown", true, true);
