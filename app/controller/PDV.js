@@ -5617,7 +5617,7 @@ Ext.define('Illi.controller.PDV', {
         Ext.EventManager.on(window, 'keydown', function (e, t) {
             var stopEvent = true;
             var cenario = control.cenarioAtivo;
-            //console.log('Ext.EventManager.on', cenario, e.getKey());
+            console.log('Ext.EventManager.on', cenario, e.getKey(), (e.altKey ? "alt" : false), (e.ctrlKey ? "ctrl" : false), (e.shiftKey ? "shift" : false));
             if (e.ctrlKey && e.shiftKey && e.getKey() === e.R) {
                 closepage = true;
                 window.location.reload(true);

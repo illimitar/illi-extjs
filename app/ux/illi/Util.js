@@ -389,34 +389,78 @@ Ext.define('Ext.ux.illi.Util', {
             return url;
         }
     },
-    fireKey: function (k) {
-        var oEvent = document.createEvent('KeyboardEvent');
+    fireKey: function (keyCode, ctrlKey, altKey, shiftKey) {
+        var el = document.body;
+        var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent("Events");
 
-        // Chromium Hack
-        Object.defineProperty(oEvent, 'keyCode', {
-            get: function () {
-                return this.keyCodeVal;
-            }
-        });
-        Object.defineProperty(oEvent, 'which', {
-            get: function () {
-                return this.keyCodeVal;
-            }
-        });
-
-        if (oEvent.initKeyboardEvent) {
-            oEvent.initKeyboardEvent("keydown", true, true, document.defaultView, false, false, false, false, k, k);
-        } else {
-            oEvent.initKeyEvent("keydown", true, true, document.defaultView, false, false, false, false, k, 0);
+        if(eventObj.initEvent){
+            eventObj.initEvent("keydown", true, true);
         }
 
-        oEvent.keyCodeVal = k;
-
-        if (oEvent.keyCode !== k) {
-            alert("keyCode mismatch " + oEvent.keyCode + "(" + oEvent.which + ")");
+        eventObj.keyCode = keyCode;
+        
+        if (ctrlKey) {
+            eventObj.ctrlKey = true;
+        }
+        if (altKey) {
+            eventObj.altKey = true;
+        }
+        if (shiftKey) {
+            eventObj.shiftKey = true;
         }
 
-        document.dispatchEvent(oEvent);
+        eventObj.which = keyCode;
+
+        el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent("onkeydown", eventObj); 
+        
+//        var oEvent = document.createEvent('KeyboardEvent');
+//        var modifiersListArg = [];
+//
+//        // Chromium Hack
+//        Object.defineProperty(oEvent, 'keyCode', {
+//            get: function () {
+//                return this.keyCodeVal;
+//            }
+//        });
+//        Object.defineProperty(oEvent, 'which', {
+//            get: function () {
+//                return this.keyCodeVal;
+//            }
+//        });
+//
+//        // teclas modificadoas
+//        alt = (alt !== undefined ? alt : false);
+//        if (alt) {
+//            modifiersListArg.push("Alt");
+//        }
+//        
+//        ctrl = (ctrl !== undefined ? ctrl : false);
+//        if (ctrl) {
+//            modifiersListArg.push("Control");
+//        }
+//        
+//        shift = (shift !== undefined ? shift : false);
+//        if (shift) {
+//            modifiersListArg.push("Shift");
+//        }
+//        
+//        modifiersListArg = (modifiersListArg.length > 0 ? modifiersListArg.join(" ") : false);
+//        console.log("fireKey()", ctrl, alt, shift, modifiersListArg);
+//        if (oEvent.initKeyboardEvent) {
+//            //eventType, canBubble, cancelable, viewArg, keyArg, locationArg, modifiersListArg, repeat, locale
+//            oEvent.initKeyboardEvent("keydown", true, true, document.defaultView, false, false, modifiersListArg, false, k, k);
+//        } else {
+//            //eventName, bubbles, cancelable, view, ctrlKey, altKey, shiftKey, metaKey, keyCode, charCode
+//            oEvent.initKeyEvent("keydown", true, true, document.defaultView, ctrl, alt, shift, false, k, 0);
+//        }
+//
+//        oEvent.keyCodeVal = k;
+//
+//        if (oEvent.keyCode !== k) {
+//            alert("keyCode mismatch " + oEvent.keyCode + "(" + oEvent.which + ")");
+//        }
+//
+//        document.dispatchEvent(oEvent);
     },
     getOperacao: function (id_grupo_operacao) {
         Ext.MessageBox.wait('Aguarde', 'Carregando Operação');
