@@ -1,6 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
     extend: 'Ext.window.Window',
     alias: 'widget.janelaVendaRapida',
+    requires: ['Illi.view.financeiro.pdv.PainelRodapeAcao'],
     initComponent: function () {
         var me = this;
         Ext.apply(me, {
@@ -46,7 +47,10 @@ Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
                 },
                 {
                     region: 'south',
-                    xtype: 'painelRodape',
+                    items: [
+                        {xtype: 'painelRodape'},
+                        {xtype: 'painelRodapeAcao'}
+                    ],
                     header: false
                 }
             ]
