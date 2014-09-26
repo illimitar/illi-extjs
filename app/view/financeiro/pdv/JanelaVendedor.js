@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaVendedor', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.janelaVendedor',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -37,6 +37,13 @@ Ext.define('Illi.view.financeiro.pdv.JanelaVendedor', {
                         }
 
                     }
+                ]
+            },
+            bbar: {
+                items: [
+                    Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
+                    "->",
+                    Illi.app.Util.BotaoTeclado("Confirmar (ENTER)", "ENTER")
                 ]
             }
         });

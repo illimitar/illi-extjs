@@ -1,11 +1,10 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoValor', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.janelaPagamentoValor',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
-            //
             title: false,
             header: false,
             autoShow: false,
@@ -24,7 +23,6 @@ Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoValor', {
             width: '40%',
             bodyBorder: false,
             layout: 'card',
-            //
             valorSaldo: 0.00,
             items: [],
             tbar: {
@@ -58,6 +56,7 @@ Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoValor', {
                     }
                 ]
             }
+
         });
         me.callParent(arguments);
     }

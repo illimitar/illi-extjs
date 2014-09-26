@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.PainelPagamentoSubTotal', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.painelPagamentoSubTotal',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -90,8 +90,17 @@ Ext.define('Illi.view.financeiro.pdv.PainelPagamentoSubTotal', {
                     xtype: 'panel',
                     border: false,
                     bodyStyle: 'background: transparent;',
-                    cls: 'right',
-                    html: 'Pressione F10 para finalizar...',
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
+                    },
+                    defaults: {
+                        flex: 1
+                    },
+                    items: [
+                        Illi.app.Util.BotaoTeclado("Finalizar (F10)", "F10"),
+                        Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC")
+                    ],
                     flex: 1
                 }
             ]
