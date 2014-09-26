@@ -31,7 +31,7 @@ Ext.define('Illi.view.financeiro.ListBaixa', {
                     text: 'Detail',
                     items: [
                         {
-                            icon: '../resources/images/icones/acao/editar.png',
+                            icon: Illi.app.Util.getPath("/resources/images/icones/acao/editar.png"),
                             tooltip: 'Negociar Titulo',
                             handler: function(grid, rowIndex, colIndex) {
                                 var store = me.getStore();

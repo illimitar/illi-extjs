@@ -109,7 +109,7 @@ Ext.define('Illi.view.financeiro.grafico.Lista', {
                         flex: null,
                         width: 25,
                         items: [{
-                                icon: '../resources/images/icones/parecer.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/parecer.png"),
                                 tooltip: 'Visualizar parecer',
                                 handler: function(grid, rowIndex, colIndex, item, e, record) {
                                     Ext.create('Illi.view.financeiro.parecer.Janela', {

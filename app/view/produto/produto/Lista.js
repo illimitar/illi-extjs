@@ -17,7 +17,7 @@ Ext.define('Illi.view.produto.produto.Lista', {
     ],
     stateful: true,
     stateId: 'listaProduto',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             store: 'produto.Produtos',
@@ -92,7 +92,7 @@ Ext.define('Illi.view.produto.produto.Lista', {
                         width: 30,
                         items: [{
                                 itemId: 'formProdutoGrade',
-                                icon: '../resources/images/icones/formulario.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/formulario.png"),
                                 tooltip: 'Editar em Formulario'
                             }]
                     },
@@ -152,7 +152,7 @@ Ext.define('Illi.view.produto.produto.Lista', {
                         hidden: true,
                         dataIndex: 'p.descricao',
                         id: me.setIdColuna('descricao'),
-                        renderer: function(valor, b, record) {
+                        renderer: function (valor, b, record) {
                             var gradex = record.get('gradex');
                             var gradey = record.get('gradey');
                             return valor + (gradex ? ' ' + gradex : '') + (gradey ? ' ' + gradey : '');
@@ -266,7 +266,7 @@ Ext.define('Illi.view.produto.produto.Lista', {
                         header: 'Ativo',
                         dataIndex: 'pg.situacao',
                         id: me.setIdColuna('pg_situacao'),
-                        renderer: function(valor) {
+                        renderer: function (valor) {
                             return(valor ? 'ATIVO' : 'DESATIVO');
                         },
                         editor: {
@@ -300,14 +300,14 @@ Ext.define('Illi.view.produto.produto.Lista', {
         me.callParent(arguments);
     },
     listeners: {
-        afterrender: function(grid) {
+        afterrender: function (grid) {
             grid.store.filter(grid.filtroInicial);
             grid.getEl().addKeyMap({
                 binding: [
                     {
                         key: Ext.EventObject.INSERT,
                         ctrl: true,
-                        fn: function() {
+                        fn: function () {
                             grid.down('#incluir').fireHandler();
                         }
                     }
@@ -318,7 +318,7 @@ Ext.define('Illi.view.produto.produto.Lista', {
                     {
                         key: Ext.EventObject.INSERT,
                         ctrl: true,
-                        fn: function() {
+                        fn: function () {
                             grid.down('#incluir').fireHandler();
                         }
                     }
@@ -326,13 +326,13 @@ Ext.define('Illi.view.produto.produto.Lista', {
             });
         }
     },
-    onRender: function() {
+    onRender: function () {
         this.callParent(arguments);
         this.getSelectionModel().on('selectionchange', this.selecionar, this);
         this.down('#incluir').setDisabled(!this.ativarBotao('incluir'));
         this.down('#atualizar').setDisabled(!this.ativarBotao('atualizar'));
     },
-    selecionar: function(selModel, selections) {
+    selecionar: function (selModel, selections) {
         this.down('#listarParecer').setDisabled(true);
         this.down('#formacaoPreco').setDisabled(true);
         this.down('#duplicarProduto').setDisabled(true);

@@ -7,7 +7,7 @@ Ext.define('Illi.view.usuario.Menu', {
         'Illi.view.usuario.ComboArvore',
         'Illi.view.financeiro.parecer.Lista'
     ],
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             tabCenter: false,
@@ -18,14 +18,14 @@ Ext.define('Illi.view.usuario.Menu', {
         me.callParent(arguments);
     },
     listeners: {
-        afterrender: function(tbar) {
+        afterrender: function (tbar) {
             var nome_usuario = tbar.localUsuario.nome;
             var grupo_usuario = tbar.localUsuario.grupo_usuario.nome;
             var caching = tbar.localUsuario.cache;
             var menu = tbar.localUsuario.menu;
             tbar.add({
                 xtype: 'image',
-                src: '../resources/images/illi.png',
+                src: Illi.app.Util.getPath("/resources/images/illi.png"), //Illi.path + '/resources/images/illi.png',
                 tooltip: 'ILLI Software',
                 width: 32,
                 height: 32,
@@ -33,10 +33,10 @@ Ext.define('Illi.view.usuario.Menu', {
                 listeners: {
                     click: {
                         element: 'el', //bind to the underlying el property on the panel
-                        fn: function() {
+                        fn: function () {
                             Ext.Ajax.request({
                                 url: '../illi/redefinir_sessao/',
-                                success: function(response) {
+                                success: function (response) {
                                     closepage = true;
                                     window.location.reload(true);
                                 }
@@ -59,7 +59,7 @@ Ext.define('Illi.view.usuario.Menu', {
                             "background-repeat": "no-repeat",
                             "background-size": "100% 100%"
                         },
-                        handler: function() {
+                        handler: function () {
                             Ext.create('Illi.view.usuario.Janela', {iconCache: iconCache}).show();
                         }
                     }
@@ -69,7 +69,7 @@ Ext.define('Illi.view.usuario.Menu', {
                 tooltip: "Suporte",
                 iconCls: 'icon-suporte large', // (tbar.smallScreen ? 'icon-anotacao medium' : 'icon-anotacao large')
                 scale: 'large', // (tbar.smallScreen ? 'medium' : 'large')
-                handler: function() {
+                handler: function () {
                     try {
                         Ext.MessageBox.show({
                             title: 'Atenção',
@@ -80,7 +80,7 @@ Ext.define('Illi.view.usuario.Menu', {
                         Ext.Ajax.request({
                             method: 'POST',
                             url: (url ? url : "http://127.0.0.1:12000/suporte"),
-                            success: function(response) {
+                            success: function (response) {
 
                                 try {
                                     var retorno = Ext.JSON.decode(response.responseText);
@@ -94,7 +94,7 @@ Ext.define('Illi.view.usuario.Menu', {
                                 }
                                 Ext.MessageBox.hide();
                             },
-                            failure: function() {
+                            failure: function () {
                                 Ext.MessageBox.hide();
                                 window.open("http://app.illi.com.br/Remoto.exe", "illi");
                             }
@@ -114,7 +114,7 @@ Ext.define('Illi.view.usuario.Menu', {
             tbar.doExibirBarraFlutuante();
         }
     },
-    doExibirBarraFlutuante: function() {
+    doExibirBarraFlutuante: function () {
         var tbar = this;
         var id_entidade = tbar.localUsuario.entidade.id;
         var barraFlutuante = Ext.widget({
@@ -131,7 +131,7 @@ Ext.define('Illi.view.usuario.Menu', {
                     labelWidth: 75,
                     value: id_entidade,
                     listeners: {
-                        select: function(combo) {
+                        select: function (combo) {
                             var id = combo.getValue();
                             if (id !== id_entidade) {
                                 combo.setDisabled(true);
@@ -141,7 +141,7 @@ Ext.define('Illi.view.usuario.Menu', {
                                     params: {
                                         entidade: id
                                     },
-                                    success: function(response) {
+                                    success: function (response) {
                                         if (response.responseText !== undefined) {
                                             var response = Ext.JSON.decode(response.responseText);
                                             if (response.controle) {
@@ -167,17 +167,17 @@ Ext.define('Illi.view.usuario.Menu', {
                     tooltip: "Sair: ",
                     iconCls: 'small icon-sair',
                     scale: 'small',
-                    handler: function() {
+                    handler: function () {
                         closepage = true;
                         window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
                     }
                 }
             ],
             listeners: {
-                afterlayout: function(flyBar) {
+                afterlayout: function (flyBar) {
                     tbar.tbarAlign(barraFlutuante);
                     tbar.doDefinirSmallScreen(tbar);
-                    Ext.EventManager.onWindowResize(function() {
+                    Ext.EventManager.onWindowResize(function () {
                         var oldSmallScreen = tbar.smallScreen;
                         tbar.tbarAlign(flyBar);
                         tbar.doDefinirSmallScreen(tbar);
@@ -188,18 +188,18 @@ Ext.define('Illi.view.usuario.Menu', {
         });
         barraFlutuante.show();
     },
-    doDefinirSmallScreen: function(tbar) {
+    doDefinirSmallScreen: function (tbar) {
         tbar.smallScreen = (Ext.getBody().getViewSize().width < 1488 ? true : false);
 
     },
-    tbarAlign: function(obj) {
+    tbarAlign: function (obj) {
         obj.alignTo(document.body, 'tr-tr', [(Ext.getScrollbarSize().width + 4) * (Ext.rootHierarchyState.rtl ? 1 : -1), -(document.body.scrollTop || document.documentElement.scrollTop) + 10]);
     },
-    tbarRedimecionarIcone: function(items, small_antigo) {
+    tbarRedimecionarIcone: function (items, small_antigo) {
         var tbar = this;
         var resolucao = Ext.getBody().getViewSize().width;
         //if ((small_antigo !== tbar.smallScreen) || (resolucao < 1000)) {
-        Ext.Array.each(items, function(item) {
+        Ext.Array.each(items, function (item) {
             if (item.texto !== undefined) {
                 item.setText((tbar.smallScreen ? false : item.texto));
                 item.setVisible(resolucao > 1025);
@@ -207,7 +207,7 @@ Ext.define('Illi.view.usuario.Menu', {
         });
         // }
     },
-    onClickButton: function(obj, evt, tab) {
+    onClickButton: function (obj, evt, tab) {
         var tbar = Illi.app.viewCenter.down('#toolbarMenuPrincipal');
         var tabCenter = Illi.app.viewCenter.down('#tabCenter');
         var raw = obj.raw;
@@ -215,11 +215,11 @@ Ext.define('Illi.view.usuario.Menu', {
             switch (raw.componente) {
                 case "WINDOW":
                     var widget = raw.xtypeClass;
-                    var doCreateWidget = function() {
+                    var doCreateWidget = function () {
                         tbar.janelaAberta[widget] = Ext.widget(widget, Illi.app.Local.get(raw.xtypeClass));
                         doOpenWidget();
                     };
-                    var doOpenWidget = function() {
+                    var doOpenWidget = function () {
                         if (tbar.janelaAberta[widget].isHidden()) {
                             tbar.janelaAberta[widget].show();
                         }
@@ -235,7 +235,7 @@ Ext.define('Illi.view.usuario.Menu', {
                     }
                     break;
                 case "TAB":
-                    var abaAberta = tabCenter.items.findBy(function(aba) {
+                    var abaAberta = tabCenter.items.findBy(function (aba) {
                         return aba.title === raw.text;
                     });
                     if (!abaAberta) {
@@ -251,7 +251,7 @@ Ext.define('Illi.view.usuario.Menu', {
                             closeAction: 'hide',
                             items: abrir,
                             listeners: {
-                                beforeactivate: function(tab, opt) {
+                                beforeactivate: function (tab, opt) {
                                     Illi.app.permissao = raw.permissao;
                                 }
                             }

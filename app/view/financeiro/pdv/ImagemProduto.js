@@ -10,7 +10,7 @@ Ext.define('Illi.view.financeiro.pdv.ImagemProduto', {
             border: false,
             bodyStyle: 'background: transparent;',
             //
-            src: '../resources/images/pdv/indisponivel.jpg',
+            src: Illi.app.Util.getPath("/resources/images/pdv/indisponivel.jpg"),
             tooltip: 'ILLI Software'
         });
         me.callParent(arguments);

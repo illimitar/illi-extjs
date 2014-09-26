@@ -16,7 +16,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
     selModel: {
         mode: 'MULTI'
     },
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             store: Ext.create('Illi.store.BoletoFinanceiros', {
@@ -70,9 +70,9 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                         filter: false,
                         width: 25,
                         items: [{
-                                icon: '../resources/images/icones/tipo/pdf.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/tipo/pdf.png"),
                                 tooltip: 'Imprimir ou Visualizar',
-                                handler: function(grid, rowIndex, colIndex, item, e, record) {
+                                handler: function (grid, rowIndex, colIndex, item, e, record) {
                                     Ext.MessageBox.wait('Gerando PDF', 'Aguarde...');
                                     Ext.Ajax.request({
                                         url: '../pdf/pdf/url/',
@@ -80,7 +80,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                                             illi: 'true',
                                             url: '/boleto/abstractBoleto/carregar_boleto/' + record.get('b.id')
                                         },
-                                        success: function(arquivo) {
+                                        success: function (arquivo) {
                                             Ext.MessageBox.show({
                                                 title: 'Baixar PDF',
                                                 msg: "Arquivo Gerado com Sucesso.",
@@ -90,7 +90,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                                                     iconCls: 'icon-pdf',
                                                     ok: "Baixar arquivo"
                                                 },
-                                                fn: function() {
+                                                fn: function () {
                                                     closepage = true;
                                                     window.open(arquivo.responseText, "Baixar PDF");
                                                     this.close();
@@ -99,7 +99,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                                         }
                                     });
                                 },
-                                getClass: function(value, metadata, record) {
+                                getClass: function (value, metadata, record) {
                                     var data_documento = record.get('b.dataDocumento');
                                     if (!data_documento) {
                                         return 'x-hide-display';
@@ -115,9 +115,9 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                         filter: false,
                         width: 25,
                         items: [{
-                                icon: '../resources/images/icones/acao/visualizar.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/acao/visualizar.png"),
                                 tooltip: 'Visualizar',
-                                handler: function(grid, rowIndex, colIndex, item, e, record) {
+                                handler: function (grid, rowIndex, colIndex, item, e, record) {
                                     Ext.create('Ext.Window', {
                                         title: 'Boleto',
                                         width: 800,
@@ -145,7 +145,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                                         ]
                                     }).show();
                                 },
-                                getClass: function(value, metadata, record) {
+                                getClass: function (value, metadata, record) {
                                     var data_documento = record.get('b.dataDocumento');
                                     if (!data_documento) {
                                         return 'x-hide-display';
@@ -175,7 +175,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                     {
                         header: 'Parceiro',
                         dataIndex: 'p.nome',
-                        renderer: function(valor, grid, record) {
+                        renderer: function (valor, grid, record) {
                             return record.get('p.id') + ' - ' + record.get('p.nome');
                         },
                         flex: 1.5
@@ -204,7 +204,7 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
                         renderer: Illi.app.Util.valorRenderer,
                         summaryType: 'sum',
                         align: 'right',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         }
                     },
@@ -232,15 +232,15 @@ Ext.define('Illi.view.boleto.BoletoFinanceiro', {
         me.callParent(arguments);
     },
     listeners: {
-        afterrender: function(grid) {
+        afterrender: function (grid) {
             grid.store.filter(grid.filtroInicial);
         }
     },
-    onRender: function() {
+    onRender: function () {
         this.callParent(arguments);
         this.getSelectionModel().on('selectionchange', this.selecionar, this);
     },
-    selecionar: function(selModel, selections) {
+    selecionar: function (selModel, selections) {
         if (selections[0]) {
             this.down('#excluir').setDisabled(!(selections.length === 1 && this.ativarBotao('excluir', selections[0].get('e.id'))));
             this.down('#gerarBoletos').setDisabled(!(this.ativarBotao('gerarBoletos', selections[0].get('e.id'))));

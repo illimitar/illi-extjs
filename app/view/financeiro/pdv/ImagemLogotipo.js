@@ -9,7 +9,7 @@ Ext.define('Illi.view.financeiro.pdv.ImagemLogotipo', {
             border: false,
             bodyStyle: 'background: transparent;',
             //
-            src: '../resources/images/pdv/logotipo.png',
+            src: Illi.app.Util.getPath("/resources/images/pdv/logotipo.png"),
             tooltip: 'ILLI Software'
         });
         me.callParent(arguments);

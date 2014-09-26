@@ -105,7 +105,7 @@ Ext.define('Illi.view.financeiro.venda.Lista', {
                         editor: false,
                         items: [
                             {
-                                icon: '../resources/images/icones/acao/remover.png',
+                                icon: Illi.app.Util.getPath("resources/images/icones/acao/remover.png"),
                                 width: 16,
                                 tooltip: 'Delete',
                                 handler: function(grid, rowIndex, colIndex) {

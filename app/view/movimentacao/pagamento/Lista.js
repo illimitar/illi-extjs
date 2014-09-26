@@ -7,7 +7,7 @@ Ext.define('Illi.view.movimentacao.pagamento.Lista', {
     requires: [
         'Illi.view.financeiro.prazo.Combo'
     ],
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             selType: 'cellmodel',
@@ -53,7 +53,7 @@ Ext.define('Illi.view.movimentacao.pagamento.Lista', {
                     {
                         header: 'Forma Pagamento',
                         dataIndex: 'pagamento_id',
-                        renderer: function(valor, metaData, record) {
+                        renderer: function (valor, metaData, record) {
                             return  record.get('pagamento');
                         },
                         editor: false
@@ -65,7 +65,7 @@ Ext.define('Illi.view.movimentacao.pagamento.Lista', {
                         renderer: Illi.app.Util.valorRenderer,
                         editor: Illi.app.Util.campoMoeda('valor'),
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:14px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         }
                     },
@@ -90,9 +90,9 @@ Ext.define('Illi.view.movimentacao.pagamento.Lista', {
                         editor: false,
                         items: [
                             {
-                                icon: '../resources/images/icones/acao/remover.png',
+                                icon: Illi.app.Util.getPath("resources/images/icones/acao/remover.png"),
                                 tooltip: 'Apagar',
-                                handler: function(grid, rowIndex, colIndex) {
+                                handler: function (grid, rowIndex, colIndex) {
                                     var rec = grid.getStore().getAt(rowIndex);
                                     grid.getStore().removeAt(rowIndex);
                                     me.up("window").down('#finalizar').setDisabled(true);
@@ -107,7 +107,7 @@ Ext.define('Illi.view.movimentacao.pagamento.Lista', {
                 Ext.create('Ext.grid.plugin.CellEditing', {
                     clicksToEdit: 2,
                     listeners: {
-                        edit: function(editor, e, opt) {
+                        edit: function (editor, e, opt) {
                             e.record.commit();
                             var store = Ext.getStore('tabelaPagamento');
                             me.down('#totalPago').setText('Total Pagamento ' + Illi.app.Util.valorRenderer((store.sum('valor'))));
@@ -140,7 +140,7 @@ Ext.define('Illi.view.movimentacao.pagamento.Lista', {
         });
         me.callParent(arguments);
     },
-    onRender: function() {
+    onRender: function () {
         this.store.load();
         this.callParent(arguments);
     }

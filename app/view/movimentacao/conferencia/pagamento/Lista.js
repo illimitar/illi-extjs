@@ -4,7 +4,7 @@ Ext.define('Illi.view.movimentacao.conferencia.pagamento.Lista', {
     itemId: 'listaPagamentoConferenciaMovimentacao',
     emptyText: "Nenhum registro Encontrado",
     totalPedido: false,
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             enableColumnHide: false,
@@ -70,7 +70,7 @@ Ext.define('Illi.view.movimentacao.conferencia.pagamento.Lista', {
 //                    },
                     datachanged: {
                         element: this,
-                        fn: function(store) {
+                        fn: function (store) {
                             var totalPagoField = me.up('#janelaPagamentoConferenciaMovimentacao').down('#id_total_pago');
                             var totalPedidoField = me.up('#janelaPagamentoConferenciaMovimentacao').down('#id_total_pedido');
                             var totalAPagarField = me.up('#janelaPagamentoConferenciaMovimentacao').down('#id_valor_pago');
@@ -139,7 +139,7 @@ Ext.define('Illi.view.movimentacao.conferencia.pagamento.Lista', {
                         dataIndex: 'valor_final',
                         renderer: Illi.app.Util.valorRenderer,
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:14px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         },
                         hidden: true
@@ -164,17 +164,17 @@ Ext.define('Illi.view.movimentacao.conferencia.pagamento.Lista', {
                         width: 30,
                         items: [
                             {
-                                icon: '../resources/images/icones/acao/editar.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/acao/editar.png"),
                                 tooltip: 'Cancelar / Restaurar',
-                                handler: function(grid, rowIndex, colIndex, action) {
+                                handler: function (grid, rowIndex, colIndex, action) {
                                     var store = grid.getStore();
                                     var record = store.getAt(rowIndex);
-                                    var doNovaSituacao = function(situacao, valor_final) {
+                                    var doNovaSituacao = function (situacao, valor_final) {
                                         record.set("situacao_antigo", record.get("situacao"));
                                         record.set("situacao", situacao);
                                         record.set("valor_final", valor_final);
                                     };
-                                    var doVoltarSituacaoAnterior = function() {
+                                    var doVoltarSituacaoAnterior = function () {
                                         record.set("situacao", record.get("situacao_antigo"));
                                         record.set("situacao_antigo", "");
                                         record.set("valor_final", record.get("valor"));
@@ -215,7 +215,7 @@ Ext.define('Illi.view.movimentacao.conferencia.pagamento.Lista', {
                 forceFit: true,
                 showPreview: true,
                 enableRowBody: true,
-                getRowClass: function(record, index) {
+                getRowClass: function (record, index) {
                     var situacao = record.get('situacao');
                     switch (situacao) {
 //                        case 'Aberto':
@@ -257,11 +257,11 @@ Ext.define('Illi.view.movimentacao.conferencia.pagamento.Lista', {
         me.callParent(arguments);
     },
     listeners: {
-        afterrender: function(grid) {
+        afterrender: function (grid) {
             var records = grid.retornoItens;
             var storeGrid = grid.getStore();
             var xCountGrid = 1;
-            Ext.Array.each(records, function(item) {
+            Ext.Array.each(records, function (item) {
                 var valor_final = item.valor_titulo;
                 var valor = valor_final;
                 switch (item.situacao) {

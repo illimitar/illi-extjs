@@ -84,7 +84,7 @@ Ext.define('Illi.view.movimentacao.Lista', {
                         filter: false,
                         width: 25,
                         items: [{
-                                icon: '../resources/images/icones/acao/visualizar.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/acao/visualizar.png"),
                                 tooltip: 'Imprimir ou Visualizar'
                             }]
                     },

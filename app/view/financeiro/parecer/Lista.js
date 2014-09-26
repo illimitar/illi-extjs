@@ -216,7 +216,7 @@ Ext.define('Illi.view.financeiro.parecer.Lista', {
                         width: 20,
                         items: [
                             {
-                                icon: '../resources/images/icones/acao/visualizar.png',
+                                icon: Illi.app.Util.getPath("/resources/images/icones/acao/visualizar.png"),
                                 tooltip: 'Visualizar',
                                 dataIndex: 'complemento',
                                 handler: function (grid, rowIndex, colIndex) {

@@ -15,22 +15,22 @@ Ext.define('Ext.ux.illi.Util', {
             clicksToEdit: 0,
             errorSummary: false,
             listeners: {
-                validateedit: function(editor, e, opt) {
+                validateedit: function (editor, e, opt) {
                     e.record.commit();
                 },
-                afterEdit: function(editor, grid, opt) {
+                afterEdit: function (editor, grid, opt) {
                     var store = editor.grid.store;
                     if (store.getModifiedRecords()[0]) {
                         editor.grid.el.mask('Salvando...');
                     }
                     store.sync({
-                        callback: function() {
+                        callback: function () {
                             editor.grid.el.unmask();
                             editor.grid.store.sort('id', 'DESC');
                         }
                     });
                 },
-                beforeEdit: function(editor, grid, opt) {
+                beforeEdit: function (editor, grid, opt) {
                     if (editor.grid.store.isGrouped()) {
                         Ext.MessageBox.show({
                             title: 'Alerta',
@@ -44,7 +44,7 @@ Ext.define('Ext.ux.illi.Util', {
                         return false;
                     }
                 },
-                canceledit: function(editor, grid, opt) {
+                canceledit: function (editor, grid, opt) {
                     grid.store.load();
                 }
             }
@@ -62,7 +62,7 @@ Ext.define('Ext.ux.illi.Util', {
     idxPlugins: [],
     idxFeatures: [],
     /** @private */
-    constructor: function(config) {
+    constructor: function (config) {
         var me = this;
         me.desabilitaBackspace();
         me.desabilitaBotaoDireito();
@@ -72,9 +72,9 @@ Ext.define('Ext.ux.illi.Util', {
         /*
          * Override da Funcao alert
          */
-        (function() {
+        (function () {
             try {
-                window.alert = function() {
+                window.alert = function () {
                     if (this.dump === true) {
                         var string = 'console.info(';
                         for (var i = 0; i < arguments.length; i++) {
@@ -92,9 +92,9 @@ Ext.define('Ext.ux.illi.Util', {
         /*
          * Override da Funcao error
          */
-        (function() {
+        (function () {
             try {
-                window.error = function() {
+                window.error = function () {
                     var first = arguments[0];
                     if (first.stack !== undefined) {
                         //console.error(first.stack); esta mostrando muito erros no financeiro verificar essa parte
@@ -113,14 +113,14 @@ Ext.define('Ext.ux.illi.Util', {
         })();
 
     },
-    init: function(me) {
+    init: function (me) {
     },
     /*
      * Desabilita Backspace
      */
 
-    desabilitaBackspace: function() {
-        Ext.EventManager.on(window, 'keydown', function(e, t) {
+    desabilitaBackspace: function () {
+        Ext.EventManager.on(window, 'keydown', function (e, t) {
             // detecta se não é um campo
             if ((!/^input$/i.test(t.tagName) || t.disabled || t.readOnly) && (!/^textArea$/i.test(t.tagName) || t.disabled || t.readOnly)) {
                 if (e.getKey() === e.BACKSPACE) {
@@ -136,19 +136,19 @@ Ext.define('Ext.ux.illi.Util', {
     /*
      * Desabilita Botão Direito
      */
-    desabilitaBotaoDireito: function() {
+    desabilitaBotaoDireito: function () {
         if (this.dump === true) {
-            Ext.EventManager.on(window, 'contextmenu', function(e, t) {
+            Ext.EventManager.on(window, 'contextmenu', function (e, t) {
                 e.preventDefault();
                 return false;
             });
         }
     },
-    mergeOptions: function(object, replace, idx) {
+    mergeOptions: function (object, replace, idx) {
         var me = this;
         var result = [];
         //return false;
-        Ext.Object.each(object, function(key, value, myself) {
+        Ext.Object.each(object, function (key, value, myself) {
             var replaced = key;
             try {
                 if (me[idx] !== undefined) {
@@ -164,7 +164,7 @@ Ext.define('Ext.ux.illi.Util', {
             }
         });
         object = result;
-        Ext.Object.each(replace, function(key, value, myself) {
+        Ext.Object.each(replace, function (key, value, myself) {
             if (object[key] === undefined) {
                 replace[key] = false;
             }
@@ -172,11 +172,11 @@ Ext.define('Ext.ux.illi.Util', {
         Ext.Object.merge(object, replace);
         return object;
     },
-    objectToArray: function(object, idx) {
+    objectToArray: function (object, idx) {
         var result = [];
         var pointer = [];
         var count = 0;
-        Ext.Object.each(object, function(key, value, myself) {
+        Ext.Object.each(object, function (key, value, myself) {
             if (value) {
                 pointer[count] = key;
                 result.push(value);
@@ -186,19 +186,19 @@ Ext.define('Ext.ux.illi.Util', {
         //Illi[idx] = pointer;
         return result;
     },
-    mergeOptions2: function(object, replace) {
-        Ext.Object.each(replace, function(key, value, myself) {
+    mergeOptions2: function (object, replace) {
+        Ext.Object.each(replace, function (key, value, myself) {
             if (object[key] === undefined) {
                 replace[key] = false;
             }
         });
         return Ext.Object.merge(object, replace);
     },
-    objectToArray2: function(object) {
+    objectToArray2: function (object) {
         var result = [];
         var pointer = [];
         var count = 0;
-        Ext.Object.each(object, function(key, value, myself) {
+        Ext.Object.each(object, function (key, value, myself) {
             if (value) {
                 pointer[count] = key;
                 result.push(value);
@@ -207,19 +207,19 @@ Ext.define('Ext.ux.illi.Util', {
         });
         return result;
     },
-    setPlugins: function(plugins, newer) {
+    setPlugins: function (plugins, newer) {
         if (newer !== undefined) {
             return this.objectToArray2(this.mergeOptions2(plugins, newer));
         }
         return this.objectToArray2(this.mergeOptions2(Ext.clone(this.defaultPlugins), plugins));
     },
-    setFeatures: function(features, newer) {
+    setFeatures: function (features, newer) {
         if (newer !== undefined) {
             return this.objectToArray2(this.mergeOptions2(features, newer));
         }
         return this.objectToArray2(this.mergeOptions2(Ext.clone(this.defaultFeatures), features));
     },
-    verStore: function(id_store) {
+    verStore: function (id_store) {
         try {
             var store = Ext.getStore(id_store);
             if (store) {
@@ -229,14 +229,14 @@ Ext.define('Ext.ux.illi.Util', {
             console.error(e);
         }
     },
-    mensagemFalha: function(texto) {
+    mensagemFalha: function (texto) {
         Ext.MessageBox.show({
             title: 'Aviso Importante',
             msg: (texto ? texto : 'Ocorreu algum erro </br> Verifique Sua conexão e tente Novamente!</br> Se o Problema Persistir entre em Contato com o Suporte! '),
             buttons: Ext.MessageBox.OK
         });
     },
-    campoMoedaMask: function(nome, texto, classe, config) {
+    campoMoedaMask: function (nome, texto, classe, config) {
         var campo = {
             xtype: 'textfield',
             name: nome,
@@ -252,7 +252,7 @@ Ext.define('Ext.ux.illi.Util', {
         var retorno = Ext.Object.merge(campo, (config ? config : {}));
         return retorno;
     },
-    campoMoeda: function(nome, texto, classe, config) {
+    campoMoeda: function (nome, texto, classe, config) {
         var campo = {
             xtype: 'numberfield',
             name: nome,
@@ -269,7 +269,7 @@ Ext.define('Ext.ux.illi.Util', {
         var retorno = Ext.Object.merge(campo, (config ? config : {}));
         return retorno;
     },
-    valorRenderer: function(v) {
+    valorRenderer: function (v) {
         try {
             return 'R$ ' + Illi.app.Util.numberFormat(v, 2, ",", ".");
             //return 'R$ ' + this.numberFormat(v, 2, ",", ".");
@@ -281,18 +281,18 @@ Ext.define('Ext.ux.illi.Util', {
         }
 
     },
-    floatRenderer: function(v) {
+    floatRenderer: function (v) {
         return Illi.app.Util.numberFormat(v, 2, ",", ".");
     },
 //
-    numberFormat: function(number, decimals, dec_point, thousands_sep) {
+    numberFormat: function (number, decimals, dec_point, thousands_sep) {
         number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
         var n = !isFinite(+number) ? 0 : +number,
                 prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
                 sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
                 dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
                 s = '',
-                toFixedFix = function(n, prec) {
+                toFixedFix = function (n, prec) {
                     var k = Math.pow(10, prec);
                     return '' + Math.round(n * k) / k;
                 };
@@ -307,14 +307,14 @@ Ext.define('Ext.ux.illi.Util', {
         }
         return s.join(dec);
     },
-    numberRound: function(number, decimals) {
+    numberRound: function (number, decimals) {
         number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
         var n = !isFinite(+number) ? 0 : +number,
                 prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
                 sep = (typeof thousands_sep === 'undefined') ? '' : thousands_sep,
                 dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
                 s = '',
-                toFixedFix = function(n, prec) {
+                toFixedFix = function (n, prec) {
                     var k = Math.pow(10, prec);
                     return '' + Math.round(n * k) / k;
                 };
@@ -329,7 +329,7 @@ Ext.define('Ext.ux.illi.Util', {
         }
         return parseFloat(s.join(dec));
     },
-    stringToFloat: function(value, input, digits) {
+    stringToFloat: function (value, input, digits) {
         if (input !== undefined && input === true) {
             value = value.replace(/\./g, "");
         }
@@ -338,7 +338,7 @@ Ext.define('Ext.ux.illi.Util', {
         value = parseFloat(value);
         return value;
     },
-    strPad: function(input, pad_length, pad_string, pad_type) {
+    strPad: function (input, pad_length, pad_string, pad_type) {
         // http://kevin.vanzonneveld.net
         // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
         // + namespaced by: Michael White (http://getsprink.com)
@@ -351,7 +351,7 @@ Ext.define('Ext.ux.illi.Util', {
         var half = '',
                 pad_to_go;
 
-        var str_pad_repeater = function(s, len) {
+        var str_pad_repeater = function (s, len) {
             var collect = '',
                     i;
 
@@ -382,7 +382,14 @@ Ext.define('Ext.ux.illi.Util', {
         }
         return input;
     },
-    getOperacao: function(id_grupo_operacao) {
+    getPath: function (url) {
+        if (frontend) {
+            return "../" + frontend + "/" + url;
+        } else {
+            return url;
+        }
+    },
+    getOperacao: function (id_grupo_operacao) {
         Ext.MessageBox.wait('Aguarde', 'Carregando Operação');
         var operacao = false;
         try {
@@ -392,10 +399,10 @@ Ext.define('Ext.ux.illi.Util', {
                 params: {
                     grupo_operacao: id_grupo_operacao
                 },
-                failure: function() {
+                failure: function () {
                     Illi.app.Util.mensagemFalha();
                 },
-                success: function(response) {
+                success: function (response) {
                     var retorno = false;
                     try {
                         operacao = Ext.JSON.decode(response.responseText);
@@ -413,7 +420,7 @@ Ext.define('Ext.ux.illi.Util', {
         }
         return operacao;
     },
-    getGravatar: function(email, tamanho) {
+    getGravatar: function (email, tamanho) {
         try {
             tamanho = (tamanho ? tamanho : 32);
             var url = "http://www.gravatar.com/avatar/";
@@ -425,7 +432,7 @@ Ext.define('Ext.ux.illi.Util', {
             return false;
         }
     },
-    md5: function(s, raw, hexcase, chrsz) {
+    md5: function (s, raw, hexcase, chrsz) {
         raw = raw || false;
         hexcase = hexcase || false;
         chrsz = chrsz || 8;
