@@ -69,7 +69,7 @@ Ext.define('Illi.view.financeiro.pdv.PainelRodape', {
                     Illi.app.Util.BotaoTeclado("Vale (F7)", "F7"),
                     Illi.app.Util.BotaoTeclado("Troca (F8)", "F8"),
                     "->",
-                    Illi.app.Util.BotaoTeclado("MENU", "ESC")
+                    Illi.app.Util.BotaoTeclado("MENU", "H", true)
                 ]
             }
         });

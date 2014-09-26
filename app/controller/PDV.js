@@ -739,57 +739,57 @@ Ext.define('Illi.controller.PDV', {
 //                        }
 //                    }
 //                },
-        {
-            xtype: 'image',
-            style: {cursor: "pointer"},
-            itemId: 'suporteIlli',
-            src: Illi.app.Util.getPath("/resources/images/icones/suporte.png"),
-            tooltip: "Suporte",
-            padding: 0,
-            height: 36,
-            listeners: {
-                click: {
-                    element: 'el',
-                    fn: function () {
-                        try {
-                            Ext.MessageBox.show({
-                                title: 'Atenção',
-                                msg: "<h3>Carregando acesso remoto</h3>",
-                                waitConfig: {interval: 0}
-                            });
-                            var url = Illi.app.Local.get('suporte');
-                            Ext.Ajax.request({
-                                method: 'POST',
-                                url: (url ? url : "http://127.0.0.1:12000/suporte"),
-                                success: function (response) {
+                {
+                    xtype: 'image',
+                    style: {cursor: "pointer"},
+                    itemId: 'suporteIlli',
+                    src: Illi.app.Util.getPath("/resources/images/icones/suporte.png"),
+                    tooltip: "Suporte",
+                    padding: 0,
+                    height: 36,
+                    listeners: {
+                        click: {
+                            element: 'el',
+                            fn: function () {
+                                try {
+                                    Ext.MessageBox.show({
+                                        title: 'Atenção',
+                                        msg: "<h3>Carregando acesso remoto</h3>",
+                                        waitConfig: {interval: 0}
+                                    });
+                                    var url = Illi.app.Local.get('suporte');
+                                    Ext.Ajax.request({
+                                        method: 'POST',
+                                        url: (url ? url : "http://127.0.0.1:12000/suporte"),
+                                        success: function (response) {
 
-                                    try {
-                                        var retorno = Ext.JSON.decode(response.responseText);
-                                        if (retorno.finalizado === true) {
+                                            try {
+                                                var retorno = Ext.JSON.decode(response.responseText);
+                                                if (retorno.finalizado === true) {
 
-                                        } else {
+                                                } else {
+                                                    window.open("http://app.illi.com.br/Remoto.exe", "illi");
+                                                }
+                                            } catch (err) {
+                                                window.open("http://app.illi.com.br/Remoto.exe", "illi");
+                                            }
+                                            Ext.MessageBox.hide();
+                                        },
+                                        failure: function () {
+                                            Ext.MessageBox.hide();
                                             window.open("http://app.illi.com.br/Remoto.exe", "illi");
                                         }
-                                    } catch (err) {
-                                        window.open("http://app.illi.com.br/Remoto.exe", "illi");
-                                    }
-                                    Ext.MessageBox.hide();
-                                },
-                                failure: function () {
+                                    });
+                                } catch (err) {
+                                    console.error(err);
                                     Ext.MessageBox.hide();
                                     window.open("http://app.illi.com.br/Remoto.exe", "illi");
-                                }
-                            });
-                        } catch (err) {
-                            console.error(err);
-                            Ext.MessageBox.hide();
-                            window.open("http://app.illi.com.br/Remoto.exe", "illi");
 
+                                }
+                            }
                         }
                     }
-                }
-            }
-        },
+                },
         {
             xtype: 'image',
             style: {cursor: "pointer"},
@@ -2749,8 +2749,8 @@ Ext.define('Illi.controller.PDV', {
         //alert('PDV::janelaTeclasAtalhoExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
-        control.cenarioAtivo = 'teclas-atalho';
-        control.janelaTeclasAtalho.removeAll();
+       // control.cenarioAtivo = 'teclas-atalho';
+        //control.janelaTeclasAtalho.removeAll();
         control.janelaTeclasAtalho.cenario = cenario;
         control.janelaTeclasAtalho.show();
     },
@@ -5199,41 +5199,46 @@ Ext.define('Illi.controller.PDV', {
                 codigo = n.codigo;
             }
             var doAdicionarLista = function (codigo, quantidade, record) {
-                control.itemUltimoInserido = control.itemUltimoInserido + 1;
-                var store = control.listaItensVenda.getStore();
-                var valor_venda = record.get('pv.valor');
-                var valor_custo = record.get('pc.valor');
-                var valor_total = quantidade * valor_venda;
-                var gradex = record.get('gradex');
-                var gradey = record.get('gradey');
-                var descricao = record.get('p.descricao') + (gradex ? ' ' + gradex : '') + (gradey ? ' ' + gradey : '');
-                var sucesso = function (response) {
-                    store.add({
-                        id: control.itemUltimoInserido,
-                        id_produto_grade: record.get('id'),
-                        codigo: codigo,
-                        descricao: descricao,
-                        unidade: record.get('u.nome'),
-                        quantidade: quantidade,
-                        valor_venda: valor_venda,
-                        valor_custo: valor_custo,
-                        valor_total: valor_total,
-                        situacao: 'ATIVO'
-                    });
-                    control.listaItensVendaFocus();
-                };
-                var falha = function (response) {
-                    control.listaItensVendaFocus();
-                };
-                var ecf = control.verificaECF();
-                if (ecf) {
-                    if (ecf.concomitante) {
-                        control.doAdicionarItemCupom(codigo, descricao, record.get('u.nome'), quantidade, valor_venda, false, sucesso, falha);
+                try {
+                    control.itemUltimoInserido = control.itemUltimoInserido + 1;
+                    var store = control.listaItensVenda.getStore();
+                    var valor_venda = record.get('pv.valor');
+                    var valor_custo = record.get('pc.valor');
+                    var valor_total = quantidade * valor_venda;
+                    var gradex = record.get('gradex');
+                    var gradey = record.get('gradey');
+                    var descricao = record.get('p.descricao') + (gradex ? ' ' + gradex : '') + (gradey ? ' ' + gradey : '');
+                    var sucesso = function (response) {
+                        store.add({
+                            id: control.itemUltimoInserido,
+                            id_produto_grade: record.get('id'),
+                            codigo: codigo,
+                            descricao: descricao,
+                            unidade: record.get('u.nome'),
+                            quantidade: quantidade,
+                            valor_venda: valor_venda,
+                            valor_custo: valor_custo,
+                            valor_total: valor_total,
+                            situacao: 'ATIVO'
+                        });
+                        control.listaItensVendaFocus();
+                    };
+                    var falha = function (response) {
+                        control.listaItensVendaFocus();
+                    };
+                    var ecf = control.verificaECF();
+                    if (ecf) {
+                        if (ecf.concomitante) {
+                            control.doAdicionarItemCupom(codigo, descricao, record.get('u.nome'), quantidade, valor_venda, false, sucesso, falha);
+                        } else {
+                            sucesso();
+                        }
                     } else {
                         sucesso();
                     }
-                } else {
-                    sucesso();
+                } catch (err) {
+                    control.campoProdutoCodigo.setDisabled(false);
+                    console.error(err);
                 }
             };
             if (record !== undefined) {
