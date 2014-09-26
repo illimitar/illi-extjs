@@ -1216,6 +1216,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Illi.view.financeiro.pdv.JanelaSangria": [],
   "Illi.view.financeiro.pdv.JanelaSuprimento": [],
   "Illi.view.financeiro.pdv.JanelaTabelaPrecoVenda": [],
+  "Illi.view.financeiro.pdv.JanelaTeclado": [],
   "Illi.view.financeiro.pdv.JanelaTeclasAtalho": [],
   "Illi.view.financeiro.pdv.JanelaTroco": [],
   "Illi.view.financeiro.pdv.JanelaVendaRapida": [],
@@ -3065,6 +3066,9 @@ Ext.ClassManager.addNameAliasMappings({
   ],
   "Illi.view.financeiro.pdv.JanelaTabelaPrecoVenda": [
     "widget.janelaTabelaPrecoVenda"
+  ],
+  "Illi.view.financeiro.pdv.JanelaTeclado": [
+    "widget.JanelaTeclado"
   ],
   "Illi.view.financeiro.pdv.JanelaTeclasAtalho": [
     "widget.janelaTeclasAtalho"

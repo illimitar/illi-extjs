@@ -1,0 +1,244 @@
+/*
+    Document   : pdv
+    Created on : 16/09/2013, 17:50:48
+    Author     : heron
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root {
+    display: block;
+}
+
+/* Acima 1600px */
+@media all {
+
+    .pdv.vendarapida .x-grid-cell-special {
+        vertical-align: inherit;
+    }
+
+    .pdv.vendarapida .x-grid-row {
+        height: 40px;
+    }
+
+    .pdv.vendarapida .x-grid-cell {
+        border-style: none;
+    }
+
+    .pdv.vendarapida .x-grid-row-selected {
+        background-color: rgba(255,255,255,0.5) !important;
+    }
+
+    .pdv.vendarapida .x-grid-cell, .pdv.vendarapida .x-column-header {
+        font-size: 30px;
+        background: rgba(255,255,255,0.1);
+    }
+
+    .pdv.vendarapida .destaque * {
+        font-size: 50px;
+        font-weight: bold;
+        min-height: 70px;
+        text-shadow: 0 0 0.15em #FFF;
+    }
+
+    .pdv.vendarapida .destaque-medio * {
+        font-size: 40px;
+        font-weight: bold;
+        min-height: 56px;
+        text-shadow: 0 0 0.15em #FFF;
+    }
+
+    .pdv.vendarapida ::-webkit-input-placeholder {
+        padding-top: 22px;
+    }
+
+    .pdv.vendarapida input:-moz-placeholder {
+        padding-top: 22px;
+    }
+
+    .pdv.vendarapida .center * {
+        text-align: center;
+    }
+
+    .pdv.vendarapida .right * {
+        text-align: right;
+    }
+
+    .pdv.vendarapida .quadro * {
+        background: rgba(255, 255, 255, 0.50);
+        border: none;
+        padding:5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+    .pdv.vendarapida .total_topo * {
+        background: rgba(255, 255, 255, 0.50);
+        border: none;
+        padding:3px;
+        font-size: 56px;
+        text-align: right;
+    }
+    .pdv.vendarapida .total_topo_titulo * {
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        text-align: center;
+    }
+    .pdv.vendarapida .rodape * {
+        background:none;
+        padding:3px;
+        border: none;
+    }
+    .pdv.vendarapida .verde * {
+        color: #006600;
+    }
+
+    .pdv.vendarapida .azul * {
+        color: #003399;
+    }
+
+    .pdv.vendarapida .vermelho * {
+        color: #FF0000;
+    }
+
+    .pdv.vendarapida .semborda .x-form-trigger-wrap {
+        border: none;
+    }
+
+    .pdv.vendarapida .x-panel-default-outer-border-trl {
+        border: none;
+    }
+
+    .pdv.vendarapida .x-panel-default-outer-border-rl {
+        border: none;
+    }
+
+    .pdv.vendarapida .x-panel-default-outer-border-rbl {
+        border: none;
+    }
+
+}
+
+/* Até 1600px */
+@media all and (max-width:1600px){
+
+    .pdv.vendarapida .x-grid-row {
+        height: 32px;
+    }
+
+    .pdv.vendarapida .x-grid-cell, .pdv.vendarapida .x-column-header {
+        font-size: 24px;
+    }
+
+    .pdv.vendarapida .destaque * {
+        font-size: 40px;
+        min-height: 56px;
+    }
+
+    .pdv.vendarapida .destaque-medio * {
+        font-size: 32px;
+        min-height: 45px;
+    }
+
+    .pdv.vendarapida ::-webkit-input-placeholder {
+        padding-top: 16px;
+    }
+
+    .pdv.vendarapida input:-moz-placeholder {
+        padding-top: 16px;
+    }
+
+}
+
+/* Até 1400px */
+@media all and (max-width:1400px){
+
+    .pdv.vendarapida .x-grid-row {
+        height: 28px;
+    }
+
+    .pdv.vendarapida .x-grid-cell, .pdv.vendarapida .x-column-header {
+        font-size: 21px;
+    }
+
+    .pdv.vendarapida .destaque * {
+        font-size: 35px;
+        min-height: 49px;
+    }
+
+    .pdv.vendarapida .destaque-medio * {
+        font-size: 28px;
+        min-height: 40px;
+    }
+
+    .pdv.vendarapida ::-webkit-input-placeholder {
+        padding-top: 12px;
+    }
+
+    .pdv.vendarapida input:-moz-placeholder {
+        padding-top: 12px;
+    }
+
+}
+
+/* Até 1200px */
+@media all and (max-width:1200px){
+
+    .pdv.vendarapida .x-grid-row {
+        height: 20px;
+    }
+
+    .pdv.vendarapida .x-grid-cell, .pdv.vendarapida .x-column-header {
+        font-size: 15px;
+    }
+
+    .pdv.vendarapida .destaque * {
+        font-size: 25px;
+        min-height: 35px;
+    }
+
+    .pdv.vendarapida .destaque-medio * {
+        font-size: 20px;
+        min-height: 28px;
+    }
+
+    .pdv.vendarapida ::-webkit-input-placeholder {
+        padding-top: 6px;
+    }
+
+    .pdv.vendarapida input:-moz-placeholder {
+        padding-top: 6px;
+    }
+
+}
+
+/* Até 1000px */
+@media all and (max-width:1000px){
+
+    .pdv.vendarapida .x-grid-row {
+        height: 12px;
+    }
+
+    .pdv.vendarapida .x-grid-cell, .pdv.vendarapida .x-column-header {
+        font-size: 9px;
+    }
+
+    .pdv.vendarapida .destaque * {
+        font-size: 15px;
+        min-height: 21px;
+    }
+
+    .pdv.vendarapida .destaque-medio * {
+        font-size: 12px;
+        min-height: 17px;
+    }
+
+    .pdv.vendarapida ::-webkit-input-placeholder {
+        padding-top: 2px;
+    }
+
+    .pdv.vendarapida input:-moz-placeholder {
+        padding-top: 2px;
+    }
+
+}
