@@ -389,9 +389,25 @@ Ext.define('Ext.ux.illi.Util', {
             return url;
         }
     },
-    fireKey: function (keyCode, ctrlKey, altKey, shiftKey) {
-        var el = document.body;
-        var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent("Events");
+    BotaoTeclado: function (texto, acao) {
+        var evento = false;
+        eval(" evento = Ext.EventObject." + acao + ";");
+        var me = this;
+        var botao = {
+            xtype: 'button',
+            text: texto,
+            scale: 'large',
+            border: false,
+            bodyBorder: false,
+            margin: '0 5 5 5',
+            handler: function (btn) {
+                me.fireKey(evento);
+            }
+        };
+        return botao;
+    },
+    fireKey: function (k) {
+        var oEvent = document.createEvent('KeyboardEvent');
 
         if(eventObj.initEvent){
             eventObj.initEvent("keydown", true, true);

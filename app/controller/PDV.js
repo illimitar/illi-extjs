@@ -50,6 +50,7 @@ Ext.define('Illi.controller.PDV', {
         'financeiro.pdv.JanelaVendedor',
         'financeiro.pdv.JanelaDocumento',
         'financeiro.pdv.JanelaTabelaPrecoVenda',
+        'financeiro.pdv.JanelaTeclado',
         'financeiro.pdv.ListaCancelamentoVenda',
         'financeiro.pdv.ListaClienteSelecao',
         'financeiro.pdv.ListaVendedorSelecao',
@@ -721,22 +722,23 @@ Ext.define('Illi.controller.PDV', {
     setRodapeAjuda: function () {
         //alert('PDV::pdvRodapeAjuda()');
         var control = this;
-        control.painelRodape.add({
-            xtype: 'panel',
-            itemId: 'pdvRodapeAjuda',
-            style: {cursor: "pointer"},
-            padding: '0 5 0 5',
-            cls: 'rodape',
-            html: '<b>CTRL + H: Ajuda</b>',
-            listeners: {
-                click: {
-                    element: 'el',
-                    fn: function () {
-                        control.janelaTeclasAtalhoExibir();
-                    }
-                }
-            }
-        },
+        control.painelRodape.add(
+//                {
+//                    xtype: 'panel',
+//                    itemId: 'pdvRodapeAjuda',
+//                    style: {cursor: "pointer"},
+//                    padding: '0 5 0 5',
+//                    cls: 'rodape',
+//                    html: '<b>CTRL + H: Ajuda</b>',
+//                    listeners: {
+//                        click: {
+//                            element: 'el',
+//                            fn: function () {
+//                                control.janelaTeclasAtalhoExibir();
+//                            }
+//                        }
+//                    }
+//                },
         {
             xtype: 'image',
             style: {cursor: "pointer"},
