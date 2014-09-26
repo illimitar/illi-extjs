@@ -98,8 +98,8 @@ Ext.define('Illi.view.financeiro.pdv.PainelPagamentoSubTotal', {
                         flex: 1
                     },
                     items: [
-                        Illi.app.Util.BotaoTeclado("Finalizar (F10)", "F10"),
-                        Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC")
+                        Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
+                        Illi.app.Util.BotaoTeclado("Finalizar (F10)", "F10")
                     ],
                     flex: 1
                 }

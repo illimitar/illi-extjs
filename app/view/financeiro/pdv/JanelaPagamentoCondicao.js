@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoCondicao', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.janelaPagamentoCondicao',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -39,6 +39,13 @@ Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoCondicao', {
                         }
 
                     }
+                ]
+            },
+            bbar: {
+                items: [
+                    Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
+                    "->",
+                    Illi.app.Util.BotaoTeclado("Confirmar (ENTER)", "ENTER")
                 ]
             }
         });
