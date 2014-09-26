@@ -5,14 +5,14 @@ Ext.define('Illi.controller.AbstractController', {
     modelName: '',
     carregado: true,
     requires: ['Illi.view.relatorio.JanelaVisualizar'],
-    colunasGrid: function() {
+    colunasGrid: function () {
         var grid = this.getGridIlli();
 
 
         var colunas = grid.getView().getGridColumns();
         var cabecalho = [];
 
-        Ext.Object.each(colunas, function(key, value, myself) {
+        Ext.Object.each(colunas, function (key, value, myself) {
             if (!value.hidden) {
                 var item = {};
                 if (value.dataIndex) {
@@ -23,7 +23,7 @@ Ext.define('Illi.controller.AbstractController', {
             }
         });
     },
-    imprimir: function(btn) {
+    imprimir: function (btn) {
         Ext.MessageBox.wait('Gerando Impressão', 'Aguarde...');
         try {
             var grid = this.getGridIlli();
@@ -39,13 +39,13 @@ Ext.define('Illi.controller.AbstractController', {
             }
             tab = tab.getActiveTab();
 
-            var relatorio = function() {
+            var relatorio = function () {
                 var dataRelatorio = Ext.Date.format(new Date(), 'd/m/Y H:i:s');
                 var largura = gridView.getHeaderCt().el.lastBox.width;
                 tab.text = (tab.text === undefined ? 'Relatório' : tab.text);
                 var cabecalho = '<head>';
                 cabecalho += '<title>Illi</title>';
-                cabecalho += '<link rel="stylesheet" type="text/css" href="../build/production/Illi/resources/Illi-all.css" />';
+                cabecalho += '<link rel="stylesheet" type="text/css" href="/' + frontend + '/build/production/Illi/resources/Illi-all.css" />';
                 cabecalho += '<style type="text/css" media="print">';
                 cabecalho += '@page { size: auto; margin: 0mm; }';
                 cabecalho += 'body { background-color:#FFFFFF; border: false; margin: 10mm; }';
@@ -55,7 +55,7 @@ Ext.define('Illi.controller.AbstractController', {
                 conteudo += '<table style="width:100%;font-weight:bold;">';
                 conteudo += '<tr>';
                 conteudo += '<td width="60px">';
-                conteudo += '<img src="../resources/images/illi.png" style="margin-right:10px" onclick="window.print()" />';
+                conteudo += '<img src="/' + frontend + '/resources/images/illi.png" style="margin-right:10px" onclick="window.print()" />';
                 conteudo += '</td>';
                 conteudo += '<td>';
                 conteudo += '<table>';
@@ -113,7 +113,7 @@ Ext.define('Illi.controller.AbstractController', {
 //                }).show();
 
 
-                setTimeout(function() {
+                setTimeout(function () {
                     win.focus();
                     //win.print();
                     //win.close();
@@ -137,11 +137,11 @@ Ext.define('Illi.controller.AbstractController', {
                     icon: Ext.MessageBox.WARNING,
                     scope: this,
                     width: 450,
-                    fn: function(btn, ev) {
+                    fn: function (btn, ev) {
                         if (btn === 'yes') {
                             Ext.MessageBox.wait('Gerando Impressão', 'Aguarde...');
                             store.load({
-                                callback: function() {
+                                callback: function () {
                                     relatorio();
                                 }
                             });
@@ -150,7 +150,7 @@ Ext.define('Illi.controller.AbstractController', {
                 });
             } else {
                 store.load({
-                    callback: function() {
+                    callback: function () {
                         relatorio();
                     }
                 });
@@ -160,14 +160,14 @@ Ext.define('Illi.controller.AbstractController', {
         }
 
     },
-    atualizar: function() {
+    atualizar: function () {
         this.getGridIlli().getSelectionModel().deselectAll();
         this.getGridIlli().store.load();
     },
-    editar: function() {
+    editar: function () {
 
     },
-    excluir: function() {
+    excluir: function () {
 
         var grid = this.getGridIlli(),
                 records = grid.getSelectionModel().getSelection();
@@ -183,12 +183,12 @@ Ext.define('Illi.controller.AbstractController', {
                 icon: Ext.MessageBox.WARNING,
                 scope: this,
                 width: 450,
-                fn: function(btn, ev) {
+                fn: function (btn, ev) {
                     if (btn === 'yes') {
                         var store = grid.store;
                         store.remove(records);
                         grid.store.sync({
-                            callback: function() {
+                            callback: function () {
                                 grid.getSelectionModel().deselectAll();
                                 grid.store.load();
                             }
@@ -199,7 +199,7 @@ Ext.define('Illi.controller.AbstractController', {
         }
         return false;
     },
-    incluir: function(btn, evt, opt) {
+    incluir: function (btn, evt, opt) {
         var grid = this.getGridIlli();
         var store = grid.store;
         try {
@@ -213,7 +213,7 @@ Ext.define('Illi.controller.AbstractController', {
             return false;
         }
     },
-    exportarExcel: function() {
+    exportarExcel: function () {
         var grid = this.getGridIlli();
         var url = grid.store.baseUrl + '../iExcel/' + grid.store.illiRead;
         var filtro = grid.store.filters.getRange();
@@ -228,7 +228,7 @@ Ext.define('Illi.controller.AbstractController', {
                 filter: filtro
             }
             ,
-            success: function(arquivo) {
+            success: function (arquivo) {
 
 
                 Ext.MessageBox.hide();
@@ -243,7 +243,7 @@ Ext.define('Illi.controller.AbstractController', {
                             iconCls: 'icon-excel',
                             ok: "Baixar arquivo"
                         },
-                        fn: function() {
+                        fn: function () {
                             window.open('../arquivos/' + arquivo.responseText, "Baixar Excel");
                         }
 
@@ -252,7 +252,7 @@ Ext.define('Illi.controller.AbstractController', {
             }
         });
     },
-    excel: function(btn) {
+    excel: function (btn) {
         var grid = this.getGridIlli();
         var store = grid.getStore();
         var gridView = grid.getView();
@@ -274,7 +274,7 @@ Ext.define('Illi.controller.AbstractController', {
         var colunas = gridView.getHeaderCt().getGridColumns();
 
         var col = '<table><tr>';
-        Ext.Array.each(colunas, function(campo) {
+        Ext.Array.each(colunas, function (campo) {
             col += '<td><b>' + campo.text + '</b></td>';
         });
 
@@ -290,7 +290,7 @@ Ext.define('Illi.controller.AbstractController', {
                 html: html
             }
             ,
-            success: function(arquivo) {
+            success: function (arquivo) {
 
 
                 Ext.MessageBox.hide();
@@ -305,7 +305,7 @@ Ext.define('Illi.controller.AbstractController', {
                             iconCls: 'icon-excel',
                             ok: "Baixar arquivo"
                         },
-                        fn: function() {
+                        fn: function () {
                             window.open('../arquivos/' + arquivo.responseText, "Baixar Excel");
                         }
 

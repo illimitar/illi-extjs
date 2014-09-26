@@ -21,7 +21,7 @@ Ext.define('Illi.controller.Natureza', {
             selector: 'treeGridNatureza'
         }
     ],
-    init: function() {
+    init: function () {
         var me = this;
         me.control(
                 {
@@ -50,7 +50,7 @@ Ext.define('Illi.controller.Natureza', {
                 }
         );
     },
-    imprimir_tree: function(btn) {
+    imprimir_tree: function (btn) {
         Ext.MessageBox.wait('Gerando Impressão', 'Aguarde...');
 
         var grid = this.getTreeGridNatureza();
@@ -61,7 +61,7 @@ Ext.define('Illi.controller.Natureza', {
                     <div><table style='width:100%;font-weight:bold;'>\n\
                     <tr>\n\
                         <td width='60px'>\n\
-                        <img src='../resources/images/illi.png' style='margin-right:10px' onclick='window.print()'/>\n\
+                        <img src='/" + frontend + "/resources/images/illi.png' style='margin-right:10px' onclick='window.print()'/>\n\
                         </td><td>\n\
                             <table>\n\
                             <tr><td> Natureza Lançamentos</td></tr>\n\
@@ -71,7 +71,7 @@ Ext.define('Illi.controller.Natureza', {
                     </table></div>";
 
 
-        var header = "<!DOCTYPE HTML> <html> <head> <title>Illi</title> <link rel='stylesheet' href='../resources/css/ext-all-neptune.css'></head>";
+        var header = "<!DOCTYPE HTML> <html> <head> <title>Illi</title> <link rel='stylesheet' href='/" + frontend + "/resources/css/ext-all-neptune.css'></head>";
         var html = header + titulo + "<body>" + gridView.getEl().dom.innerHTML + "</body></html>";
 
         var win = window.open('illi', 'fullscreen=yes');
