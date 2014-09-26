@@ -389,7 +389,7 @@ Ext.define('Ext.ux.illi.Util', {
             return url;
         }
     },
-    BotaoTeclado: function (texto, acao) {
+    BotaoTeclado: function (texto, acao, ctrlKey, altKey, shiftKey) {
         var evento = false;
         eval(" evento = Ext.EventObject." + acao + ";");
         var me = this;
@@ -401,7 +401,7 @@ Ext.define('Ext.ux.illi.Util', {
             bodyBorder: false,
             margin: '0 5 5 5',
             handler: function (btn) {
-                me.fireKey(evento);
+                me.fireKey(evento, ctrlKey, altKey, shiftKey);
             }
         };
         return botao;
@@ -410,12 +410,12 @@ Ext.define('Ext.ux.illi.Util', {
         var el = document.body;
         var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent("Events");
 
-        if(eventObj.initEvent){
+        if (eventObj.initEvent) {
             eventObj.initEvent("keydown", true, true);
         }
 
         eventObj.keyCode = keyCode;
-        
+
         if (ctrlKey) {
             eventObj.ctrlKey = true;
         }
@@ -428,8 +428,8 @@ Ext.define('Ext.ux.illi.Util', {
 
         eventObj.which = keyCode;
 
-        el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent("onkeydown", eventObj); 
-        
+        el.dispatchEvent ? el.dispatchEvent(eventObj) : el.fireEvent("onkeydown", eventObj);
+
 //        var oEvent = document.createEvent('KeyboardEvent');
 //        var modifiersListArg = [];
 //
