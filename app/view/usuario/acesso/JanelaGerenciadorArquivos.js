@@ -5,7 +5,7 @@ Ext.define('Illi.view.usuario.acesso.JanelaGerenciadorArquivos', {
     layout: 'fit',
     iconCache: "icon-homem",
     modal: true,
-    url: '../explorer/',
+    url: '../../extras/explorer/',
     initComponent: function() {
         var me = this;
         Ext.apply(me, {
