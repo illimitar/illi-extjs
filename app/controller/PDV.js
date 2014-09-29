@@ -21,6 +21,7 @@ Ext.define('Illi.controller.PDV', {
         'financeiro.pdv.ImagemLogotipo',
         'financeiro.pdv.ImagemProduto',
         'financeiro.pdv.JanelaTeclasAtalho',
+        'financeiro.pdv.JanelaTeclado',
         'financeiro.pdv.JanelaAutenticador',
         'financeiro.pdv.JanelaCancelamentoVenda',
         'financeiro.pdv.JanelaCancelarItem',
@@ -50,7 +51,6 @@ Ext.define('Illi.controller.PDV', {
         'financeiro.pdv.JanelaVendedor',
         'financeiro.pdv.JanelaDocumento',
         'financeiro.pdv.JanelaTabelaPrecoVenda',
-        'financeiro.pdv.JanelaTeclado',
         'financeiro.pdv.ListaCancelamentoVenda',
         'financeiro.pdv.ListaClienteSelecao',
         'financeiro.pdv.ListaVendedorSelecao',
@@ -110,6 +110,7 @@ Ext.define('Illi.controller.PDV', {
         {ref: 'imagemLogotipo', selector: 'imagemLogotipo'},
         {ref: 'imagemProduto', selector: 'imagemProduto'},
         {ref: 'janelaTeclasAtalho', selector: 'janelaTeclasAtalho'},
+        {ref: 'janelaTeclado', selector: 'janelaTeclado'},
         {ref: 'janelaAutenticador', selector: 'janelaAutenticador'},
         {ref: 'janelaCancelamentoVenda', selector: 'janelaCancelamentoVenda'},
         {ref: 'janelaCancelarItem', selector: 'janelaCancelarItem'},
@@ -197,6 +198,7 @@ Ext.define('Illi.controller.PDV', {
         //
         //
         me.janelaTeclasAtalho = Ext.widget('janelaTeclasAtalho');
+        me.janelaTeclado = Ext.widget('janelaTeclado');
         me.janelaAutenticador = Ext.widget('janelaAutenticador');
         me.janelaCancelamentoVenda = Ext.widget('janelaCancelamentoVenda');
         me.janelaCancelarItem = Ext.widget('janelaCancelarItem');
@@ -260,38 +262,49 @@ Ext.define('Illi.controller.PDV', {
             },
             //
             'campoAutenticador': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoCancelarItem': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoCliente': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoContaCaixa': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoDesconto': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoDescontoPorcentagem': {
                 afterrender: me.onAfterRender,
+                focus: me.onFocus,
                 keyup: me.onKeyUp
             },
             'campoPagamentoTroca': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoPagamentoValor': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoProdutoCodigo': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoVendedor': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             'campoDocumento': {
-                afterrender: me.onAfterRender
+                afterrender: me.onAfterRender,
+                focus: me.onFocus
             },
             //
             'formularioConfiguracaoECF': {
@@ -321,6 +334,12 @@ Ext.define('Illi.controller.PDV', {
                 afterrender: me.onAfterRender
             },
             'janelaTeclasAtalho button': {
+                click: me.onClick
+            },
+            'janelaTeclado': {
+                afterrender: me.onAfterRender
+            },
+            'janelaTeclado button': {
                 click: me.onClick
             },
             'janelaAutenticador': {
@@ -2757,6 +2776,19 @@ Ext.define('Illi.controller.PDV', {
         control.janelaTeclasAtalho.hide(null, function () {
             control.cenarioAtivo = cenario;
         });
+    },
+    //
+    //
+    //
+    janelaTecladoExibir: function () {
+        //alert('PDV::janelaTecladoExibir()');
+        var control = this;
+        control.janelaTeclado.show();
+    },
+    janelaTecladoOcultar: function () {
+        //alert('PDV::janelaTecladoOcultar()');
+        var control = this;
+        control.janelaTeclado.hide();
     },
     //
     //
@@ -5470,6 +5502,12 @@ Ext.define('Illi.controller.PDV', {
                 case 'teclas-atalho-fechar':
                     return control.janelaTeclasAtalhoOcultar();
                     break;
+                case 'teclado-fechar':
+                    return control.janelaTecladoOcultar();
+                    break;
+                case 'teclado-abrir':
+                    return control.janelaTecladoExibir();
+                    break;
                 case 'suprimento-confirmar':
                     return control.janelaSuprimentoConfirmar();
                     break;
@@ -5515,6 +5553,7 @@ Ext.define('Illi.controller.PDV', {
         switch (me.getXType()) {
             case 'janelaVendaRapida':
                 control.setMapaTeclado();
+                control.janelaTecladoExibir();
                 control.doAbrirCaixa();
                 break;
         }
@@ -5613,6 +5652,11 @@ Ext.define('Illi.controller.PDV', {
                 break;
         }
     },
+    onFocus: function (me, e) {
+        alert('PDV::onFocus()', me, e);
+        var control = this;
+        
+    },
     setMapaTeclado: function () {
         //alert('PDV::setMapaTeclado()');
         var control = this;
@@ -5627,515 +5671,521 @@ Ext.define('Illi.controller.PDV', {
                 if (e.ctrlKey && e.shiftKey && e.getKey() === e.C) {
                     control.setCache();
                 } else {
-                    if (e.ctrlKey && e.getKey() === e.H) {
-                        control.janelaTeclasAtalhoExibir();
+                    if (e.ctrlKey && e.getKey() === e.K) {
+                        control.janelaTecladoExibir();
                     } else {
-                        switch (e.getKey()) {
-                            case e.F1:
-                                switch (cenario) {
-                                    case 'venda':
-                                        control.janelaProdutoPesquisaExibir();
-                                        break;
-                                }
-                                break;
-                            case e.F2:
-                                switch (cenario) {
-                                    case 'venda':
-                                    case 'pagamento':
-                                        control.janelaPagamentoFormaExibir('dinheiro', control.cenarioAtivo);
-                                        break;
-                                }
-                                break;
-                            case e.F3:
-                                switch (cenario) {
-                                    case 'venda':
-                                        if (control.getVendaIniciada(true)) {
-                                            control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
-                                        } else {
-                                            control.janelaSangriaExibir();
-                                        }
-                                        break;
-                                    case 'pagamento':
-                                        control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
-                                        break;
-                                }
-                                break;
-                            case e.F4:
-                                switch (cenario) {
-                                    case 'venda':
-                                        if (control.getVendaIniciada(true)) {
-                                            control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
-                                        } else {
-                                            control.janelaSuprimentoExibir();
-                                        }
-                                        break;
-                                    case 'pagamento':
-                                        control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
-                                        break;
-                                }
-                                break;
-                            case e.F5:
-                                switch (cenario) {
-                                    case 'venda':
-                                    case 'pagamento':
-                                        control.janelaPagamentoFormaExibir('ticket', control.cenarioAtivo);
-                                        break;
-                                }
-                                break;
-                            case e.F6:
-                                switch (cenario) {
-                                    case 'venda':
-                                    case 'pagamento':
-                                        control.janelaPagamentoFormaExibir('boleto', control.cenarioAtivo);
-                                        break;
-                                }
-                                break;
-                            case e.F7:
-                                switch (cenario) {
-                                    case 'venda':
-                                    case 'pagamento':
-                                        control.janelaPagamentoFormaExibir('vale', control.cenarioAtivo);
-                                        break;
-                                }
-                                break;
-                            case e.F8:
-                                switch (cenario) {
-                                    case 'venda':
-                                    case 'pagamento':
-                                        if (e.ctrlKey && cenario === 'venda') {
-                                            control.janelaDevolucaoEdicaoExibir(false, true);
-                                        } else {
-                                            control.janelaPagamentoFormaExibir('troca', control.cenarioAtivo);
-                                        }
-                                        break;
-                                }
-                                break;
-                            case e.F9:
-                                switch (cenario) {
-                                    case 'venda':
-                                        control.janelaVendaRapidaFechar();
-                                        break;
-                                }
-                                break;
-                            case e.F10:
-                                switch (cenario) {
-                                    case 'pagamento':
-                                        control.janelaPagamentoConfirmar(e.shiftKey);
-                                        break;
-                                }
-                                break;
-                            case e.F11:
-                                switch (cenario) {
-                                    case 'venda':
-                                    case 'abertura':
-                                        if (e.shiftKey) {
-                                            control.janelaConfiguracaoImpressaoExibir();
-                                        } else {
-                                            control.janelaConfiguracaoECFExibir();
-                                        }
-                                        break;
-                                }
-                                break;
-                            case e.F12:
-                                switch (cenario) {
-                                    case 'venda':
-                                        if (e.ctrlKey) {
-                                            control.janelaCancelamentoVendaExibir();
-                                        } else {
-                                            control.doCancelarVenda(function () {
-                                                control.doIniciarVenda();
-                                            });
-                                        }
-                                        break;
-                                }
-                                break;
-                            case e.DELETE:
-                                switch (cenario) {
-                                    case 'venda':
-                                        if (e.ctrlKey) {
-                                            control.listaItensCanceladosToggle();
-                                        } else {
-                                            if (control.itemVendaSelecionado) {
-                                                control.listaItensVendaRemover();
-                                            } else {
-                                                control.janelaCancelarItemExibir();
-                                            }
-                                        }
-                                        break;
-                                    case 'pagamento':
-                                        control.listaItensPagamentoRemover();
-                                        break;
-                                    case 'pagamento-troca':
-                                        control.janelaPagamentoTrocaLimpar();
-                                        break;
-                                    case 'pagamento-valor':
-                                        control.janelaPagamentoValorLimpar();
-                                        break;
-                                    case 'desconto':
-                                        control.janelaDescontoLimpar();
-                                        break;
-                                    case 'desconto-porcentagem':
-                                        control.janelaDescontoPorcentagemLimpar();
-                                        break;
-                                    case 'autenticador':
-                                        control.janelaAutenticadorLimpar();
-                                        break;
-                                    case 'conta-caixa':
-                                        control.janelaContaCaixaLimpar();
-                                        break;
-                                    case 'cliente':
-                                        control.janelaClienteLimpar();
-                                        break;
-                                    case 'vendedor':
-                                        control.janelaVendedorLimpar();
-                                        break;
-                                    case 'documento':
-                                        control.janelaDocumentoLimpar();
-                                        break;
-                                }
-                                break;
-                            case e.ESC:
-                                switch (cenario) {
-                                    case 'fechamento':
-                                        control.janelaFechamentoCaixaOcultar();
-                                        break;
-                                    case 'pagamento':
-                                        control.janelaPagamentoOcultar();
-                                        break;
-                                    case 'pagamento-troca':
-                                        control.janelaPagamentoTrocaOcultar();
-                                        break;
-                                    case 'pagamento-valor':
-                                        control.janelaPagamentoValorOcultar();
-                                        break;
-                                    case 'pagamento-condicao':
-                                        control.janelaPagamentoCondicaoOcultar(false, false);
-                                        break;
-                                    case 'pagamento-forma':
-                                        control.janelaPagamentoFormaOcultar(false, false);
-                                        break;
-                                    case 'impressao':
-                                        control.janelaImpressaoOcultar();
-                                        break;
-                                    case 'cancelamento-venda':
-                                        control.janelaCancelamentoVendaOcultar();
-                                        break;
-                                    case 'desconto':
-                                        control.janelaDescontoOcultar();
-                                        break;
-                                    case 'desconto-porcentagem':
-                                        control.janelaDescontoPorcentagemOcultar();
-                                        break;
-                                    case 'autenticador':
-                                        control.janelaAutenticadorOcultar(false, false, true);
-                                        break;
-                                    case 'produto-pesquisa':
-                                        control.campoProdutoCodigo.setValue('');
-                                        control.janelaProdutoPesquisaOcultar(function () {
-                                            control.listaItensVendaFocus();
-                                        });
-                                        break;
-                                    case 'produto-selecao':
-                                        control.campoProdutoCodigo.setValue('');
-                                        control.janelaProdutoSelecaoOcultar(function () {
-                                            control.listaItensVendaFocus();
-                                        });
-                                        break;
-                                    case 'cliente-selecao':
-                                        control.janelaClienteSelecaoOcultar();
-                                        break;
-                                    case 'vendedor-selecao':
-                                        control.janelaVendedorSelecaoOcultar();
-                                        break;
-                                    case 'tabela-preco':
-                                        control.janelaTabelaPrecoVendaOcultar();
-                                        break;
-                                    case 'sangria':
-                                        control.janelaSangriaOcultar();
-                                        break;
-                                    case 'configuracao-ecf':
-                                        control.janelaConfiguracaoECFOcultar();
-                                        break;
-                                    case 'configuracao-impressao':
-                                        control.janelaConfiguracaoImpressaoOcultar();
-                                        break;
-                                    case 'teclas-atalho':
-                                        control.janelaTeclasAtalhoOcultar();
-                                        break;
-                                    case 'suprimento':
-                                        control.janelaSuprimentoOcultar();
-                                        break;
-                                    case 'devolucao':
-                                        control.janelaDevolucaoOcultar();
-                                        break;
-                                    case 'devolucao-edicao':
-                                        control.janelaDevolucaoEdicaoOcultar();
-                                        break;
-                                    case 'cliente-cadastro':
-                                        control.down("#janelaCadastroCliente").destroy();
-                                        break;
-                                    case 'troco':
-                                        control.janelaTrocoOcultar();
-                                        break;
-                                    case 'cancela-item':
-                                        control.janelaCancelarItemOcultar();
-                                        break;
-                                    case 'cliente':
-                                        control.janelaClienteOcultar();
-                                        break;
-                                    case 'vendedor':
-                                        control.janelaVendedorOcultar();
-                                        break;
-                                    case 'documento':
-                                        control.janelaDocumentoOcultar();
-                                        break;
-                                }
-                                break;
-                            case e.ENTER:
-                                if (/(x-message-box|x-btn-button)/gi.test(t.className)) { // x-message-box
-                                    stopEvent = false;
-                                } else {
+                        if (e.ctrlKey && e.getKey() === e.H) {
+                            control.janelaTeclasAtalhoExibir();
+                        } else {
+                            switch (e.getKey()) {
+                                case e.F1:
                                     switch (cenario) {
+                                        case 'venda':
+                                            control.janelaProdutoPesquisaExibir();
+                                            break;
+                                    }
+                                    break;
+                                case e.F2:
+                                    switch (cenario) {
+                                        case 'venda':
+                                        case 'pagamento':
+                                            control.janelaPagamentoFormaExibir('dinheiro', control.cenarioAtivo);
+                                            break;
+                                    }
+                                    break;
+                                case e.F3:
+                                    switch (cenario) {
+                                        case 'venda':
+                                            if (control.getVendaIniciada(true)) {
+                                                control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
+                                            } else {
+                                                control.janelaSangriaExibir();
+                                            }
+                                            break;
+                                        case 'pagamento':
+                                            control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
+                                            break;
+                                    }
+                                    break;
+                                case e.F4:
+                                    switch (cenario) {
+                                        case 'venda':
+                                            if (control.getVendaIniciada(true)) {
+                                                control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
+                                            } else {
+                                                control.janelaSuprimentoExibir();
+                                            }
+                                            break;
+                                        case 'pagamento':
+                                            control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
+                                            break;
+                                    }
+                                    break;
+                                case e.F5:
+                                    switch (cenario) {
+                                        case 'venda':
+                                        case 'pagamento':
+                                            control.janelaPagamentoFormaExibir('ticket', control.cenarioAtivo);
+                                            break;
+                                    }
+                                    break;
+                                case e.F6:
+                                    switch (cenario) {
+                                        case 'venda':
+                                        case 'pagamento':
+                                            control.janelaPagamentoFormaExibir('boleto', control.cenarioAtivo);
+                                            break;
+                                    }
+                                    break;
+                                case e.F7:
+                                    switch (cenario) {
+                                        case 'venda':
+                                        case 'pagamento':
+                                            control.janelaPagamentoFormaExibir('vale', control.cenarioAtivo);
+                                            break;
+                                    }
+                                    break;
+                                case e.F8:
+                                    switch (cenario) {
+                                        case 'venda':
+                                        case 'pagamento':
+                                            if (e.ctrlKey && cenario === 'venda') {
+                                                control.janelaDevolucaoEdicaoExibir(false, true);
+                                            } else {
+                                                control.janelaPagamentoFormaExibir('troca', control.cenarioAtivo);
+                                            }
+                                            break;
+                                    }
+                                    break;
+                                case e.F9:
+                                    switch (cenario) {
+                                        case 'venda':
+                                            control.janelaVendaRapidaFechar();
+                                            break;
+                                    }
+                                    break;
+                                case e.F10:
+                                    switch (cenario) {
+                                        case 'pagamento':
+                                            control.janelaPagamentoConfirmar(e.shiftKey);
+                                            break;
+                                    }
+                                    break;
+                                case e.F11:
+                                    switch (cenario) {
+                                        case 'venda':
+                                        case 'abertura':
+                                            if (e.shiftKey) {
+                                                control.janelaConfiguracaoImpressaoExibir();
+                                            } else {
+                                                control.janelaConfiguracaoECFExibir();
+                                            }
+                                            break;
+                                    }
+                                    break;
+                                case e.F12:
+                                    switch (cenario) {
+                                        case 'venda':
+                                            if (e.ctrlKey) {
+                                                control.janelaCancelamentoVendaExibir();
+                                            } else {
+                                                control.doCancelarVenda(function () {
+                                                    control.doIniciarVenda();
+                                                });
+                                            }
+                                            break;
+                                    }
+                                    break;
+                                case e.DELETE:
+                                    switch (cenario) {
+                                        case 'venda':
+                                            if (e.ctrlKey) {
+                                                control.listaItensCanceladosToggle();
+                                            } else {
+                                                if (control.itemVendaSelecionado) {
+                                                    control.listaItensVendaRemover();
+                                                } else {
+                                                    control.janelaCancelarItemExibir();
+                                                }
+                                            }
+                                            break;
+                                        case 'pagamento':
+                                            control.listaItensPagamentoRemover();
+                                            break;
                                         case 'pagamento-troca':
-                                            control.janelaPagamentoTrocaConfirmar();
+                                            control.janelaPagamentoTrocaLimpar();
                                             break;
                                         case 'pagamento-valor':
-                                            control.janelaPagamentoValorConfirmar();
-                                            break;
-                                        case 'pagamento-condicao':
-                                            control.janelaPagamentoCondicaoConfirmar();
-                                            break;
-                                        case 'pagamento-forma':
-                                            control.janelaPagamentoFormaConfirmar();
-                                            break;
-                                        case 'impressao':
-                                            control.janelaImpressaoConfirmar(e.shiftKey);
-                                            break;
-                                        case 'cancelamento-venda':
-                                            control.janelaCancelamentoVendaConfirmar();
+                                            control.janelaPagamentoValorLimpar();
                                             break;
                                         case 'desconto':
-                                            control.janelaDescontoConfirmar();
+                                            control.janelaDescontoLimpar();
                                             break;
                                         case 'desconto-porcentagem':
-                                            control.janelaDescontoPorcentagemConfirmar();
+                                            control.janelaDescontoPorcentagemLimpar();
                                             break;
                                         case 'autenticador':
-                                            control.janelaAutenticadorConfirmar(false);
+                                            control.janelaAutenticadorLimpar();
                                             break;
                                         case 'conta-caixa':
-                                            control.janelaContaCaixaConfirmar();
+                                            control.janelaContaCaixaLimpar();
                                             break;
                                         case 'cliente':
-                                            control.janelaClienteConfirmar();
+                                            control.janelaClienteLimpar();
                                             break;
                                         case 'vendedor':
-                                            control.janelaVendedorConfirmar();
+                                            control.janelaVendedorLimpar();
                                             break;
                                         case 'documento':
-                                            control.janelaDocumentoConfirmar();
+                                            control.janelaDocumentoLimpar();
+                                            break;
+                                    }
+                                    break;
+                                case e.ESC:
+                                    switch (cenario) {
+                                        case 'fechamento':
+                                            control.janelaFechamentoCaixaOcultar();
+                                            break;
+                                        case 'pagamento':
+                                            control.janelaPagamentoOcultar();
+                                            break;
+                                        case 'pagamento-troca':
+                                            control.janelaPagamentoTrocaOcultar();
+                                            break;
+                                        case 'pagamento-valor':
+                                            control.janelaPagamentoValorOcultar();
+                                            break;
+                                        case 'pagamento-condicao':
+                                            control.janelaPagamentoCondicaoOcultar(false, false);
+                                            break;
+                                        case 'pagamento-forma':
+                                            control.janelaPagamentoFormaOcultar(false, false);
+                                            break;
+                                        case 'impressao':
+                                            control.janelaImpressaoOcultar();
+                                            break;
+                                        case 'cancelamento-venda':
+                                            control.janelaCancelamentoVendaOcultar();
+                                            break;
+                                        case 'desconto':
+                                            control.janelaDescontoOcultar();
+                                            break;
+                                        case 'desconto-porcentagem':
+                                            control.janelaDescontoPorcentagemOcultar();
+                                            break;
+                                        case 'autenticador':
+                                            control.janelaAutenticadorOcultar(false, false, true);
+                                            break;
+                                        case 'produto-pesquisa':
+                                            control.campoProdutoCodigo.setValue('');
+                                            control.janelaProdutoPesquisaOcultar(function () {
+                                                control.listaItensVendaFocus();
+                                            });
+                                            break;
+                                        case 'produto-selecao':
+                                            control.campoProdutoCodigo.setValue('');
+                                            control.janelaProdutoSelecaoOcultar(function () {
+                                                control.listaItensVendaFocus();
+                                            });
+                                            break;
+                                        case 'cliente-selecao':
+                                            control.janelaClienteSelecaoOcultar();
+                                            break;
+                                        case 'vendedor-selecao':
+                                            control.janelaVendedorSelecaoOcultar();
                                             break;
                                         case 'tabela-preco':
-                                            control.janelaTabelaPrecoVendaConfirmar();
+                                            control.janelaTabelaPrecoVendaOcultar();
                                             break;
                                         case 'sangria':
-                                            control.janelaSangriaConfirmar();
+                                            control.janelaSangriaOcultar();
                                             break;
                                         case 'configuracao-ecf':
-                                            control.janelaConfiguracaoECFConfirmar();
+                                            control.janelaConfiguracaoECFOcultar();
                                             break;
                                         case 'configuracao-impressao':
-                                            control.janelaConfiguracaoImpressaoConfirmar();
+                                            control.janelaConfiguracaoImpressaoOcultar();
+                                            break;
+                                        case 'teclas-atalho':
+                                            control.janelaTeclasAtalhoOcultar();
                                             break;
                                         case 'suprimento':
-                                            control.janelaSuprimentoConfirmar();
+                                            control.janelaSuprimentoOcultar();
+                                            break;
+                                        case 'devolucao':
+                                            control.janelaDevolucaoOcultar();
+                                            break;
+                                        case 'devolucao-edicao':
+                                            control.janelaDevolucaoEdicaoOcultar();
+                                            break;
+                                        case 'cliente-cadastro':
+                                            control.down("#janelaCadastroCliente").destroy();
                                             break;
                                         case 'troco':
                                             control.janelaTrocoOcultar();
                                             break;
                                         case 'cancela-item':
-                                            control.janelaCancelarItemConfirmar();
-                                            break;
-                                        case 'venda':
-                                            control.setProduto();
-                                            break;
-                                        case 'produto-pesquisa':
-                                            control.janelaProdutoPesquisaConfirmar();
-                                            break;
-                                        case 'produto-selecao':
-                                            control.janelaProdutoSelecaoConfirmar();
-                                            break;
-                                        case 'cliente-selecao':
-                                            control.janelaClienteSelecaoConfirmar();
-                                            break;
-                                        case 'vendedor-selecao':
-                                            control.janelaVendedorSelecaoConfirmar();
-                                            break;
-                                    }
-                                }
-                                break;
-                            case e.TAB:
-                                switch (cenario) {
-                                    case 'sangria':
-                                    case 'suprimento':
-                                    case 'configuracao-ecf':
-                                    case 'configuracao-impressao':
-                                    case 'cliente-cadastro':
-                                    case 'devolucao-edicao':
-                                        stopEvent = false;
-                                        break;
-                                }
-                                break;
-                            default:
-                                var isBackspace = false;
-                                if (e.getKey() === e.BACKSPACE) {
-                                    isBackspace = true;
-                                }
-                                var isCharEnabled = false;
-                                switch (e.getKey()) {
-                                    case e.END:
-                                    case e.HOME:
-                                    case e.LEFT :
-                                    case e.UP:
-                                    case e.RIGHT:
-                                    case e.DOWN:
-                                    case e.SPACE:
-                                    case e.NUM_ZERO:
-                                    case 186:
-                                    case 188:
-                                    case 190:
-                                    case 191:
-                                    case 194:
-                                        isCharEnabled = true;
-                                        break;
-                                }
-                                if (/\w+$/gi.test(String.fromCharCode(e.getKey())) || isBackspace || isCharEnabled) {
-                                    switch (cenario) {
-                                        case 'venda':
-                                            if (e.ctrlKey) {
-                                                switch (e.getKey()) {
-                                                    case e.C:
-                                                        control.janelaClienteExibir();
-                                                        break;
-                                                    case e.V:
-                                                        control.janelaVendedorExibir();
-                                                        break;
-                                                    case e.N:
-                                                        control.janelaDocumentoExibir();
-                                                        break;
-                                                    case e.T:
-                                                        control.janelaTabelaPrecoVendaExibir();
-                                                        break;
-                                                    case e.D:
-                                                        if (control.getVendaIniciada(true)) {
-                                                            if (e.shiftKey) {
-                                                                control.janelaDescontoPorcentagemExibir("desconto_item");
-                                                            } else {
-                                                                control.janelaDescontoPorcentagemExibir("desconto_venda");
-                                                            }
-//                                                            control.janelaDescontoPorcentagemExibir();
-                                                        } else {
-                                                            control.janelaDevolucaoExibir();
-                                                        }
-                                                        break;
-                                                    case e.A:
-                                                        if (e.shiftKey) {
-                                                            control.janelaDescontoPorcentagemExibir("acrescimo_item");
-                                                        } else {
-                                                            control.janelaDescontoPorcentagemExibir("acrescimo_venda");
-                                                        }
-                                                        break;
-                                                    case e.M:
-                                                        control.janelaVendaRapidaMinimizar();
-                                                        break;
-                                                    case e.I:
-                                                        control.janelaImpressaoExibir();
-                                                        break;
-                                                }
-                                            } else {
-                                                control.campoProdutoCodigo.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'pagamento-troca':
-                                            if (!e.ctrlKey) {
-                                                control.campoPagamentoTroca.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'pagamento-valor':
-                                            if (!e.ctrlKey) {
-                                                control.campoPagamentoValor.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'desconto':
-                                            if (!e.ctrlKey) {
-                                                control.campoDesconto.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'desconto-porcentagem':
-                                            if (!e.ctrlKey) {
-                                                control.campoDescontoPorcentagem.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'autenticador':
-                                            if (!e.ctrlKey) {
-                                                control.campoAutenticador.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'conta-caixa':
-                                            if (!e.ctrlKey) {
-                                                control.campoContaCaixa.focus();
-                                                stopEvent = false;
-                                            }
+                                            control.janelaCancelarItemOcultar();
                                             break;
                                         case 'cliente':
-                                            if (!e.ctrlKey) {
-                                                control.campoCliente.focus();
-                                                stopEvent = false;
-                                            }
+                                            control.janelaClienteOcultar();
                                             break;
                                         case 'vendedor':
-                                            if (!e.ctrlKey) {
-                                                control.campoVendedor.focus();
-                                                stopEvent = false;
-                                            }
+                                            control.janelaVendedorOcultar();
                                             break;
                                         case 'documento':
-                                            if (!e.ctrlKey) {
-                                                control.campoDocumento.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'cancela-item':
-                                            if (!e.ctrlKey) {
-                                                control.campoCancelarItem.focus();
-                                                stopEvent = false;
-                                            }
-                                            break;
-                                        case 'sangria':
-                                        case 'suprimento':
-                                        case 'fechamento':
-                                        case 'configuracao-ecf':
-                                        case 'configuracao-impressao':
-                                        case 'devolucao-edicao':
-                                        case 'cliente-cadastro':
-                                            stopEvent = false;
-                                            break;
-                                        default:
-                                            if (isBackspace) {
-                                                if (!((!/^input$/i.test(t.tagName) || t.disabled || t.readOnly) && (!/^textArea$/i.test(t.tagName) || t.disabled || t.readOnly))) {
-                                                    isBackspace = true;
-                                                }
-                                            }
+                                            control.janelaDocumentoOcultar();
                                             break;
                                     }
-                                }
-                                break;
+                                    break;
+                                case e.ENTER:
+                                    if (/(x-message-box|x-btn-button)/gi.test(t.className)) { // x-message-box
+                                        stopEvent = false;
+                                    } else {
+                                        switch (cenario) {
+                                            case 'pagamento-troca':
+                                                control.janelaPagamentoTrocaConfirmar();
+                                                break;
+                                            case 'pagamento-valor':
+                                                control.janelaPagamentoValorConfirmar();
+                                                break;
+                                            case 'pagamento-condicao':
+                                                control.janelaPagamentoCondicaoConfirmar();
+                                                break;
+                                            case 'pagamento-forma':
+                                                control.janelaPagamentoFormaConfirmar();
+                                                break;
+                                            case 'impressao':
+                                                control.janelaImpressaoConfirmar(e.shiftKey);
+                                                break;
+                                            case 'cancelamento-venda':
+                                                control.janelaCancelamentoVendaConfirmar();
+                                                break;
+                                            case 'desconto':
+                                                control.janelaDescontoConfirmar();
+                                                break;
+                                            case 'desconto-porcentagem':
+                                                control.janelaDescontoPorcentagemConfirmar();
+                                                break;
+                                            case 'autenticador':
+                                                control.janelaAutenticadorConfirmar(false);
+                                                break;
+                                            case 'conta-caixa':
+                                                control.janelaContaCaixaConfirmar();
+                                                break;
+                                            case 'cliente':
+                                                control.janelaClienteConfirmar();
+                                                break;
+                                            case 'vendedor':
+                                                control.janelaVendedorConfirmar();
+                                                break;
+                                            case 'documento':
+                                                control.janelaDocumentoConfirmar();
+                                                break;
+                                            case 'tabela-preco':
+                                                control.janelaTabelaPrecoVendaConfirmar();
+                                                break;
+                                            case 'sangria':
+                                                control.janelaSangriaConfirmar();
+                                                break;
+                                            case 'configuracao-ecf':
+                                                control.janelaConfiguracaoECFConfirmar();
+                                                break;
+                                            case 'configuracao-impressao':
+                                                control.janelaConfiguracaoImpressaoConfirmar();
+                                                break;
+                                            case 'suprimento':
+                                                control.janelaSuprimentoConfirmar();
+                                                break;
+                                            case 'troco':
+                                                control.janelaTrocoOcultar();
+                                                break;
+                                            case 'cancela-item':
+                                                control.janelaCancelarItemConfirmar();
+                                                break;
+                                            case 'venda':
+                                                control.setProduto();
+                                                break;
+                                            case 'produto-pesquisa':
+                                                control.janelaProdutoPesquisaConfirmar();
+                                                break;
+                                            case 'produto-selecao':
+                                                control.janelaProdutoSelecaoConfirmar();
+                                                break;
+                                            case 'cliente-selecao':
+                                                control.janelaClienteSelecaoConfirmar();
+                                                break;
+                                            case 'vendedor-selecao':
+                                                control.janelaVendedorSelecaoConfirmar();
+                                                break;
+                                        }
+                                    }
+                                    break;
+                                case e.TAB:
+                                    switch (cenario) {
+                                        case 'sangria':
+                                        case 'suprimento':
+                                        case 'configuracao-ecf':
+                                        case 'configuracao-impressao':
+                                        case 'cliente-cadastro':
+                                        case 'devolucao-edicao':
+                                            stopEvent = false;
+                                            break;
+                                    }
+                                    break;
+                                default:
+                                    var isBackspace = false;
+                                    if (e.getKey() === e.BACKSPACE) {
+                                        isBackspace = true;
+                                    }
+                                    var isCharEnabled = false;
+                                    switch (e.getKey()) {
+                                        case e.END:
+                                        case e.HOME:
+                                        case e.LEFT :
+                                        case e.UP:
+                                        case e.RIGHT:
+                                        case e.DOWN:
+                                        case e.SPACE:
+                                        case e.NUM_ZERO:
+                                        case 186:
+                                        case 188:
+                                        case 190:
+                                        case 191:
+                                        case 194:
+                                            isCharEnabled = true;
+                                            break;
+                                    }
+                                    console.log("1", e.getKey());
+                                    if (/\w+$/gi.test(String.fromCharCode(e.getKey())) || isBackspace || isCharEnabled) {
+                                        switch (cenario) {
+                                            case 'venda':
+                                                if (e.ctrlKey) {
+                                                    switch (e.getKey()) {
+                                                        case e.C:
+                                                            control.janelaClienteExibir();
+                                                            break;
+                                                        case e.V:
+                                                            control.janelaVendedorExibir();
+                                                            break;
+                                                        case e.N:
+                                                            control.janelaDocumentoExibir();
+                                                            break;
+                                                        case e.T:
+                                                            control.janelaTabelaPrecoVendaExibir();
+                                                            break;
+                                                        case e.D:
+                                                            if (control.getVendaIniciada(true)) {
+                                                                if (e.shiftKey) {
+                                                                    control.janelaDescontoPorcentagemExibir("desconto_item");
+                                                                } else {
+                                                                    control.janelaDescontoPorcentagemExibir("desconto_venda");
+                                                                }
+//                                                            control.janelaDescontoPorcentagemExibir();
+                                                            } else {
+                                                                control.janelaDevolucaoExibir();
+                                                            }
+                                                            break;
+                                                        case e.A:
+                                                            if (e.shiftKey) {
+                                                                control.janelaDescontoPorcentagemExibir("acrescimo_item");
+                                                            } else {
+                                                                control.janelaDescontoPorcentagemExibir("acrescimo_venda");
+                                                            }
+                                                            break;
+                                                        case e.M:
+                                                            control.janelaVendaRapidaMinimizar();
+                                                            break;
+                                                        case e.I:
+                                                            control.janelaImpressaoExibir();
+                                                            break;
+                                                    }
+                                                } else {
+                                                    console.log("1", e.getKey());
+                                                    control.campoProdutoCodigo.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'pagamento-troca':
+                                                if (!e.ctrlKey) {
+                                                    control.campoPagamentoTroca.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'pagamento-valor':
+                                                if (!e.ctrlKey) {
+                                                    control.campoPagamentoValor.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'desconto':
+                                                if (!e.ctrlKey) {
+                                                    control.campoDesconto.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'desconto-porcentagem':
+                                                if (!e.ctrlKey) {
+                                                    control.campoDescontoPorcentagem.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'autenticador':
+                                                if (!e.ctrlKey) {
+                                                    control.campoAutenticador.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'conta-caixa':
+                                                if (!e.ctrlKey) {
+                                                    control.campoContaCaixa.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'cliente':
+                                                if (!e.ctrlKey) {
+                                                    control.campoCliente.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'vendedor':
+                                                if (!e.ctrlKey) {
+                                                    control.campoVendedor.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'documento':
+                                                if (!e.ctrlKey) {
+                                                    control.campoDocumento.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'cancela-item':
+                                                if (!e.ctrlKey) {
+                                                    control.campoCancelarItem.focus();
+                                                    stopEvent = false;
+                                                }
+                                                break;
+                                            case 'sangria':
+                                            case 'suprimento':
+                                            case 'fechamento':
+                                            case 'configuracao-ecf':
+                                            case 'configuracao-impressao':
+                                            case 'devolucao-edicao':
+                                            case 'cliente-cadastro':
+                                                stopEvent = false;
+                                                break;
+                                            default:
+                                                if (isBackspace) {
+                                                    if (!((!/^input$/i.test(t.tagName) || t.disabled || t.readOnly) && (!/^textArea$/i.test(t.tagName) || t.disabled || t.readOnly))) {
+                                                        isBackspace = true;
+                                                    }
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    break;
+                            }
                         }
                     }
                 }

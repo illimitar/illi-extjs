@@ -389,9 +389,9 @@ Ext.define('Ext.ux.illi.Util', {
             return url;
         }
     },
-    BotaoTeclado: function (texto, acao, ctrlKey, altKey, shiftKey) {
+    BotaoTeclado: function (texto, acao, ctrlKey, altKey, shiftKey, config) {
         var evento = false;
-        eval(" evento = Ext.EventObject." + acao + ";");
+        eval("evento = Ext.EventObject." + acao + ";");
         var me = this;
         var botao = {
             xtype: 'button',
@@ -404,10 +404,13 @@ Ext.define('Ext.ux.illi.Util', {
                 me.fireKey(evento, ctrlKey, altKey, shiftKey);
             }
         };
+        if (config !== undefined) {
+            Ext.apply(botao, config);
+        }
         return botao;
     },
     fireKey: function (keyCode, ctrlKey, altKey, shiftKey) {
-        var el = document.body;
+        var el = window; //document.body;
         var eventObj = document.createEventObject ? document.createEventObject() : document.createEvent("Events");
 
         if (eventObj.initEvent) {

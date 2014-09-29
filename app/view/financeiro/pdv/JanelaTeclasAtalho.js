@@ -65,6 +65,7 @@ Ext.define('Illi.view.financeiro.pdv.JanelaTeclasAtalho', {
                 Illi.app.Util.BotaoTeclado("Definir Cliente (CTRL + C)", "C", true),
                 Illi.app.Util.BotaoTeclado("Devolução (CTRL + D)", "D", true),
                 Illi.app.Util.BotaoTeclado("Imp. 2ª Via (CTRL + I)", "I", true),
+                Illi.app.Util.BotaoTeclado("Teclado Virtual (CTRL + K)", "K", true),
                 Illi.app.Util.BotaoTeclado("Doc. relacionado (CTRL + N)", "N", true),
                 Illi.app.Util.BotaoTeclado("Miminizar/sair (CTRL + M)", "M", true),
                 {
@@ -102,6 +103,7 @@ Ext.define('Illi.view.financeiro.pdv.JanelaTeclasAtalho', {
                             + '<div class="linha"><span class="atalho">CTRL + C</span> - Definir Cliente</div>'
                             + '<div class="linha"><span class="atalho">CTRL + D</span> - Devolução</div>'
                             + '<div class="linha"><span class="atalho">CTRL + I</span> - Imprimir Segunda Via de Venda</div>'
+                            + '<div class="linha"><span class="atalho">CTRL + K</span> - Teclado Virtual</div>'
                             + '<div class="linha"><span class="atalho">CTRL + M</span> - Sair sem encerrar caixa</div>'
                             + '<div class="linha"><span class="atalho">CTRL + N</span> - Informar documento relacionado</div>'
 //                    + '<div class="linha"><span class="atalho">CTRL + S</span> - Encerrar Caixa e Sair</div>'
@@ -129,6 +131,7 @@ Ext.define('Illi.view.financeiro.pdv.JanelaTeclasAtalho', {
                             + '<div class="linha"><span class="atalho">CTRL + C</span> - Definir Cliente</div>'
                             + '<div class="linha"><span class="atalho">CTRL + D</span> - Conceder Desconto</div>'
                             + '<div class="linha"><span class="atalho">CTRL + I</span> - Imprimir Segunda Via de Venda</div>'
+                            + '<div class="linha"><span class="atalho">CTRL + K</span> - Teclado Virtual</div>'
                             + '<div class="linha"><span class="atalho">CTRL + N</span> - Informar documento relacionado</div>'
                             + '<div class="linha"><span class="atalho">CTRL + V</span> - Definir Vendedor</div>'
                             + '<div class="linha"><span class="atalho">CTRL + DELETE</span> - Exibir Itens Cancelados</div>'
@@ -176,6 +179,12 @@ Ext.define('Illi.view.financeiro.pdv.JanelaTeclasAtalho', {
 
                     }
                 ]
+            },
+            listeners: {
+                deactivate: function (self) {
+                    self.toFront();
+                },
+                delay: 1    // Ext.Window.toFront() will check the current window
             }
         });
         me.callParent(arguments);
