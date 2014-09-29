@@ -14,7 +14,7 @@ Ext.define('Illi.view.financeiro.pdv.FormularioDevolucaoEdicao', {
             border: false,
             bodyStyle: 'background: transparent;',
             padding: '5 5 0 5',
-            bodyPadding: 10,
+            //bodyPadding: 10,
             //
             fieldDefaults: {
                 anchor: '100%',

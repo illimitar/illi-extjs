@@ -12,9 +12,6 @@ Ext.define('Illi.view.financeiro.pdv.PainelPagamento', {
                 type: 'vbox',
                 align: 'stretch'
             },
-            style: {
-                padding: '10px'
-            },
             //
             items: [
                 {

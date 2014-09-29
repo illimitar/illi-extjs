@@ -784,7 +784,6 @@ Ext.define('Illi.controller.PDV', {
                                     console.error(err);
                                     Ext.MessageBox.hide();
                                     window.open("http://app.illi.com.br/Remoto.exe", "illi");
-
                                 }
                             }
                         }
@@ -2520,7 +2519,6 @@ Ext.define('Illi.controller.PDV', {
                 sucesso(response);
             }
         };
-
         control.xhrCupomImprimir(params, false, false, concomitante, doFinalizado, falha);
     },
     doCancelarVendaCupom: function (sucesso, falha, concomitante) {
@@ -2529,14 +2527,12 @@ Ext.define('Illi.controller.PDV', {
             acao: 'Cancelar Cupom',
             comando: "ECF.CancelaCupom"
         };
-
         var doCancelado = function (response) {
             control.estadoECF = false;
             if (typeof (falha) === 'function') {
                 sucesso(response);
             }
         };
-
         control.xhrCupomImprimir(params, false, false, true, doCancelado, falha);
     },
     doSangriaCupom: function (valor, sucesso, falha, observacao, concomitante) {
@@ -2749,7 +2745,7 @@ Ext.define('Illi.controller.PDV', {
         //alert('PDV::janelaTeclasAtalhoExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
-       // control.cenarioAtivo = 'teclas-atalho';
+        // control.cenarioAtivo = 'teclas-atalho';
         //control.janelaTeclasAtalho.removeAll();
         control.janelaTeclasAtalho.cenario = cenario;
         control.janelaTeclasAtalho.show();
@@ -2997,7 +2993,6 @@ Ext.define('Illi.controller.PDV', {
                 }
             }
         });
-
         janela.show();
         janela.focus();
     },

@@ -22,7 +22,10 @@ Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoValor', {
             modal: true,
             width: '40%',
             bodyBorder: false,
-            layout: 'card',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
             valorSaldo: 0.00,
             items: [],
             tbar: {
@@ -40,18 +43,53 @@ Ext.define('Illi.view.financeiro.pdv.JanelaPagamentoValor', {
                 ]
             },
             bbar: {
+                layout: {
+                    type: 'vbox',
+                    align: 'stretch'
+                },
                 items: [
                     {
                         xtype: 'panel',
                         border: false,
                         bodyStyle: 'background: transparent;',
-                        cls: 'destaque vermelho',
-                        html: 'Total à Pagar: '
+                        layout: {
+                            type: 'hbox',
+                            align: 'stretch'
+                        },
+                        items: [
+                            {
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: transparent;',
+                                cls: 'destaque vermelho',
+                                html: 'Total à Pagar: '
+                            },
+                            {
+                                xtype: 'painelPagamentoTotal',
+                                cls: 'destaque vermelho',
+                                itemId: 'pdvPagamentoValorSubtotal', // manter
+                                flex: 1
+                            }
+                        ],
+                        flex: 1
                     },
                     {
-                        xtype: 'painelPagamentoTotal',
-                        cls: 'destaque vermelho',
-                        itemId: 'pdvPagamentoValorSubtotal', // manter
+                        xtype: 'toolbar',
+                        border: false,
+                        margin: 0,
+                        padding: 0,
+                        style: 'background: none;',
+                        layout: {
+                            type: 'hbox',
+                            align: 'stretch'
+                        },
+                        defaults: {
+                            flex: 1
+                        },
+                        items: [
+                            Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
+                            Illi.app.Util.BotaoTeclado("Confirmar (ENTER)", "ENTER")
+                        ],
                         flex: 1
                     }
                 ]

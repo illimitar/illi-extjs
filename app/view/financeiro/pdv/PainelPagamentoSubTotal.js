@@ -5,17 +5,12 @@ Ext.define('Illi.view.financeiro.pdv.PainelPagamentoSubTotal', {
         var me = this;
         Ext.apply(me, {
             scope: me,
-            //
             border: false,
             bodyStyle: 'background: transparent;',
             layout: {
                 type: 'vbox',
                 align: 'stretch'
             },
-            style: {
-                padding: '10px'
-            },
-            //
             items: [
                 {
                     xtype: 'panel',
@@ -87,9 +82,11 @@ Ext.define('Illi.view.financeiro.pdv.PainelPagamentoSubTotal', {
                     flex: 1
                 },
                 {
-                    xtype: 'panel',
+                    xtype: 'toolbar',
                     border: false,
-                    bodyStyle: 'background: transparent;',
+                    margin: 0,
+                    padding: 0,
+                    style: 'background: none;',
                     layout: {
                         type: 'hbox',
                         align: 'stretch'

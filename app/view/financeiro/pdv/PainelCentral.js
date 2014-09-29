@@ -9,7 +9,6 @@ Ext.define('Illi.view.financeiro.pdv.PainelCentral', {
             border: false,
             bodyStyle: 'background: transparent;',
             padding: '5 5 5 5',
-            bodyPadding: 10,
             layout: {
                 type: 'vbox', // Arrange child items vertically
                 align: 'stretch'

@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaDescontoPorcentagem', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.janelaDescontoPorcentagem',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -40,16 +40,49 @@ Ext.define('Illi.view.financeiro.pdv.JanelaDescontoPorcentagem', {
                 ]
             },
             bbar: {
+                layout: {
+                    type: 'vbox',
+                    align: 'stretch'
+                },
                 items: [
                     {
                         xtype: 'panel',
                         border: false,
                         bodyStyle: 'background: transparent;',
-                        cls: 'destaque',
-                        html: 'Valor: '
+                        layout: {
+                            type: 'hbox',
+                            align: 'stretch'
+                        },
+                        items: [
+                            {
+                                xtype: 'panel',
+                                border: false,
+                                bodyStyle: 'background: transparent;',
+                                cls: 'destaque',
+                                html: 'Valor: '
+                            },
+                            {
+                                xtype: 'painelDescontoPorcentagemValor',
+                                flex: 1
+                            }
+                        ],
+                        flex: 1
                     },
                     {
-                        xtype: 'painelDescontoPorcentagemValor',
+                        xtype: 'panel',
+                        border: false,
+                        bodyStyle: 'background: transparent;',
+                        layout: {
+                            type: 'hbox',
+                            align: 'stretch'
+                        },
+                        defaults: {
+                            flex: 1
+                        },
+                        items: [
+                            Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
+                            Illi.app.Util.BotaoTeclado("Confirmar (ENTER)", "ENTER")
+                        ],
                         flex: 1
                     }
                 ]

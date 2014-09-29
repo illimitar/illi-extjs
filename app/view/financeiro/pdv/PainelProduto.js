@@ -5,13 +5,11 @@ Ext.define('Illi.view.financeiro.pdv.PainelProduto', {
         var me = this;
         Ext.apply(me, {
             scope: me,
-            //
             border: false,
             bodyStyle: 'background: transparent;',
             layout: {
                 type: 'hbox'
             },
-            //
             items: [
                 {
                     xtype: 'painelProdutoQtd',

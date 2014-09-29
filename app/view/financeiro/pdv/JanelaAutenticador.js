@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaAutenticador', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.janelaAutenticador',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -38,6 +38,13 @@ Ext.define('Illi.view.financeiro.pdv.JanelaAutenticador', {
                         }
 
                     }
+                ]
+            },
+            bbar: {
+                items: [
+                    Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
+                    "->",
+                    Illi.app.Util.BotaoTeclado("Confirmar (ENTER)", "ENTER")
                 ]
             }
         });

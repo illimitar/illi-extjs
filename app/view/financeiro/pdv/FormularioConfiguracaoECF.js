@@ -12,7 +12,7 @@ Ext.define('Illi.view.financeiro.pdv.FormularioConfiguracaoECF', {
             border: false,
             bodyStyle: 'background: transparent;',
             padding: '5 5 0 5',
-            bodyPadding: 10,
+            //bodyPadding: 10,
             //
             defaultType: 'textfield',
             items: [
@@ -27,7 +27,7 @@ Ext.define('Illi.view.financeiro.pdv.FormularioConfiguracaoECF', {
                         layout: {
                             type: 'hbox',
                             anchor: '60%',
-                            bodyPadding: 10,
+                            //bodyPadding: 10,
                             defaultMargins: {
                                 top: 0,
                                 right: 5,

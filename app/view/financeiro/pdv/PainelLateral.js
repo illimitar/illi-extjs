@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.PainelLateral', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.painelLateral',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -9,19 +9,12 @@ Ext.define('Illi.view.financeiro.pdv.PainelLateral', {
             border: false,
             bodyStyle: 'background: transparent;',
             padding: '0 0 5 5',
-            bodyPadding: 10,
             layout: {
                 type: 'vbox',
                 align: 'stretch'
             },
             //
             items: [
-//                {
-//                    xtype: 'imagemLogotipo'
-//                },
-//                {
-//                    xtype: 'imagemProduto'
-//                },
                 {
                     xtype: 'panel',
                     border: false,
@@ -31,10 +24,12 @@ Ext.define('Illi.view.financeiro.pdv.PainelLateral', {
                 },
                 {
                     xtype: 'painelProdutoNome',
-                    cls: 'destaque quadro'
+                    cls: 'destaque quadro',
+                    border: false
                 },
                 {
-                    xtype: 'painelProduto'
+                    xtype: 'painelProduto',
+                    border: false
                 },
                 {
                     xtype: 'panel',

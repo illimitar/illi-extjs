@@ -6,12 +6,10 @@ Ext.define('Illi.view.financeiro.pdv.PainelProdutoQtd', {
         var me = this;
         Ext.apply(me, {
             scope: me,
-            //
             border: false,
             bodyStyle: 'background: transparent;',
             cls: 'destaque',
-            //
-            html: '0,00 x' // 0
+            html: '0,00 x'
         });
         me.callParent(arguments);
     }
