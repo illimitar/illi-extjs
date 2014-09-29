@@ -69,9 +69,11 @@ Ext.define('Illi.view.financeiro.pdv.JanelaDescontoPorcentagem', {
                         flex: 1
                     },
                     {
-                        xtype: 'panel',
+                        xtype: 'toolbar',
                         border: false,
-                        bodyStyle: 'background: transparent;',
+                        margin: 0,
+                        padding: 0,
+                        style: 'background: none;',
                         layout: {
                             type: 'hbox',
                             align: 'stretch'
