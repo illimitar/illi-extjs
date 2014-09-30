@@ -2,7 +2,7 @@ Ext.define('Illi.view.Viewport', {
     extend: 'Ext.container.Viewport',
     renderTo: Ext.getBody(),
     requires: ['Illi.view.financeiro.parecer.ListaContatoAgenda'],
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             title: 'illi',
@@ -12,13 +12,13 @@ Ext.define('Illi.view.Viewport', {
         me.callParent(arguments);
     },
     listeners: {
-        afterrender: function(viewport) {
+        afterrender: function (viewport) {
             Illi.app.viewCenter = viewport;
-            var falha = function() {
+            var falha = function () {
                 closepage = true;
                 window.location = "http://" + window.document.location.host;
             };
-            viewport.xhrUsuarioSessao(function(response) {
+            viewport.xhrUsuarioSessao(function (response) {
                 Ext.fly('appLoadingBackground').destroy();
                 Illi.app.Local.set('usuario', response);
                 // ini1: verifica qual grupo de usuario e determina se abrirá o pdv ou o painel principal
@@ -45,27 +45,33 @@ Ext.define('Illi.view.Viewport', {
                             bodyBorder: false,
                             autoScroll: false,
                             bodyPadding: 0,
-                            items: (/(ADMINISTRADOR|MASTER)/gi.test(grupo_usuario) ? Ext.create('Illi.view.financeiro.grafico.Container', {
-                                title: 'Início',
-                                border: true
-                            }) : Ext.create('Illi.view.financeiro.parecer.ListaContatoAgenda', {
-                                title: 'Início',
-                                border: true
-                            }))
+                            items: []
                         }
                     });
+                    if (/(ADMINISTRADOR|MASTER)/gi.test(grupo_usuario)) {
+                        viewport.down("#tabCenter").add(Ext.create('Illi.view.financeiro.grafico.Container', {
+                            title: 'Início',
+                            border: true
+                        }));
+                    } else {
+                        viewport.down("#tabCenter").add(Ext.create('Illi.view.financeiro.parecer.ListaContatoAgenda', {
+                            title: 'Início',
+                            border: true
+                        }));
+                    }
+//                    viewport.down("#tabCenter").add(Ext.widget('janelaVendaRapida'));
                 }
                 // fim1
                 viewport.setVerificadorSessao();
             }, falha);
         }
     },
-    setVerificadorSessao: function() {
+    setVerificadorSessao: function () {
         var viewport = this;
         var taskSessao = new Ext.util.TaskRunner();
         var ctrlSessao = taskSessao.newTask({
-            run: function() {
-                viewport.xhrUsuarioSessao(false, function() {
+            run: function () {
+                viewport.xhrUsuarioSessao(false, function () {
                     closepage = true;
                     window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
                 });
@@ -74,13 +80,13 @@ Ext.define('Illi.view.Viewport', {
         });
         ctrlSessao.start();
     },
-    xhrUsuarioSessao: function(sucesso, falha) {
+    xhrUsuarioSessao: function (sucesso, falha) {
         //alert('Illi.view.Viewport::xhrUsuarioSessao()', sucesso, falha);
         var viewport = this;
         try {
             Ext.Ajax.request({
                 url: '../usuario/usuario/iJson/sessao',
-                success: function(response) {
+                success: function (response) {
                     var response = Ext.JSON.decode(response.responseText);
                     if (response.id !== undefined) {
                         if (sucesso) {
@@ -92,7 +98,7 @@ Ext.define('Illi.view.Viewport', {
 
                     }
                 },
-                failure: function(response) {
+                failure: function (response) {
                     Illi.app.Util.mensagemFalha();
                 }
             });

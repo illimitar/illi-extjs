@@ -29,7 +29,7 @@ Ext.define('Illi.view.financeiro.parecer.Lista', {
                     frameborder: '0',
                     autoEl: {
                         tag: "iframe",
-                        src: '../boleto/abstractBoleto/carregar_boleto/' + id_boleto + '/'
+                        src: '/boleto/abstractBoleto/carregar_boleto/' + id_boleto + '/'
                     }
                 }
 
@@ -62,7 +62,7 @@ Ext.define('Illi.view.financeiro.parecer.Lista', {
                     autoEl: {
                         tag: "iframe",
                         autoScroll: false,
-                        src: "../" + url
+                        src: url
                     }
                 }
 
@@ -114,7 +114,7 @@ Ext.define('Illi.view.financeiro.parecer.Lista', {
             listeners: {
                 validateedit: function (editor, grid, opt) {
                     Ext.Ajax.request({
-                        url: '../fluxo/parecer/agendar',
+                        url: '/fluxo/parecer/agendar',
                         params: {
                             data: Ext.JSON.encode(editor.editor.getForm().getValues())
                         },
@@ -227,16 +227,14 @@ Ext.define('Illi.view.financeiro.parecer.Lista', {
                                                 me.visualizarBoleto(rec.get('url'));
                                                 break;
                                             case 'Comissão':
-                                                me.anexo('relatorios/vendedor_comissao/relatorio/' + rec.get('url'));
+                                                me.anexo('/relatorios/vendedor_comissao/relatorio/' + rec.get('url'));
                                                 break;
                                             default:
-                                                me.anexo(rec.get('url'));
+                                                me.anexo("/" + PATH_ARQUIVOS + "/" + rec.get('url'));
+                                                break;
                                         }
-
                                     }
-
-                                }
-                                ,
+                                },
                                 getClass: function (value, metadata, record) {
                                     var anexo = record.get('anexo');
                                     if (!anexo) {

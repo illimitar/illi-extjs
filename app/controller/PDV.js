@@ -5553,7 +5553,7 @@ Ext.define('Illi.controller.PDV', {
         switch (me.getXType()) {
             case 'janelaVendaRapida':
                 control.setMapaTeclado();
-                control.janelaTecladoExibir();
+//                control.janelaTecladoExibir();
                 control.doAbrirCaixa();
                 break;
         }
