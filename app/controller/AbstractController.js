@@ -45,7 +45,7 @@ Ext.define('Illi.controller.AbstractController', {
                 tab.text = (tab.text === undefined ? 'Relatório' : tab.text);
                 var cabecalho = '<head>';
                 cabecalho += '<title>Illi</title>';
-                cabecalho += '<link rel="stylesheet" type="text/css" href="/' + frontend + '/build/production/Illi/resources/Illi-all.css" />';
+                cabecalho += '<link rel="stylesheet" type="text/css" href="/' + PATH_FRONTEND + '/build/production/Illi/resources/Illi-all.css" />';
                 cabecalho += '<style type="text/css" media="print">';
                 cabecalho += '@page { size: auto; margin: 0mm; }';
                 cabecalho += 'body { background-color:#FFFFFF; border: false; margin: 10mm; }';
@@ -55,7 +55,7 @@ Ext.define('Illi.controller.AbstractController', {
                 conteudo += '<table style="width:100%;font-weight:bold;">';
                 conteudo += '<tr>';
                 conteudo += '<td width="60px">';
-                conteudo += '<img src="/' + frontend + '/resources/images/illi.png" style="margin-right:10px" onclick="window.print()" />';
+                conteudo += '<img src="/' + PATH_FRONTEND + '/resources/images/illi.png" style="margin-right:10px" onclick="window.print()" />';
                 conteudo += '</td>';
                 conteudo += '<td>';
                 conteudo += '<table>';
@@ -244,7 +244,7 @@ Ext.define('Illi.controller.AbstractController', {
                             ok: "Baixar arquivo"
                         },
                         fn: function () {
-                            window.open('../arquivos/' + arquivo.responseText, "Baixar Excel");
+                            window.open(PATH_ARQUIVOS + '/' + arquivo.responseText, "Baixar Excel");
                         }
 
                     });
@@ -306,7 +306,7 @@ Ext.define('Illi.controller.AbstractController', {
                             ok: "Baixar arquivo"
                         },
                         fn: function () {
-                            window.open('../arquivos/' + arquivo.responseText, "Baixar Excel");
+                            window.open('/' + PATH_ARQUIVOS + '/' + arquivo.responseText, "Baixar Excel");
                         }
 
                     });

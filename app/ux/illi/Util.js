@@ -383,8 +383,8 @@ Ext.define('Ext.ux.illi.Util', {
         return input;
     },
     getPath: function (url) {
-        if (frontend) {
-            return "../" + frontend + "/" + url;
+        if (PATH_FRONTEND) {
+            return "/" + PATH_FRONTEND + "/" + url;
         } else {
             return url;
         }

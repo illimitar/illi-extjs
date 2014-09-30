@@ -3068,7 +3068,7 @@ Ext.ClassManager.addNameAliasMappings({
     "widget.janelaTabelaPrecoVenda"
   ],
   "Illi.view.financeiro.pdv.JanelaTeclado": [
-    "widget.JanelaTeclado"
+    "widget.janelaTeclado"
   ],
   "Illi.view.financeiro.pdv.JanelaTeclasAtalho": [
     "widget.janelaTeclasAtalho"
