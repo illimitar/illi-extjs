@@ -78,7 +78,7 @@ Ext.define('Illi.controller.relatorio.produto.Produto', {
                                         width: "95%",
                                         height: "98%",
                                         plain: true,
-                                        modal: true,
+                                        //modal: true,
                                         win: this,
                                         autoScroll: true,
                                         frame: false,

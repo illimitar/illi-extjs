@@ -280,7 +280,7 @@ Ext.define('Illi.controller.AbsFinanceiro', {
                     width: 800,
                     height: 600,
                     plain: true,
-                    modal: true,
+                  //  modal: true,
                     win: this,
                     autoScroll: true,
                     frame: false,

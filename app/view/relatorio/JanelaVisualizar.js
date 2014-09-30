@@ -11,7 +11,7 @@ Ext.define('Illi.view.relatorio.JanelaVisualizar', {
             height: "95%",
             plain: true,
             autoShow: true,
-            modal: true,
+            modal: false,
             autoScroll: true,
             frame: false,
             border: false,
