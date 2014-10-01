@@ -980,7 +980,7 @@ Ext.define('Illi.controller.PDV', {
                     error(response);
                 }
                 //if (first) {
-                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(relogio)', falha);
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (relogio)', falha);
                 //}
             };
             try {
@@ -1024,7 +1024,7 @@ Ext.define('Illi.controller.PDV', {
             if (response) {
                 error(response);
             }
-            control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(preabertura)', falha);
+            control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (pré-abertura)', falha);
         };
         try {
             var doSucesso = function (data) {
@@ -1058,6 +1058,48 @@ Ext.define('Illi.controller.PDV', {
         }
         //}, 250);
     },
+    xhrConfiguracao: function (idConta, sucesso, falha) {
+        //alert('PDV::xhrAbertura()', idConta, sucesso, falha);
+        var control = this;
+        control.MSG('Abrindo Caixa...');
+        setTimeout(function () {
+            var doFalha = function (response) {
+                if (response) {
+                    error(response);
+                }
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (configuração)', falha);
+            };
+            try {
+                var doSucesso = function (data) {
+                    if (data.responseText) {
+                        var response = Ext.JSON.decode(data.responseText);
+                        if (response.status === true) {
+                            control.MSG();
+                            sucesso(response);
+                        } else {
+                            control.MSG('Seu caixa não pode ser iniciado!<br /><b>Motivo:</b> ' + response.observacao, function () {
+                                falha(response);
+                            });
+                        }
+                    } else {
+                        doFalha(false);
+                    }
+                };
+                Ext.Ajax.request({
+                    url: '/pdv/vendarapida/iJson/configuracao',
+                    method: 'POST',
+                    async: false,
+                    params: {
+                        'id_conta': (idConta ? idConta : '')
+                    },
+                    success: doSucesso,
+                    failure: doFalha
+                });
+            } catch (e) {
+                doFalha(e);
+            }
+        }, 250);
+    },
     xhrAbertura: function (idConta, sucesso, falha) {
         //alert('PDV::xhrAbertura()', idConta, sucesso, falha);
         var control = this;
@@ -1067,7 +1109,7 @@ Ext.define('Illi.controller.PDV', {
                 if (response) {
                     error(response);
                 }
-                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(abertura)', falha);
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (abertura)', falha);
             };
             try {
                 var doSucesso = function (data) {
@@ -1110,7 +1152,7 @@ Ext.define('Illi.controller.PDV', {
                 if (response) {
                     error(response);
                 }
-                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(autenticacao)', falha);
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (autenticação)', falha);
             };
             try {
                 var doSucesso = function (data) {
@@ -1159,7 +1201,7 @@ Ext.define('Illi.controller.PDV', {
                     error(response);
                 }
 
-                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(troca)', falha);
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (troca)', falha);
             };
             try {
                 var doSucesso = function (data) {
@@ -1207,7 +1249,7 @@ Ext.define('Illi.controller.PDV', {
                     error(response);
                 }
 
-                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(cache)', falha);
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (cache)', falha);
             };
             try {
                 var doSucesso = function (data) {
@@ -1236,7 +1278,7 @@ Ext.define('Illi.controller.PDV', {
                     error(response);
                 }
 
-                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(finalizavenda)', falha);
+                control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (finaliza venda)', falha);
             };
             try {
                 var doSucesso = function (data) {
@@ -3388,6 +3430,7 @@ Ext.define('Illi.controller.PDV', {
         //alert('PDV::janelaContaCaixaExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
+        alert(cenario);
         if (control.ultimaSessao.contaCaixa) {
             control.janelaContaCaixaConfirmar(control.ultimaSessao.contaCaixa, control.ultimaSessao.contaCaixaNome, control.ultimaSessao.contaCaixaSaldo);
         } else {
@@ -3410,71 +3453,101 @@ Ext.define('Illi.controller.PDV', {
             nome = record.get('nome');
             saldo = record.get('saldo');
         }
-        if (control.ultimaSessao.contaCaixaDefinida !== true) {
-            if (conta > 0) {
-                control.ultimaSessao.contaCaixa = conta;
-                control.ultimaSessao.contaCaixaNome = nome;
-                control.ultimaSessao.contaCaixaSaldo = saldo;
-                control.ultimaSessao.contaCaixaDefinida = true;
-                Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
-                var doConfirma = function () {
+        var doFalhaAbertura = function (response) {
+            alert('doFalhaAbertura() ... 1 ...');
+            var doOcultarContaCaixa = function () {
+                alert('doFalhaAbertura() ... 2 ...');
+                if (response !== undefined) {
+                    alert('doFalhaAbertura() ... 3 ...');
+                    if (response !== undefined && response.fechamento === true) {
+                        alert('doFalhaAbertura() ... 4 ...');
+                        control.doFecharCaixa(false, true);
+                    } else {
+                        alert('doFalhaAbertura() ... 4 ...');
+                        control.janelaVendaRapidaOcultar();
+                    }
+                } else {
+                    alert('doFalhaAbertura() ... 5 ...');
+                    control.janelaVendaRapidaOcultar();
+                }
+            };
+            control.janelaContaCaixaOcultar(doOcultarContaCaixa);
+        };
+        var doConfirma = function (response) {
+            var cenario = control.janelaContaCaixa.cenario;
+            var doSucessoConfiguracao = function (config) {
+                alert('doSucessoConfiguracao() ... 1 ...');
+                control.ultimaSessao.necessarioAutenticacao = config.informacao.autenticacao;
+                alert(control.ultimaSessao.necessarioAutenticacao);
+                var doSucessoAutenticador = function () {
+                    alert('doSucessoConfiguracao() ... 4 ...');
                     var doSucessoAbertura = function (response) {
-                        response = response.informacao;
-                        control.ultimaSessao.entidadePessoa = response.entidade;
-                        control.ultimaSessao.clientePadrao = parseInt(response.cliente.id);
-                        control.ultimaSessao.clientePadraoNome = response.cliente.nome;
-                        control.ultimaSessao.pesquisaProduto = parseInt(response.pesquisa_exibicao);
-                        control.ultimaSessao.digitosProduto = parseInt(response.pesquisa_digitos);
-                        control.ultimaSessao.conferenciaObrigatoria = response.conferencia_cega;
-                        control.ultimaSessao.mensagemRomaneio = response.mensagem;
-                        control.ultimaSessao.pesquisaVendedor = (response.pesquisa_vendedor !== 1 ? false : true);
-                        control.ultimaSessao.solicitarDocumento = (response.solicitar_documento !== 1 ? false : true);
-                        control.ultimaSessao.vendedorObrigatorio = (response.vendedor !== 1 ? false : true);
-                        control.ultimaSessao.naturezaSangria = response.natureza_sangria;
-                        control.ultimaSessao.naturezaSuprimento = response.natureza_suprimento;
-                        control.ultimaSessao.necessarioAutenticacao = response.autenticacao;
+                        alert('doSucessoConfiguracao() ... 5 ...');
+                        var informacao = response.informacao;
+                        control.ultimaSessao.entidadePessoa = informacao.entidade;
+                        control.ultimaSessao.clientePadrao = parseInt(informacao.cliente.id);
+                        control.ultimaSessao.clientePadraoNome = informacao.cliente.nome;
+                        control.ultimaSessao.pesquisaProduto = parseInt(informacao.pesquisa_exibicao);
+                        control.ultimaSessao.digitosProduto = parseInt(informacao.pesquisa_digitos);
+                        control.ultimaSessao.conferenciaObrigatoria = informacao.conferencia_cega;
+                        control.ultimaSessao.mensagemRomaneio = informacao.mensagem;
+                        control.ultimaSessao.pesquisaVendedor = (informacao.pesquisa_vendedor !== 1 ? false : true);
+                        control.ultimaSessao.solicitarDocumento = (informacao.solicitar_documento !== 1 ? false : true);
+                        control.ultimaSessao.vendedorObrigatorio = (informacao.vendedor !== 1 ? false : true);
+                        control.ultimaSessao.naturezaSangria = informacao.natureza_sangria;
+                        control.ultimaSessao.naturezaSuprimento = informacao.natureza_suprimento;
                         Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
                         var doSucessoImpressao = function (response2) {
+                            alert('doSucessoConfiguracao() ... 8 ...');
                             var doOcultarContaCaixa = function () {
+                            alert('doSucessoConfiguracao() ... 9 ...');
                                 control.doIniciarVenda();
                             };
                             control.setRodapeCaixa(control.ultimaSessao.contaCaixaNome);
                             control.janelaContaCaixaOcultar(doOcultarContaCaixa);
                         };
                         if (response.impressao !== false) {
+                            alert('doSucessoConfiguracao() ... 6 ...');
                             control.xhrImpressao(response.impressao, doSucessoImpressao, doSucessoImpressao);
                         } else {
+                            alert('doSucessoConfiguracao() ... 7 ...');
                             doSucessoImpressao(false);
                         }
                     };
-                    var doFalhaAbertura = function (response) {
-                        var doOcultarContaCaixa = function () {
-                            if (response !== undefined) {
-                                if (response !== undefined && response.fechamento === true) {
-                                    control.doFecharCaixa(false, true);
-                                } else {
-                                    control.janelaVendaRapidaOcultar();
-                                }
-                            } else {
-
-                            }
-                        };
-                        control.janelaContaCaixaOcultar(doOcultarContaCaixa);
-                    };
                     control.xhrAbertura(control.ultimaSessao.contaCaixa, doSucessoAbertura, doFalhaAbertura);
                 };
-                if (saldo > 0) {
-                    control.MSG('Saldo atual em caixa: ' + Illi.app.Util.valorRenderer(saldo), doConfirma);
+                if (response !== "aberto") {
+                    alert('doSucessoConfiguracao() ... 2 ...');
+                    control.janelaAutenticadorExibir('abertura', doSucessoAutenticador, "Autorizou a abertura do caixa.\nConta ID: " + control.ultimaSessao.contaCaixa, doFalhaAbertura, cenario);
                 } else {
-                    doConfirma();
+                    alert('doSucessoConfiguracao() ... 3 ...');
+                    doSucessoAutenticador();
                 }
+            };
+            control.xhrConfiguracao(control.ultimaSessao.contaCaixa, doSucessoConfiguracao, doFalhaAbertura);
+        };
+        if (control.ultimaSessao.contaCaixaDefinida !== true) {
+            if (conta > 0) {
+                var doConfirmaAbertura = function (buttonId, text, opt) {
+                    if (buttonId === 'yes') {
+                        control.ultimaSessao.contaCaixa = conta;
+                        control.ultimaSessao.contaCaixaNome = nome;
+                        control.ultimaSessao.contaCaixaSaldo = saldo;
+                        control.ultimaSessao.contaCaixaDefinida = true;
+                        Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
+                        if (saldo > 0) {
+                            control.MSG('Saldo atual em caixa: ' + Illi.app.Util.valorRenderer(saldo), doConfirma);
+                        } else {
+                            doConfirma();
+                        }
+                    } else {
+                        doFalhaAbertura();
+                    }
+                };
+                Ext.MessageBox.confirm('Atenção', 'Seu caixa será aberto.<br />Deseja continuar?', doConfirmaAbertura);
             }
         } else {
-            var doOcultarContaCaixa = function () {
-                control.doIniciarVenda();
-            };
-            control.setRodapeCaixa(control.ultimaSessao.contaCaixaNome);
-            control.janelaContaCaixaOcultar(doOcultarContaCaixa);
+            doConfirma("aberto");
         }
     },
     janelaContaCaixaLimpar: function () {
@@ -5655,7 +5728,7 @@ Ext.define('Illi.controller.PDV', {
     onFocus: function (me, e) {
         alert('PDV::onFocus()', me, e);
         var control = this;
-        
+
     },
     setMapaTeclado: function () {
         //alert('PDV::setMapaTeclado()');
@@ -6056,7 +6129,6 @@ Ext.define('Illi.controller.PDV', {
                                             isCharEnabled = true;
                                             break;
                                     }
-                                    console.log("1", e.getKey());
                                     if (/\w+$/gi.test(String.fromCharCode(e.getKey())) || isBackspace || isCharEnabled) {
                                         switch (cenario) {
                                             case 'venda':
@@ -6101,7 +6173,6 @@ Ext.define('Illi.controller.PDV', {
                                                             break;
                                                     }
                                                 } else {
-                                                    console.log("1", e.getKey());
                                                     control.campoProdutoCodigo.focus();
                                                     stopEvent = false;
                                                 }

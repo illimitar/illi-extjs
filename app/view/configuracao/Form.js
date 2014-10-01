@@ -555,6 +555,7 @@ Ext.define('Illi.view.configuracao.Form', {
                     xtype: 'combobox',
                     forceSelection: true,
                     store: [
+                        [16, 'Abertura de Caixa'],
                         ['0', 'Fechamento de Caixa'],
                         [5, 'Configuração'],
                         [7, 'Configuração de Impressão ECF'],

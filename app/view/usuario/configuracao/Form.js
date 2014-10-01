@@ -92,7 +92,8 @@ Ext.define('Illi.view.usuario.configuracao.Form', {
                     xtype: 'combobox',
                     forceSelection: true,
                     store: [
-                        [0, 'Fechamento de Caixa'],
+                        [16, 'Abertura de Caixa'],
+                        ['0', 'Fechamento de Caixa'],
                         [5, 'Configuração'],
                         [7, 'Configuração de Impressão ECF'],
                         [8, 'Configuração de Impressão não-ECF'],
@@ -108,7 +109,6 @@ Ext.define('Illi.view.usuario.configuracao.Form', {
                         [10, 'Cancelamento de Devolução'],
                         [4, 'Impressão Segunda Via'],
                         [11, 'Impressão do Resumo de Fechamento de Caixa']
-                        // 16
                     ],
                     multiSelect: true,
                     name: 'pdv_permissao_fiscal',

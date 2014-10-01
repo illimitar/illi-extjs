@@ -49,6 +49,12 @@ Ext.define('Illi.view.financeiro.pdv.ListaProdutoPesquisa', {
                         hidden: true
                     },
                     {
+                        header: 'Referência',
+                        id: me.setIdColuna('referencia'),
+                        dataIndex: 'p.codigo',
+                        flex: 0.2
+                    },
+                    {
                         header: 'Descrição',
                         dataIndex: 'p.descricao',
                         id: me.setIdColuna('p_descricao'),
