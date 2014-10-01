@@ -454,6 +454,9 @@ Ext.define('Illi.controller.PDV', {
                 select: me.onSelect,
                 cellkeydown: me.onCellKeyDown
             },
+            'listaCancelamentoVenda actioncolumn': {
+                click: me.janelaImpressaoVisualizar
+            },
             'listaClienteSelecao': {
                 afterrender: me.onAfterRender,
                 select: me.onSelect,
@@ -478,6 +481,9 @@ Ext.define('Illi.controller.PDV', {
                 afterrender: me.onAfterRender,
                 select: me.onSelect,
                 cellkeydown: me.onCellKeyDown
+            },
+            'listaImpressao actioncolumn': {
+                click: me.janelaImpressaoVisualizar
             },
             'listaItensCancelados': {
                 afterrender: me.onAfterRender
@@ -4027,6 +4033,9 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
+    janelaImpressaoVisualizar: function (grid, rowIndex, colIndex, item, e, record) {
+        Ext.create("Illi.view.relatorio.JanelaVisualizar", {url: '../pdv/vendarapida/get_impressao/' + record.get('m.id') + '/'});
+    },
     //
     //
     //
@@ -5655,7 +5664,7 @@ Ext.define('Illi.controller.PDV', {
     onFocus: function (me, e) {
         alert('PDV::onFocus()', me, e);
         var control = this;
-        
+
     },
     setMapaTeclado: function () {
         //alert('PDV::setMapaTeclado()');
