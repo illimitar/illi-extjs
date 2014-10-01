@@ -3506,7 +3506,7 @@ Ext.define('Illi.controller.PDV', {
                         var doSucessoImpressao = function (response2) {
                             alert('doSucessoConfiguracao() ... 8 ...');
                             var doOcultarContaCaixa = function () {
-                            alert('doSucessoConfiguracao() ... 9 ...');
+                                alert('doSucessoConfiguracao() ... 9 ...');
                                 control.doIniciarVenda();
                             };
                             control.setRodapeCaixa(control.ultimaSessao.contaCaixaNome);
@@ -3624,6 +3624,7 @@ Ext.define('Illi.controller.PDV', {
                                 quantidade: "",
                                 valor_venda: -(valor),
                                 valor_custo: 0,
+                                valor_pago: 0,
                                 valor_total: -(valor),
                                 situacao: 'DESCONTO'
                             };
@@ -3706,7 +3707,7 @@ Ext.define('Illi.controller.PDV', {
                                         control.listaItensVenda.store.remove(desconto);
                                     }
                                     //
-                                    record.set('valor_desconto_acrescimo', -(valor));
+                                    record.set('valor_pago', (parseFloat(record.get('valor_venda')) - parseFloat(valor)));
                                     record.commit();
 //                                    store.add(itemLinha);
 //                                    break;
@@ -3724,7 +3725,7 @@ Ext.define('Illi.controller.PDV', {
                                         control.listaItensVenda.store.remove(acrescimo);
                                     }
                                     //
-                                    record.set('valor_desconto_acrescimo', (valor));
+                                    record.set('valor_pago', (parseFloat(record.get('valor_venda')) + parseFloat(valor)));
                                     record.commit();
 //                                    store.add(itemLinha);
 //                                    break;
@@ -4151,9 +4152,8 @@ Ext.define('Illi.controller.PDV', {
             control.totalTroco = Illi.app.Util.numberRound(control.totalPagamento - control.totalVenda, 2); //  - control.totalDesconto
             if (control.totalTroco >= 0) {
                 var listaItensVenda = [];
-                Ext.Array.each(control.listaItensVenda.getStore().data.items, function (item) {
-                    item.raw.situacao = item.data.situacao;
-                    listaItensVenda.push(item.raw);
+                Ext.Array.each(control.listaItensVenda.getSelectionModel().getStore().data.items, function (item) {
+                    listaItensVenda.push(item.getData());
                 });
                 var listaItensCancelados = [];
                 Ext.Array.each(control.listaItensCancelados.getStore().data.items, function (item) {
@@ -5322,6 +5322,7 @@ Ext.define('Illi.controller.PDV', {
                             id: control.itemUltimoInserido,
                             id_produto_grade: record.get('id'),
                             codigo: codigo,
+                            ordem: control.itemUltimoInserido,
                             descricao: descricao,
                             unidade: record.get('u.nome'),
                             quantidade: quantidade,
@@ -5332,6 +5333,7 @@ Ext.define('Illi.controller.PDV', {
                         });
                         control.listaItensVendaFocus();
                     };
+                    alert(record.getData());
                     var falha = function (response) {
                         control.listaItensVendaFocus();
                     };
@@ -5396,7 +5398,7 @@ Ext.define('Illi.controller.PDV', {
                         var sucesso = function (response) {
                             control.listaItensCancelados.getStore().add(record);
                             record.set('situacao', 'DESATIVO');
-                            record.set('valor_desconto_acrescimo', 0);
+                            record.set('valor_pago', 0);
                             record.commit();
                             var desconto = control.listaItensVenda.getSelectionModel().getStore().getById("D" + (control.itemVendaSelecionado));
                             if (desconto) {
