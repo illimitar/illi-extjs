@@ -2,7 +2,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaCancelamentoVenda', {
     extend: 'Illi.view.AbstractList',
     alias: 'widget.listaCancelamentoVenda',
     ecf: false,
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -25,16 +25,16 @@ Ext.define('Illi.view.financeiro.pdv.ListaCancelamentoVenda', {
             store: Ext.create('Illi.store.Vendas', {
                 storeId: "storeCancelamentoVenda",
                 listeners: {
-                    load: function(store, records, successful, eOpts) {
+                    load: function (store, records, successful, eOpts) {
                         var win = me.up('panel');
                         alert(records);
-                        Ext.Array.each(records, function(item) {
+                        Ext.Array.each(records, function (item) {
                             if (item.get("ecf")) {
                                 win.ultimoItemECF = (!win.ultimoItemECF ? item.get("id") : (win.ultimoItemECF < item.get("id") ? item.get("id") : win.ultimoItemECF));
                             }
                         });
                         me.focus();
-                        setTimeout(function() {
+                        setTimeout(function () {
                             me.getView().focusRow(0);
                             var row = store.getAt(0);
                             if (row) {
@@ -50,6 +50,17 @@ Ext.define('Illi.view.financeiro.pdv.ListaCancelamentoVenda', {
                 },
                 items: [
                     {
+                        xtype: 'actioncolumn',
+                        menuDisabled: true,
+                        sortable: false,
+                        filter: false,
+                        width: 25,
+                        items: [{
+                                icon: Illi.app.Util.getPath("/resources/images/icones/acao/visualizar.png"),
+                                tooltip: 'Imprimir ou Visualizar'
+                            }]
+                    },
+                    {
                         header: 'C.I.',
                         dataIndex: 'id',
                         flex: 0.4
@@ -58,7 +69,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaCancelamentoVenda', {
                         header: 'C.O.',
                         dataIndex: 'm.id',
                         flex: 0.4,
-                        renderer: function(value, metaData, record) {
+                        renderer: function (value, metaData, record) {
                             return (record.get("ecf") ? value + " *" : value);
                         }
                     },
