@@ -2,7 +2,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaImpressao', {
     extend: 'Illi.view.AbstractList',
     alias: 'widget.listaImpressao',
     ecf: false,
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -25,9 +25,9 @@ Ext.define('Illi.view.financeiro.pdv.ListaImpressao', {
             store: Ext.create('Illi.store.Vendas', {
                 storeId: "storeImpressao",
                 listeners: {
-                    load: function(store, records, successful, eOpts) {
+                    load: function (store, records, successful, eOpts) {
                         me.focus();
-                        setTimeout(function() {
+                        setTimeout(function () {
                             me.getView().focusRow(0);
                             var row = store.getAt(0);
                             if (row) {
@@ -43,6 +43,17 @@ Ext.define('Illi.view.financeiro.pdv.ListaImpressao', {
                 },
                 items: [
                     {
+                        xtype: 'actioncolumn',
+                        menuDisabled: true,
+                        sortable: false,
+                        filter: false,
+                        width: 25,
+                        items: [{
+                                icon: Illi.app.Util.getPath("/resources/images/icones/acao/visualizar.png"),
+                                tooltip: 'Imprimir ou Visualizar'
+                            }]
+                    },
+                    {
                         header: 'C.I.',
                         dataIndex: 'id',
                         flex: 0.4
@@ -51,7 +62,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaImpressao', {
                         header: 'C.O.',
                         dataIndex: 'm.id',
                         flex: 0.4,
-                        renderer: function(value, metaData, record) {
+                        renderer: function (value, metaData, record) {
                             return (record.get("ecf") ? value + " *" : value);
                         }
                     },
