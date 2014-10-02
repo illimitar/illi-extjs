@@ -1,7 +1,7 @@
 Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
     extend: 'Illi.view.AbstractList',
     alias: 'widget.listaItensVenda',
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -19,6 +19,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                 autoSync: true,
                 fields: [
                     {name: 'id'},
+                    {name: 'id_produto_grade'},
                     {name: 'codigo'},
                     {name: 'descricao'},
                     {name: 'unidade'},
@@ -26,7 +27,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                     {name: 'valor_venda', type: 'float'},
                     {name: 'valor_custo', type: 'float'},
                     {name: 'valor_total', type: 'float'},
-                    {name: 'valor_desconto_acrescimo', type: 'float'},
+                    {name: 'valor_pago', type: 'float'},
                     {name: 'situacao'}
                 ],
                 proxy: {
@@ -38,7 +39,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                 listeners: {
                     datachanged: {
                         element: this,
-                        fn: function(store) {
+                        fn: function (store) {
                             var win = me.up('window');
                             var storeCancelados = win.down('#pdvListaItensCancelados').getStore();
                             win.quantidadeVenda = store.sum("quantidade") - storeCancelados.sum("quantidade");
@@ -65,7 +66,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                         header: 'Item',
                         dataIndex: 'id',
                         align: 'right',
-                        renderer: function(value, metaData, record) {
+                        renderer: function (value, metaData, record) {
                             var ver = /^[0-9]+$/;
                             return (ver.test(value) ? value : "");
                         },
@@ -97,6 +98,13 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                         flex: 0.5
                     },
                     {
+                        header: 'Vl. Pago',
+                        dataIndex: 'valor_pago',
+                        align: 'right',
+                        renderer: Illi.app.Util.valorRenderer,
+                        flex: 0.5
+                    },
+                    {
                         header: 'Vl. Total',
                         dataIndex: 'valor_total',
                         align: 'right',
@@ -112,7 +120,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                 forceFit: true,
                 showPreview: true,
                 enableRowBody: true,
-                getRowClass: function(record, index) {
+                getRowClass: function (record, index) {
                     var tipo = record.get('situacao');
                     switch (true) {
                         case (tipo < 0):

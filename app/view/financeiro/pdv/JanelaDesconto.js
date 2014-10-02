@@ -38,7 +38,7 @@ Ext.define('Illi.view.financeiro.pdv.JanelaDesconto', {
 
                     }
                 ]
-            },
+            }, 
             bbar: {
                 items: [
                     Illi.app.Util.BotaoTeclado("Cancelar (ESC)", "ESC"),
