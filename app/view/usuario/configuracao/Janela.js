@@ -13,7 +13,7 @@ Ext.define('Illi.view.usuario.configuracao.Janela', {
         Ext.apply(me, {
             scope: me,
             width: 700,
-            height: 265,
+            height: 285,
             items: [
                 {
                     xtype: 'form',

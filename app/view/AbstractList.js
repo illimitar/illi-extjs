@@ -77,6 +77,7 @@ Ext.define('Illi.view.AbstractList', {
         me.callParent(arguments);
     },
     ativarBotao: function(botao, id_entidade) {
+        var me = this;
         try {
             var permissao = Illi.app.permissao;
             if (botao && permissao) {
