@@ -3551,7 +3551,9 @@ Ext.define('Illi.controller.PDV', {
                         Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
                         if (saldo > 0) {
                             alert('janelaContaCaixaConfirmar() ... 6.1 ...');
-                            control.MSG('Saldo atual em caixa: ' + Illi.app.Util.valorRenderer(saldo), doConfirma);
+                            setTimeout(function() {
+                                control.MSG('Saldo atual em caixa: ' + Illi.app.Util.valorRenderer(saldo), doConfirma);
+                            }, 250);
                         } else {
                             alert('janelaContaCaixaConfirmar() ... 6.2 ...');
                             doConfirma();
