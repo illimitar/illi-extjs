@@ -2266,9 +2266,12 @@ Ext.define('Illi.controller.PDV', {
             control.janelaVendaRapidaOcultar();
         };
         var iniciarCaixa = function () {
+            console.log("--- 1 ---");
             if (control.ultimaSessao !== undefined) {
+                console.log("--- 2 ---");
                 control.xhrPreAbertura(control.ultimaSessao.contaCaixa, doSucessoPreAbertura, doFalhaPreAbertura);
             } else {
+                console.log("--- 3 ---");
                 control.xhrPreAbertura(false, doSucessoPreAbertura, doFalhaPreAbertura);
             }
         };
@@ -3532,27 +3535,36 @@ Ext.define('Illi.controller.PDV', {
             };
             control.xhrConfiguracao(control.ultimaSessao.contaCaixa, doSucessoConfiguracao, doFalhaAbertura);
         };
+        alert('janelaContaCaixaConfirmar() ... 1 ...');
         if (control.ultimaSessao.contaCaixaDefinida !== true) {
+            alert('janelaContaCaixaConfirmar() ... 2.1 ...');
             if (conta > 0) {
+                alert('janelaContaCaixaConfirmar() ... 3 ...');
                 var doConfirmaAbertura = function (buttonId, text, opt) {
+                    alert('janelaContaCaixaConfirmar() ... 4 ...');
                     if (buttonId === 'yes') {
+                        alert('janelaContaCaixaConfirmar() ... 5.1 ...');
                         control.ultimaSessao.contaCaixa = conta;
                         control.ultimaSessao.contaCaixaNome = nome;
                         control.ultimaSessao.contaCaixaSaldo = saldo;
                         control.ultimaSessao.contaCaixaDefinida = true;
                         Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
                         if (saldo > 0) {
+                            alert('janelaContaCaixaConfirmar() ... 6.1 ...');
                             control.MSG('Saldo atual em caixa: ' + Illi.app.Util.valorRenderer(saldo), doConfirma);
                         } else {
+                            alert('janelaContaCaixaConfirmar() ... 6.2 ...');
                             doConfirma();
                         }
                     } else {
+                        alert('janelaContaCaixaConfirmar() ... 5.2 ...');
                         doFalhaAbertura();
                     }
                 };
                 Ext.MessageBox.confirm('Atenção', 'Seu caixa será aberto.<br />Deseja continuar?', doConfirmaAbertura);
             }
         } else {
+            alert('janelaContaCaixaConfirmar() ... 2.2 ...');
             doConfirma("aberto");
         }
     },

@@ -28,7 +28,12 @@ Ext.define('Illi.view.produto.grade.Lista', {
                         disabled: true,
                         iconCls: 'icon-duplicar',
                         itemId: 'duplicar'
-
+                    },
+                    {
+                        text: 'Excluir',
+                        action: 'excluir',
+                        iconCls: 'icon-remover',
+                        itemId: 'excluir'
                     },
                     {
                         text: 'Atualizar',
