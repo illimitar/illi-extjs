@@ -1086,6 +1086,7 @@ Ext.ClassManager.addNameAlternateMappings({
   "Illi.store.produto.TipoCodigoBarras": [],
   "Illi.store.produto.Unidades": [],
   "Illi.store.relatorio.Relatorios": [],
+  "Illi.store.usuario.Acessos": [],
   "Illi.view.AbstractCombo": [],
   "Illi.view.AbstractForm": [],
   "Illi.view.AbstractJanela": [],
@@ -2681,6 +2682,7 @@ Ext.ClassManager.addNameAliasMappings({
   "Illi.store.produto.TipoCodigoBarras": [],
   "Illi.store.produto.Unidades": [],
   "Illi.store.relatorio.Relatorios": [],
+  "Illi.store.usuario.Acessos": [],
   "Illi.view.AbstractCombo": [
     "widget.abstractCombo"
   ],
