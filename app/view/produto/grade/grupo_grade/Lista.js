@@ -22,7 +22,7 @@ Ext.define('Illi.view.produto.grade.grupo_grade.Lista', {
 
                     },
                     {
-                        text: 'Duplicar ',
+                        text: 'Duplicar',
                         action: 'duplicar',
                         disabled: true,
                         iconCls: 'icon-duplicar',
@@ -35,6 +35,12 @@ Ext.define('Illi.view.produto.grade.grupo_grade.Lista', {
                         disabled: true,
                         iconCls: 'icon-adicionar',
                         itemId: 'adicionarGrade'
+                    },
+                    {
+                        text: 'Excluir',
+                        action: 'excluir',
+                        iconCls: 'icon-remover',
+                        itemId: 'excluir'
                     },
                     {
                         text: 'Atualizar',

@@ -15,14 +15,12 @@ Ext.define('Illi.view.banco.conta.ListaContaUsuario', {
                         action: 'incluir',
                         iconCls: 'icon-adicionar',
                         itemId: 'incluir'
-
                     },
                     {
                         text: 'Excluir',
                         action: 'excluir',
                         iconCls: 'icon-remover',
                         itemId: 'excluir'
-
                     },
                     {
                         text: 'Atualizar',
