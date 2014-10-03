@@ -8,10 +8,10 @@ Ext.define('Illi.model.produto.Preco', {
             name: 'nome'
         },
         {
-            name: 'data_inicio', mapping: 'data_inicio.date', type: 'date', dateFormat: 'Y-m-d H:i:s' // dateFormat: 'Y-m-d', 
+            name: 'data_inicio', mapping: 'data_inicio.date', type: 'date' //, dateFormat: 'Y-m-d H:i:s' // dateFormat: 'Y-m-d', 
         },
         {
-            name: 'data_fim', mapping: 'data_fim.date', type: 'date', dateFormat: 'Y-m-d H:i:s' // dateFormat: 'Y-m-d', 
+            name: 'data_fim', mapping: 'data_fim.date', type: 'date'//, dateFormat: 'Y-m-d H:i:s' // dateFormat: 'Y-m-d', 
         },
         {
             name: 'tipo'

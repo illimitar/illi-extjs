@@ -22,7 +22,7 @@ Ext.define('Illi.model.produto.ImportacaoProduto', {
         {name: 'gradex'},
         {name: 'gradey'},
         {name: 'produto_grade'},
-        {name: 'data', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data.date'},
-        {name: 'data_importacao', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data_importacao.date'}
+        {name: 'data', type: 'date',   mapping: 'data.date'},
+        {name: 'data_importacao', type: 'date',   mapping: 'data_importacao.date'}
     ]
 });

@@ -19,7 +19,7 @@ Ext.define('Illi.model.produto.Produto', {
         {name: 'p.situacao', mapping: 'produto.situacao'},
         {name: 'p.tipo', mapping: 'produto.tipo'},
         {name: 'pg.situacao', mapping: 'situacao'},
-        {name: 'data', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'produto.data.date'},
+        {name: 'data', type: 'date',   mapping: 'produto.data.date'},
         {name: 'u.id', type: 'int', mapping: 'produto.unidade.id'},
         {name: 'u.nome', mapping: 'produto.unidade.nome'},
         {name: 'g.id', type: 'int', mapping: 'produto.grupo.id'},

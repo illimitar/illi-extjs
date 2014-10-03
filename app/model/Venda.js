@@ -8,7 +8,7 @@ Ext.define('Illi.model.Venda', {
             name: 'm.id', mapping: 'movimentacao.id'
         },
         {
-            name: 'data_impressao', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'impressao.data.date'
+            name: 'data_impressao', type: 'date',   mapping: 'impressao.data.date'
         },
         {
             name: 'cliente', mapping: 'movimentacao.pessoa.nome'

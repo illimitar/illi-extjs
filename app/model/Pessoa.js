@@ -44,13 +44,13 @@ Ext.define('Illi.model.Pessoa', {
         {
             name: 'data_nascimento',
             type: 'date',
-            dateFormat: 'Y-m-d H:i:s',
+             
             mapping: 'data_nascimento.date'
         },
         {
             name: 'mes_nascimento',
             type: 'date',
-            dateFormat: 'Y-m-d H:i:s',
+             
             mapping: 'data_nascimento.date'
         },
         {

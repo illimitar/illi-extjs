@@ -10,14 +10,14 @@ Ext.define('Illi.model.Parecer', {
         {
             name: 'data',
             type: 'date',
-            dateFormat: 'Y-m-d H:i:s',
+             
             mapping: 'data.date'
 
         },
         {
             name: 'dataReferencia',
             type: 'date',
-            dateFormat: 'Y-m-d H:i:s',
+             
             mapping: 'dataReferencia.date'
         },
         {

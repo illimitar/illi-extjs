@@ -6,6 +6,6 @@ Ext.define('Illi.model.configuracao.Situacao', {
         {name: 'tipo'},
         {name: 'obs'},
         {name: 'situacao'},
-        {name: 'data', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data.date'}
+        {name: 'data', type: 'date',   mapping: 'data.date'}
     ]
 });

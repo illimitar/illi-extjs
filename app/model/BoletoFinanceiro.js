@@ -49,9 +49,9 @@ Ext.define('Illi.model.BoletoFinanceiro', {
             name: 'valor_titulo',
             type: 'float'
         },
-        {name: 'data_emissao', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data_emissao.date'},
-        {name: 'b.dataDocumento', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'boleto[0].dataDocumento.date'},
-        {name: 'data_vencimento', type: 'date', dateFormat: 'Y-m-d H:i:s', mapping: 'data_vencimento.date'}
+        {name: 'data_emissao', type: 'date',   mapping: 'data_emissao.date'},
+        {name: 'b.dataDocumento', type: 'date',   mapping: 'boleto[0].dataDocumento.date'},
+        {name: 'data_vencimento', type: 'date',   mapping: 'data_vencimento.date'}
     ]
 });
 
