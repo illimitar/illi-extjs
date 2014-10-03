@@ -1,9 +1,13 @@
 Ext.define('Illi.view.Viewport', {
     extend: 'Ext.container.Viewport',
     renderTo: Ext.getBody(),
-    requires: ['Illi.view.financeiro.parecer.ListaContatoAgenda'],
+    requires: [
+        'Illi.view.financeiro.grafico.Container',
+        'Illi.view.financeiro.parecer.ListaContatoAgenda'
+    ],
     initComponent: function () {
         var me = this;
+        Illi.app.Util.MSG("Iniciando Sistema...");
         Ext.apply(me, {
             title: 'illi',
             layout: 'border',
@@ -15,15 +19,13 @@ Ext.define('Illi.view.Viewport', {
         afterrender: function (viewport) {
             Illi.app.viewCenter = viewport;
             var falha = function () {
+                Illi.app.Util.MSG("Encerrando Sistema...");
                 closepage = true;
-                window.location = "http://" + window.document.location.host;
+                window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
             };
             viewport.xhrUsuarioSessao(function (response) {
                 Ext.fly('appLoadingBackground').destroy();
                 Illi.app.Local.set('usuario', response);
-                // ini1: verifica qual grupo de usuario e determina se abrirá o pdv ou o painel principal
-                var grupo_usuario = Illi.app.Local.get('usuario').grupo_usuario.nome;
-                var usuario_acesso_inicial = Illi.app.Local.get('usuario').usuario_acesso_inicial;
                 viewport.add(Ext.create('Illi.view.usuario.Menu', {
                     region: 'north',
                     onClickButton: viewport.onClickButton
@@ -44,27 +46,33 @@ Ext.define('Illi.view.Viewport', {
                         items: []
                     }
                 });
-                if (usuario_acesso_inicial) {
+                var usuario_acesso_inicial = Illi.app.Local.get('usuario').usuario_acesso_inicial;
+                if (!usuario_acesso_inicial) {
+                    var grupo_usuario = Illi.app.Local.get('usuario').grupo_usuario.nome;
+                    if (/(CAIXA)/gi.test(grupo_usuario)) {
+                        usuario_acesso_inicial = 1055;
+                    } else {
+                        if (/(ADMINISTRADOR|MASTER)/gi.test(grupo_usuario)) {
+                            usuario_acesso_inicial = 1014;
+                        } else {
+                            usuario_acesso_inicial = 1028;
+                        }
+                    }
                     var obj = viewport.down("#tbarButtonItem" + usuario_acesso_inicial);
                     obj.initial = true;
                     obj.fireHandler('click');
-                } else {
-                    if (/(CAIXA)/gi.test(grupo_usuario)) {
-                        viewport.add(Ext.widget('janelaVendaRapida'));
-                    } else {
-                        if (/(ADMINISTRADOR|MASTER)/gi.test(grupo_usuario)) {
-                            viewport.down("#tabCenter").add(Ext.create('Illi.view.financeiro.grafico.Container', {
-                                title: 'Início',
-                                border: true
-                            }));
-                        } else {
-                            viewport.down("#tabCenter").add(Ext.create('Illi.view.financeiro.parecer.ListaContatoAgenda', {
-                                title: 'Início',
-                                border: true
-                            }));
-                        }
-                    }
                 }
+                if (typeof (usuario_acesso_inicial) !== "object") {
+                    usuario_acesso_inicial = [usuario_acesso_inicial];
+                }
+                Illi.app.Util.MSG();
+                Ext.Array.each(usuario_acesso_inicial, function (item) {
+                    var obj = viewport.down("#tbarButtonItem" + item);
+                    if (obj) {
+                        obj.initial = true;
+                        obj.fireHandler('click');
+                    }
+                });
                 // fim1
                 viewport.setVerificadorSessao();
             }, falha);
@@ -76,6 +84,7 @@ Ext.define('Illi.view.Viewport', {
         var ctrlSessao = taskSessao.newTask({
             run: function () {
                 viewport.xhrUsuarioSessao(false, function () {
+                    Illi.app.Util.MSG('Encerrando Sistema...');
                     closepage = true;
                     window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
                 });
@@ -118,10 +127,29 @@ Ext.define('Illi.view.Viewport', {
         var raw = obj.raw;
         if (raw.controllerName !== undefined) {
             switch (raw.componente) {
+                case "FULLSCREEN":
                 case "WINDOW":
                     var widget = raw.xtypeClass;
                     var doCreateWidget = function () {
-                        tbar.janelaAberta[widget] = Ext.widget(widget, Illi.app.Local.get(raw.xtypeClass));
+                        if (raw.componente === "FULLSCREEN") {
+                            var conf = Illi.app.Local.get(raw.xtypeClass);
+                            if (conf) {
+                                Ext.apply(conf, {
+                                    closable: false,
+                                    maximizable: false,
+                                    maximized: true
+                                });
+                            } else {
+                                conf = {
+                                    closable: false,
+                                    maximizable: false,
+                                    maximized: true
+                                };
+                            }
+                            tbar.janelaAberta[widget] = Ext.widget(widget, conf);
+                        } else {
+                            tbar.janelaAberta[widget] = Ext.widget(widget, Illi.app.Local.get(raw.xtypeClass));
+                        }
                         doOpenWidget();
                     };
                     var doOpenWidget = function () {
@@ -161,14 +189,11 @@ Ext.define('Illi.view.Viewport', {
                             permissao: raw.permissao,
                             listeners: {
                                 beforeactivate: function (tab, opt) {
-//                                    console.log("tabCenterItem beforeactivate", tab, opt);
                                     Illi.app.permissao = raw.permissao;
                                 },
                                 afterlayout: function (tab, layout, opt) {
-//                                    console.log("tabCenterItem afterlayout", tab, layout, opt);
                                 },
                                 afterrender: function (tab, opt) {
-//                                    console.log("tabCenterItem afterrender", tab, opt);
                                     var abaAberta = tabCenter.items.findBy(function (aba) {
                                         return aba.title === raw.text;
                                     });

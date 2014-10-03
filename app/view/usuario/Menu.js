@@ -37,6 +37,7 @@ Ext.define('Illi.view.usuario.Menu', {
                             Ext.Ajax.request({
                                 url: '../illi/redefinir_sessao/',
                                 success: function (response) {
+                                    Illi.app.Util.MSG('Atualizando Sistema...');
                                     closepage = true;
                                     window.location.reload(true);
                                 }
@@ -45,10 +46,8 @@ Ext.define('Illi.view.usuario.Menu', {
                     }
                 }
             });
-
             var gravatar = Illi.app.Util.getGravatar(Illi.app.Local.get("usuario").email);
             var iconCache = (caching ? 'icon-cache' : 'icon-homem');
-
             tbar.add(
                     {
                         tooltip: "Perfil: " + nome_usuario,
@@ -106,7 +105,6 @@ Ext.define('Illi.view.usuario.Menu', {
                     }
                 }
             });
-
             if (menu.length > 0) {
                 eval("menu = " + menu + ";");
                 tbar.add(menu);
@@ -142,6 +140,7 @@ Ext.define('Illi.view.usuario.Menu', {
                                         entidade: id
                                     },
                                     success: function (response) {
+                                        Illi.app.Util.MSG('Atualizando Sistema...');
                                         if (response.responseText !== undefined) {
                                             var response = Ext.JSON.decode(response.responseText);
                                             if (response.controle) {
@@ -168,6 +167,7 @@ Ext.define('Illi.view.usuario.Menu', {
                     iconCls: 'small icon-sair',
                     scale: 'small',
                     handler: function () {
+                        Illi.app.Util.MSG('Encerrando Sistema...');
                         closepage = true;
                         window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
                     }

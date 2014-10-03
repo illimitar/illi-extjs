@@ -3,7 +3,7 @@ Ext.define('Illi.view.ComboComponente', {
     alias: 'widget.comboComponente',
     name: 'componente',
     value: 'TAB',
-    store: ['TAB', 'WINDOW'],
+    store: ['TAB', 'WINDOW', 'FULLSCREEN'],
     queryMode: 'local',
     initComponent: function() {
         this.callParent(arguments);

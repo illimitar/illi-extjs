@@ -19,9 +19,6 @@ Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
                 type: 'border'
             },
             autoShow: true,
-            closable: false,
-            maximizable: false,
-            maximized: true,
             scrollbars: false,
             //
             items: [

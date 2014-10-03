@@ -513,6 +513,42 @@ Ext.define('Ext.ux.illi.Util', {
         }
         return operacao;
     },
+    MSG: function (mensagem, acao, confirmar) {
+        var control = this;
+        acao = (acao && typeof (acao) === 'function' ? acao : false);
+        try {
+            if (mensagem) {
+                if (acao) {
+                    if (confirmar) {
+                        Ext.MessageBox.show({
+                            title: 'Atenção',
+                            msg: '<h3>' + mensagem + '</h3>',
+                            buttons: Ext.Msg.YESNO,
+                            waitConfig: {interval: 0},
+                            fn: acao
+                        });
+                    } else {
+                        Ext.MessageBox.alert('Atenção', '<h3>' + mensagem + '</h3>', acao);
+                    }
+                } else {
+//                    Ext.MessageBox.show({
+//                        title: 'Atenção',
+//                        msg: '<h3>' + mensagem + '</h3>',
+//                        waitConfig: {interval: 0}
+//                    });
+                    Ext.MessageBox.wait('<h3>' + mensagem + '</h3>', 'Aguarde...', {interval: 0});
+                }
+            } else {
+                if (Ext.MessageBox.isVisible()) {
+                    Ext.MessageBox.hide();
+                }
+            }
+        } catch (e) {
+            if (Ext.MessageBox.isVisible()) {
+                Ext.MessageBox.hide();
+            }
+        }
+    },
     getGravatar: function (email, tamanho) {
         try {
             tamanho = (tamanho ? tamanho : 32);

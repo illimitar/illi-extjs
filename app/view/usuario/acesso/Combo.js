@@ -7,6 +7,36 @@ Ext.define('Illi.view.usuario.acesso.Combo', {
     valueField: 'id',
     queryMode: 'remote',
     queryParam: 'titulo',
+    tpl: Ext.create('Ext.XTemplate',
+            '<tpl for=".">',
+            '   <tpl if="this.selecao(pai)">',
+            '       <div class="x-boundlist-item" style="color: #bbb;">{titulo}</div>',
+            '   <tpl else>',
+            '       <div class="x-boundlist-item">{titulo}</div>',
+            '   </tpl>',
+            '</tpl>',
+            {
+                disableFormats: true,
+                selecao: function(pai) {
+                    return (pai === 'S');
+                }
+            }
+    ),
+    listeners: {
+        beforeselect: function(combo, record, index) {
+            if (record.get('pai') === 'S') {
+                return false;
+            }
+        },
+        blur: function(combo) {
+            var selecao = combo.findRecord("id", combo.getValue());
+            if (selecao) {
+                if (selecao.get('pai') === 'S') {
+                    combo.setValue(null);
+                }
+            }
+        }
+    },
     initComponent: function() {
         this.callParent(arguments);
         this.store.load();

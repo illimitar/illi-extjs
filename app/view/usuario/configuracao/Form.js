@@ -41,6 +41,7 @@ Ext.define('Illi.view.usuario.configuracao.Form', {
                     xtype: 'comboAcesso',
                     store: Ext.create('Illi.store.usuario.Acessos', {storeId: "comboUsuarioAcessos"}),
                     forceSelection: true,
+                    multiSelect: true,
                     name: 'usuario_acesso_inicial',
                     trigger2Cls: 'trigger-ajuda',
                     onTrigger2Click: function () {
