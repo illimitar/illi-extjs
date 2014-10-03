@@ -2233,11 +2233,15 @@ Ext.define('Illi.controller.PDV', {
     //
 
     doAbrirCaixa: function () {
+        alert('doAbrirCaixa() ... 1 ...');
         var control = this;
         control.ultimaSessao = Illi.app.Local.get('pdvUltimaSessao'); // armazena a ultima informação de caixa.
         var doSucessoPreAbertura = function (response) {
+            alert('doSucessoPreAbertura() ... 2 ...');
             var doExibirContaCaixa = function (response) {
+                alert('doExibirContaCaixa() ... 3 ...');
                 if (control.ultimaSessao === undefined || control.ultimaSessao.active !== true || control.ultimaSessao.diaOperacao !== response.dia_operacao || response.fechado === true) {
+                    alert('doExibirContaCaixa() ... 4 ...');
                     control.ultimaSessao = {};
                     control.ultimaSessao.contaCaixaDefinida = false;
                     control.ultimaSessao.contaCaixaPadrao = response.conta.rows[0].id;
@@ -2254,62 +2258,79 @@ Ext.define('Illi.controller.PDV', {
                 control.janelaContaCaixaExibir();
             };
             if (control.relogioHorario === undefined) {
+                alert('doSucessoPreAbertura() ... 5.1 ...');
                 var doSucessoRelogio = function () {
+                    alert('doSucessoRelogio() ... 6 ...');
                     doExibirContaCaixa(response);
                 };
                 control.setRelogio(doSucessoRelogio);
             } else {
+                alert('doSucessoPreAbertura() ... 5.2 ...');
                 doExibirContaCaixa(response);
             }
         };
         var doFalhaPreAbertura = function (response) {
+            alert('doSucessoPreAbertura() ... 7 ...');
             control.janelaVendaRapidaOcultar();
         };
         var iniciarCaixa = function () {
-            console.log("--- 1 ---");
+            alert('iniciarCaixa() ... 1 ...');
             if (control.ultimaSessao !== undefined) {
-                console.log("--- 2 ---");
+                alert('iniciarCaixa() ... 2.1 ...');
                 control.xhrPreAbertura(control.ultimaSessao.contaCaixa, doSucessoPreAbertura, doFalhaPreAbertura);
             } else {
-                console.log("--- 3 ---");
+                alert('iniciarCaixa() ... 2.2 ...');
                 control.xhrPreAbertura(false, doSucessoPreAbertura, doFalhaPreAbertura);
             }
         };
         if (control.verificaECF()) {
+            alert('iniciarCaixa() ... 8.1 ...');
             var callback = function (retorno) {
+                alert('callback() ... 9 ...');
                 if (retorno.data) {
+                    alert('callback() ... 10.1 ...');
                     switch (retorno.data) {
                         case 'estVenda':
                         case 'estPagamento':
+                            alert('callback() ... 11.1 ...');
                             control.doCancelarVendaCupom(iniciarCaixa, Ext.emptyFn);
                             break;
                         case 'estPagamento':
+                            alert('callback() ... 11.2 ...');
                             control.doCancelarVendaCupom(iniciarCaixa, Ext.emptyFn);
                             break;
                         case 'estRequerZ':
+                            alert('callback() ... 11.3 ...');
                             var ret = function (retz) {
+                                alert('ret() ... 12 ...');
                                 iniciarCaixa();
                                 //control.MSG("Não é possivel operar o ECF, com redução Z pendente!<br/> Verifique se emitiu a redução do dia anterior!");
                             };
                             setTimeout(function () {
+                                alert('setTimeout() ... 13 ...');
                                 //control.doReducaoZCupom(ret, ret, true, "Redução Z Pendente!</br>Emitir Agora !?");
                                 control.doReducaoZ(ret, ret, true, "Redução Z Pendente!</br>Emitir Agora?");
                             }, 50);
                             break;
                         default:
+                            alert('callback() ... 11.4 ...');
                             if (retorno.sucesso === true) {
+                                alert('callback() ... 14.1 ...');
                                 iniciarCaixa();
                             } else {
+                                alert('callback() ... 14.2 ...');
                                 control.MSG(retorno.mensagem, Ext.emptyFn);
                             }
                             break;
                     }
                 } else {
+                    alert('callback() ... 10.2 ...');
                     iniciarCaixa();
                 }
             };
             control.doEstado(callback);
         } else {
+            alert('iniciarCaixa() ... 8.2 ...');
             iniciarCaixa();
         }
     },
@@ -3551,7 +3572,7 @@ Ext.define('Illi.controller.PDV', {
                         Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
                         if (saldo > 0) {
                             alert('janelaContaCaixaConfirmar() ... 6.1 ...');
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 control.MSG('Saldo atual em caixa: ' + Illi.app.Util.valorRenderer(saldo), doConfirma);
                             }, 250);
                         } else {
