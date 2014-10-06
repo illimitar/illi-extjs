@@ -262,38 +262,38 @@ Ext.define('Illi.controller.PDV', {
             },
             //
             'campoAutenticador': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoCancelarItem': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoCliente': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoContaCaixa': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoDesconto': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoDescontoPorcentagem': {
                 afterrender: me.onAfterRender,
                 keyup: me.onKeyUp
             },
             'campoPagamentoTroca': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoPagamentoValor': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoProdutoCodigo': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoVendedor': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             'campoDocumento': {
-                afterrender: me.onAfterRender,
+                afterrender: me.onAfterRender
             },
             //
             'formularioConfiguracaoECF': {
