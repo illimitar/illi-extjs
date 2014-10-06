@@ -3888,7 +3888,7 @@ Ext.define('Illi.controller.PDV', {
         var doSucessoAutenticador = function () {
             var doSucessoFechamento = function (response) {
                 var doSucessoImpressao = function (response3) {
-                    alert(response3);
+                    //alert(response3);
                 };
                 control.xhrImpressao(response.impressao, doSucessoImpressao, doSucessoImpressao);
             };
