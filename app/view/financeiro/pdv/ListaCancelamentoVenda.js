@@ -27,7 +27,6 @@ Ext.define('Illi.view.financeiro.pdv.ListaCancelamentoVenda', {
                 listeners: {
                     load: function (store, records, successful, eOpts) {
                         var win = me.up('panel');
-                        alert(records);
                         Ext.Array.each(records, function (item) {
                             if (item.get("ecf")) {
                                 win.ultimoItemECF = (!win.ultimoItemECF ? item.get("id") : (win.ultimoItemECF < item.get("id") ? item.get("id") : win.ultimoItemECF));
