@@ -5336,34 +5336,40 @@ Ext.define('Illi.controller.PDV', {
                     console.error(err);
                 }
             };
-            if (record !== undefined) {
-                doAdicionarLista(codigo, quantidade, record);
-            } else {
-                control.storeProdutos.getProxy().extraParams = {
-                    codigo: codigo,
-                    tabela_venda: (control.tabelaSelecionada ? control.tabelaSelecionada.id : ""),
-                    pdv: true
-                };
-                control.storeProdutos.load({
-                    callback: function (records, options, success) {
-                        if (records) {
-                            if (records.length > 1) {
-                                control.janelaProdutoSelecaoExibir(codigo, quantidade, control.storeProdutos, doAdicionarLista);
-                            } else {
-                                var record = records[0];
-                                if (record) {
-                                    doAdicionarLista(codigo, quantidade, record);
-                                } else {
-                                    control.MSG('Produto não encontrado!', function () {
-                                        control.listaItensVendaFocus();
-                                    });
-                                }
-                            }
-                        } else {
-                            control.listaItensVendaFocus();
-                        }
-                    }
+            if (quantidade % 1 != 0) { // verifica se o numero não contem decimal
+                control.MSG('Quantidade inserida é invalido!', function () {
+                    control.listaItensVendaFocus();
                 });
+            } else {
+                if (record !== undefined) {
+                    doAdicionarLista(codigo, quantidade, record);
+                } else {
+                    control.storeProdutos.getProxy().extraParams = {
+                        codigo: codigo,
+                        tabela_venda: (control.tabelaSelecionada ? control.tabelaSelecionada.id : ""),
+                        pdv: true
+                    };
+                    control.storeProdutos.load({
+                        callback: function (records, options, success) {
+                            if (records) {
+                                if (records.length > 1) {
+                                    control.janelaProdutoSelecaoExibir(codigo, quantidade, control.storeProdutos, doAdicionarLista);
+                                } else {
+                                    var record = records[0];
+                                    if (record) {
+                                        doAdicionarLista(codigo, quantidade, record);
+                                    } else {
+                                        control.MSG('Produto não encontrado!', function () {
+                                            control.listaItensVendaFocus();
+                                        });
+                                    }
+                                }
+                            } else {
+                                control.listaItensVendaFocus();
+                            }
+                        }
+                    });
+                }
             }
         } else {
             control.MSG('Produto não encontrado!', function () {
