@@ -97,13 +97,13 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                         renderer: Illi.app.Util.valorRenderer,
                         flex: 0.5
                     },
-                    {
-                        header: 'Vl. Pago',
-                        dataIndex: 'valor_pago',
-                        align: 'right',
-                        renderer: Illi.app.Util.valorRenderer,
-                        flex: 0.5
-                    },
+//                    {
+//                        header: 'Vl. Pago',
+//                        dataIndex: 'valor_pago',
+//                        align: 'right',
+//                        renderer: Illi.app.Util.valorRenderer,
+//                        flex: 0.5
+//                    },
                     {
                         header: 'Vl. Total',
                         dataIndex: 'valor_total',
