@@ -230,7 +230,12 @@ Ext.define('Illi.view.financeiro.parecer.Lista', {
                                                 me.anexo('/relatorios/vendedor_comissao/relatorio/' + rec.get('url'));
                                                 break;
                                             default:
-                                                me.anexo("/" + PATH_ARQUIVOS + "/" + rec.get('url'));
+                                                var arquivo = rec.get('arquivo');
+                                                if (arquivo) {
+                                                    me.anexo("/" + PATH_ARQUIVOS_DB + "/" + rec.get('arquivo'));
+                                                } else {
+                                                    me.anexo("/" + PATH_ARQUIVOS_DIR + "/" + rec.get('url'));
+                                                }
                                                 break;
                                         }
                                     }

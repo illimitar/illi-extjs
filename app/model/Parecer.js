@@ -10,14 +10,11 @@ Ext.define('Illi.model.Parecer', {
         {
             name: 'data',
             type: 'date',
-             
             mapping: 'data.date'
-
         },
         {
             name: 'dataReferencia',
             type: 'date',
-             
             mapping: 'dataReferencia.date'
         },
         {
@@ -48,9 +45,9 @@ Ext.define('Illi.model.Parecer', {
         },
         {
             name: 'complemento'
+        },
+        {
+            name: 'arquivo'
         }
-
-
     ]
-
 });

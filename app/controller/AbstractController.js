@@ -244,7 +244,7 @@ Ext.define('Illi.controller.AbstractController', {
                             ok: "Baixar arquivo"
                         },
                         fn: function () {
-                            window.open(PATH_ARQUIVOS + '/' + arquivo.responseText, "Baixar Excel");
+                            window.open(PATH_ARQUIVOS_DIR + '/' + arquivo.responseText, "Baixar Excel");
                         }
 
                     });
@@ -306,7 +306,7 @@ Ext.define('Illi.controller.AbstractController', {
                             ok: "Baixar arquivo"
                         },
                         fn: function () {
-                            window.open('/' + PATH_ARQUIVOS + '/' + arquivo.responseText, "Baixar Excel");
+                            window.open('/' + PATH_ARQUIVOS_DIR + '/' + arquivo.responseText, "Baixar Excel");
                         }
 
                     });
