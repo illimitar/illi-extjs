@@ -263,48 +263,37 @@ Ext.define('Illi.controller.PDV', {
             //
             'campoAutenticador': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoCancelarItem': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoCliente': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoContaCaixa': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoDesconto': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoDescontoPorcentagem': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus,
                 keyup: me.onKeyUp
             },
             'campoPagamentoTroca': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoPagamentoValor': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoProdutoCodigo': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoVendedor': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             'campoDocumento': {
                 afterrender: me.onAfterRender,
-                focus: me.onFocus
             },
             //
             'formularioConfiguracaoECF': {
@@ -5719,11 +5708,6 @@ Ext.define('Illi.controller.PDV', {
                 control.janelaDevolucaoEditar(false);
                 break;
         }
-    },
-    onFocus: function (me, e) {
-        alert('PDV::onFocus()', me, e);
-        var control = this;
-
     },
     setMapaTeclado: function () {
         //alert('PDV::setMapaTeclado()');
