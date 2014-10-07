@@ -21,7 +21,7 @@ Ext.define('Illi.view.financeiro.Lista', {
         mode: 'MULTI'
     },
     emptyText: "Nenhum registro Encontrado",
-    pegaTipo: function() {
+    pegaTipo: function () {
         if (this.store.storeId === 'financeiroApagar') {
             return   'DESPESA';
         }
@@ -29,7 +29,7 @@ Ext.define('Illi.view.financeiro.Lista', {
             return   'RECEITA';
         }
     },
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             tbar: {
@@ -116,13 +116,13 @@ Ext.define('Illi.view.financeiro.Lista', {
                     "->",
                     {
                         iconCls: 'icon-email',
-                        handler: function() {
+                        handler: function () {
                             try {
                                 if (!me.id_fluxo) {
                                     var titulos = me.getStore();
                                     var id_fluxos = [];
                                     var id_fluxo = false;
-                                    titulos.each(function(rec) {
+                                    titulos.each(function (rec) {
                                         id_fluxos.push(rec.getData().id);
                                     });
                                     id_fluxo = id_fluxos.join();
@@ -164,7 +164,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         header: 'Parceiro',
                         dataIndex: 'p.nome',
                         id: me.setIdColuna('p_nome'),
-                        renderer: function(value, metaData, record) {
+                        renderer: function (value, metaData, record) {
                             return value + ' (' + record.get('p.id') + ')';
                         },
                         editor: {
@@ -191,7 +191,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         dataIndex: 'pz.id',
                         id: me.setIdColuna('pz_id'),
                         width: 120,
-                        renderer: function(value, metaData, record) {
+                        renderer: function (value, metaData, record) {
                             if (record.get('pz.descricao')) {
                                 return value + ' - ' + record.get('pz.descricao');
                             } else {
@@ -219,7 +219,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         editor: {
                             xtype: 'textfield'
                         },
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">Qt. Total: ' + value + '</span>';
                         }
                     },
@@ -240,7 +240,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         align: 'right',
                         width: 80,
                         minWidth: 80,
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         }
                     },
@@ -253,7 +253,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         minWidth: 80,
                         hidden: true,
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         }
                     },
@@ -273,7 +273,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         editor: {
                             xtype: 'comboTipoTitulo'
                         },
-                        renderer: function(value, b, record) {
+                        renderer: function (value, b, record) {
                             if (record.get('tp.nome')) {
                                 return record.get('tp.nome');
                             } else {
@@ -297,7 +297,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         renderer: Illi.app.Util.valorRenderer,
                         align: 'right',
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         },
                         hidden: true
@@ -309,7 +309,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         renderer: Illi.app.Util.valorRenderer,
                         align: 'right',
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         },
                         hidden: true
@@ -321,7 +321,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         renderer: Illi.app.Util.valorRenderer,
                         align: 'right',
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         },
                         hidden: true
@@ -333,7 +333,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         renderer: Illi.app.Util.valorRenderer,
                         align: 'right',
                         summaryType: 'sum',
-                        summaryRenderer: function(value) {
+                        summaryRenderer: function (value) {
                             return '<span style="font-size:10px;font-weight:bold;">' + Illi.app.Util.valorRenderer(value) + '</span>';
                         },
                         hidden: true
@@ -444,7 +444,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                         dataIndex: 'e.id',
                         id: me.setIdColuna('empresa'),
                         hideable: false,
-                        renderer: function(value, b, record) {
+                        renderer: function (value, b, record) {
                             return value + ' - ' + record.get('e.nome');
                         },
                         editor: {
@@ -510,22 +510,22 @@ Ext.define('Illi.view.financeiro.Lista', {
             plugins: Illi.app.Util.setPlugins({
                 'rowediting': {
                     listeners: {
-                        validateedit: function(editor, e, opt) {
+                        validateedit: function (editor, e, opt) {
                             e.record.data.tipo = me.pegaTipo();
                         },
-                        afterEdit: function(editor, grid, opt) {
+                        afterEdit: function (editor, grid, opt) {
                             var store = editor.grid.store;
                             if (store.getModifiedRecords()[0]) {
                                 editor.grid.el.mask('Salvando...');
                             }
                             store.sync({
-                                callback: function(a, b, c) {
+                                callback: function (a, b, c) {
                                     editor.grid.el.unmask();
                                     store.load();
                                 }
                             });
                         },
-                        beforeEdit: function(editor, grid, opt) {
+                        beforeEdit: function (editor, grid, opt) {
                             if (editor.grid.store.isGrouped()) {
                                 Ext.MessageBox.show({
                                     title: 'Alerta',
@@ -535,6 +535,18 @@ Ext.define('Illi.view.financeiro.Lista', {
                                 });
                                 return false;
                             } else {
+
+                                var permissao = Illi.app.permissao;
+                                if (!permissao[Illi.app.Local.get('usuario').entidade.id]["alterar"]) {
+                                    Ext.MessageBox.show({
+                                        title: 'Alerta',
+                                        msg: 'Sem Permisão para Alterar o Titulo',
+                                        icon: Ext.MessageBox.ERROR,
+                                        buttons: Ext.Msg.OK
+                                    });
+                                    return false;
+                                }
+
                                 if (grid.record.get('data_baixa')) {
                                     Ext.MessageBox.show({
                                         title: 'Alerta',
@@ -580,7 +592,7 @@ Ext.define('Illi.view.financeiro.Lista', {
                 forceFit: true,
                 showPreview: true,
                 enableRowBody: true,
-                getRowClass: function(record, index) {
+                getRowClass: function (record, index) {
                     var situacao = record.get('situacao');
                     var tipo = record.get('tipo');
 
@@ -608,12 +620,12 @@ Ext.define('Illi.view.financeiro.Lista', {
         });
         me.callParent(arguments);
     },
-    onRender: function() {
+    onRender: function () {
         this.callParent(arguments);
         this.getSelectionModel().on('selectionchange', this.selecionar, this);
         this.down('#incluir').setDisabled(!this.ativarBotao('incluir'));
     },
-    selecionar: function(selModel, selections) {
+    selecionar: function (selModel, selections) {
         try {
             var ativa = true;
             if (selections[0]) {
