@@ -1,5 +1,5 @@
 Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
-    extend: 'Ext.window.Window', // Ext.panel.Panel
+    extend: 'Ext.panel.Panel',
     alias: 'widget.janelaVendaRapida',
     initComponent: function () {
         var me = this;
@@ -18,7 +18,6 @@ Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
             layout: {
                 type: 'border'
             },
-            autoShow: true,
             scrollbars: false,
             //
             items: [

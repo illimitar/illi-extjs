@@ -127,25 +127,58 @@ Ext.define('Illi.view.Viewport', {
                 case "WINDOW":
                     var widget = raw.xtypeClass;
                     var doCreateWidget = function () {
-                        if (raw.componente === "FULLSCREEN") {
-                            var conf = Illi.app.Local.get(raw.xtypeClass);
-                            if (conf) {
-                                Ext.apply(conf, {
-                                    closable: false,
-                                    maximizable: false,
-                                    maximized: true
-                                });
-                            } else {
-                                conf = {
-                                    closable: false,
-                                    maximizable: false,
-                                    maximized: true
-                                };
-                            }
-                            tbar.janelaAberta[widget] = Ext.widget(widget, conf);
+                        var conf = Illi.app.Local.get(raw.xtypeClass);
+                        if (conf) {
+                            Ext.apply(conf, {
+                                typeComponent: raw.componente
+                            });
                         } else {
-                            tbar.janelaAberta[widget] = Ext.widget(widget, Illi.app.Local.get(raw.xtypeClass));
+                            conf = {
+                                typeComponent: raw.componente
+                            };
                         }
+                        var abrir = Ext.widget(widget, conf);
+                        if (obj.initial || Illi.app.permissao === undefined) {
+                            Illi.app.permissao = raw.permissao;
+                        }
+                        tbar.janelaAberta[widget] = Ext.create("Ext.window.Window", {
+                            autoShow: false,
+                            height: '97.7%',
+                            width: '97.7%',
+                            header: (raw.componente === "FULLSCREEN" ? false : true),
+                            border: (raw.componente === "FULLSCREEN" ? false : true),
+                            modal: (raw.componente === "FULLSCREEN" ? true : false),
+                            title: (raw.componente === "FULLSCREEN" ? false : raw.text || 'Tela do sistema'),
+                            style: (raw.componente === "FULLSCREEN" ? {
+                                backgroundColor: '#fff',
+                                border: '0px'
+                            } : false),
+                            layout: 'fit',
+                            itemId: raw.id_acesso,
+                            closable: (raw.componente === "FULLSCREEN" ? false : (obj.initial ? false : true)),
+                            maximizable: (raw.componente === "FULLSCREEN" ? false : false),
+                            maximized: (raw.componente === "FULLSCREEN" ? true : false),
+                            closeAction: 'hide',
+                            items: abrir,
+                            permissao: raw.permissao,
+                            listeners: {
+                                beforeshow: function (tab, opt) {
+                                    Illi.app.permissao = raw.permissao;
+                                },
+                                show: function (tab, opt) {
+                                    if (tab.handlerActiveAction && typeof (tab.handlerActiveAction) === "function") {
+                                        tab.handlerActiveAction(tab, opt);
+                                    }
+                                },
+                                hide: function (tab, opt) {
+                                    if (tab.handlerDesactiveAction && typeof (tab.handlerDesactiveAction) === "function") {
+                                        tab.handlerDesactiveAction(tab, opt);
+                                    }
+                                }
+                            },
+                            handlerActiveAction: false,
+                            handlerDesactiveAction: false
+                        });
                         doOpenWidget();
                     };
                     var doOpenWidget = function () {
@@ -165,11 +198,21 @@ Ext.define('Illi.view.Viewport', {
                     break;
                 case "TAB":
                     var abaAberta = tabCenter.items.findBy(function (aba) {
-                        return aba.title === raw.text;
+                        return aba.itemId === raw.id_acesso;
                     });
                     if (!abaAberta) {
                         var widget = raw.xtypeClass;
-                        var abrir = Ext.widget(widget, Illi.app.Local.get(raw.xtypeClass));
+                        var conf = Illi.app.Local.get(raw.xtypeClass);
+                        if (conf) {
+                            Ext.apply(conf, {
+                                typeComponent: raw.componente
+                            });
+                        } else {
+                            conf = {
+                                typeComponent: raw.componente
+                            };
+                        }
+                        var abrir = Ext.widget(widget, conf);
                         if (obj.initial || Illi.app.permissao === undefined) {
                             Illi.app.permissao = raw.permissao;
                         }
@@ -187,17 +230,27 @@ Ext.define('Illi.view.Viewport', {
                                 beforeactivate: function (tab, opt) {
                                     Illi.app.permissao = raw.permissao;
                                 },
-                                afterlayout: function (tab, layout, opt) {
+                                activate: function (tab, opt) {
+                                    if (tab.handlerActiveAction && typeof (tab.handlerActiveAction) === "function") {
+                                        tab.handlerActiveAction(tab, opt);
+                                    }
+                                },
+                                deactivate: function (tab, opt) {
+                                    if (tab.handlerDesactiveAction && typeof (tab.handlerDesactiveAction) === "function") {
+                                        tab.handlerDesactiveAction(tab, opt);
+                                    }
                                 },
                                 afterrender: function (tab, opt) {
                                     var abaAberta = tabCenter.items.findBy(function (aba) {
-                                        return aba.title === raw.text;
+                                        return aba.itemId === raw.id_acesso;
                                     });
                                     if (obj.initial) {
                                         tabCenter.setActiveTab(abaAberta);
                                     }
                                 }
-                            }
+                            },
+                            handlerActiveAction: false,
+                            handlerDesactiveAction: false
                         }).show();
                         delete widget;
                         delete abrir;

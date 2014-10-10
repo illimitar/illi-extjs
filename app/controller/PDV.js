@@ -181,22 +181,9 @@ Ext.define('Illi.controller.PDV', {
     init: function () {
         //alert('PDV::init()');
         var me = this;
-        // ativa simulação da impressora fiscal
-//        me.simulacaoECF = false;
         me.ecf = false;
-        //
-//        Ext.Ajax.on("beforerequest", function(conn, options, eOpts) {
-//            try {
-//                console.debug("PHP --->", options.url, options.params);
-//            } catch (err) {
-//                console.error(err);
-//            }
-//
-//        });
         me.setVariavelGlobal();
-        //
-        //
-        //
+        me.tecladoEstadoMapa = true;
         me.janelaTeclasAtalho = Ext.widget('janelaTeclasAtalho');
         me.janelaTeclado = Ext.widget('janelaTeclado');
         me.janelaAutenticador = Ext.widget('janelaAutenticador');
@@ -227,9 +214,6 @@ Ext.define('Illi.controller.PDV', {
         me.janelaVendedor = Ext.widget('janelaVendedor');
         me.janelaDocumento = Ext.widget('janelaDocumento');
         me.janelaTabelaPrecoVenda = Ext.widget('janelaTabelaPrecoVenda');
-        //
-        //
-        //
         me.storeProdutos = Ext.create('Illi.store.produto.Produtos', {
             autoLoad: false,
             storeId: 'pdvStoreProduto'
@@ -253,14 +237,10 @@ Ext.define('Illi.controller.PDV', {
             'forceOrder': '1'
         };
         me.storePrazoFechamento.load();
-        //
-        //
-        //
         me.control({
             'barraOpcoesGerais button': {
                 click: me.onClick
             },
-            //
             'campoAutenticador': {
                 afterrender: me.onAfterRender
             },
@@ -295,7 +275,6 @@ Ext.define('Illi.controller.PDV', {
             'campoDocumento': {
                 afterrender: me.onAfterRender
             },
-            //
             'formularioConfiguracaoECF': {
                 afterrender: me.onAfterRender
             },
@@ -311,14 +290,12 @@ Ext.define('Illi.controller.PDV', {
             'formularioDevolucaoEdicao': {
                 afterrender: me.onAfterRender
             },
-            //
             'imagemLogotipo': {
                 afterrender: me.onAfterRender
             },
             'imagemProduto': {
                 afterrender: me.onAfterRender
             },
-            //
             'janelaTeclasAtalho': {
                 afterrender: me.onAfterRender
             },
@@ -428,8 +405,7 @@ Ext.define('Illi.controller.PDV', {
                 afterrender: me.onAfterRender
             },
             'janelaVendaRapida': {
-                afterrender: me.onAfterRender,
-                show: me.onShow
+                afterrender: me.onAfterRender
             },
             'janelaVendedor': {
                 afterrender: me.onAfterRender
@@ -437,7 +413,6 @@ Ext.define('Illi.controller.PDV', {
             'janelaDocumento': {
                 afterrender: me.onAfterRender
             },
-            //
             'listaCancelamentoVenda': {
                 afterrender: me.onAfterRender,
                 select: me.onSelect,
@@ -516,7 +491,6 @@ Ext.define('Illi.controller.PDV', {
                 select: me.onSelect,
                 cellkeydown: me.onCellKeyDown
             },
-            //
             'painelCentral': {
                 afterrender: me.onAfterRender
             },
@@ -608,7 +582,6 @@ Ext.define('Illi.controller.PDV', {
         control.permitirTroco = true;
         control.totalVenda = 0; // control.cupom.total
         control.totalDesconto = 0; // control.cupom.desconto
-//        control.totalDescontoPorcentagem = 0; // control.cupom.porcenta_desconto
         control.totalPagamento = 0; // control.cupom.pagamento.
         control.totalTroco = 0; // control.cupom.troco
         control.setTabelaPreco(0, '');
@@ -617,7 +590,7 @@ Ext.define('Illi.controller.PDV', {
         control.setDocumento();
     },
     setCliente: function (id, nome) {
-        //alert('PDV::setCliente()', id, nome);
+        //alert('PDV::setCliente()');
         var control = this;
         control.clienteSelecionado = {
             'id': id,
@@ -628,7 +601,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     setVendedor: function (id, nome) {
-        //alert('PDV::setVendedor()', id, nome);
+        //alert('PDV::setVendedor()');
         var control = this;
         control.vendedorSelecionado = {
             'id': id,
@@ -639,7 +612,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     setDocumento: function (documento) {
-        //alert('PDV::setDocumento()', documento);
+        //alert('PDV::setDocumento()');
         var control = this;
         control.documentoSelecionado = documento;
         if (documento) {
@@ -649,7 +622,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     setRelogio: function (callback) {
-        //alert('PDV::setRelogio()', callback);
+        //alert('PDV::setRelogio()');
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var doSucessoRelogio = function (response) {
@@ -671,13 +644,13 @@ Ext.define('Illi.controller.PDV', {
         control.xhrRelogio(true, doSucessoRelogio, doFalhaRelogio);
     },
     setRelogioSync: function (callback) {
-        //alert('PDV::setRelogioSync()', callback);
+        //alert('PDV::setRelogioSync()');
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var task = new Ext.util.TaskRunner();
         var relogio = task.newTask({
             run: function () {
-                //alert('taskRelogioSync.newTask.run()', control.relogioHorario);
+                //alert('taskRelogioSync.newTask.run()');
                 var doSucessoRelogio = function (response) {
                     control.relogio.stop();
                     control.relogioHorario = response.horario * 1000;
@@ -703,17 +676,17 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     setRodapeOperador: function (valor) {
-        //alert('PDV::setRodapeOperador()', valor);
+        //alert('PDV::setRodapeOperador()');
         var control = this;
         control.janelaVendaRapida.down('#pdvRodapeOperador').update('<b>Operador: </b>' + valor);
     },
     setRodapeCaixa: function (valor) {
-        //alert('PDV::setRodapeCaixa()', valor);
+        //alert('PDV::setRodapeCaixa()');
         var control = this;
         control.janelaVendaRapida.down('#pdvRodapeCaixa').update('<b>Caixa: </b>' + valor);
     },
     setRodapeVendedor: function (valor) {
-        //alert('PDV::setRodapeVendedor()', valor);
+        //alert('PDV::setRodapeVendedor()');
         var control = this;
         control.janelaVendaRapida.down('#pdvRodapeVendedor').update('<b>Vendedor: </b>' + valor);
     },
@@ -724,85 +697,67 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     setRodapeTabelaPreco: function (valor) {
-        //alert('PDV::setRodapeTabelaPreco()', valor);
+        //alert('PDV::setRodapeTabelaPreco()');
         var control = this;
         control.janelaVendaRapida.down('#pdvRodapeTabelaPreco').update('<b>Tabela Preço: </b>' + valor);
     },
     setSuperiorCliente: function (valor) {
-        //alert('PDV::setSuperiorCliente()', valor);
+        //alert('PDV::setSuperiorCliente()');
         var control = this;
         control.painelCliente.update(valor);
     },
     setRodapeAjuda: function () {
         //alert('PDV::pdvRodapeAjuda()');
         var control = this;
-        control.painelRodape.add(
-//                {
-//                    xtype: 'panel',
-//                    itemId: 'pdvRodapeAjuda',
-//                    style: {cursor: "pointer"},
-//                    padding: '0 5 0 5',
-//                    cls: 'rodape',
-//                    html: '<b>CTRL + H: Ajuda</b>',
-//                    listeners: {
-//                        click: {
-//                            element: 'el',
-//                            fn: function () {
-//                                control.janelaTeclasAtalhoExibir();
-//                            }
-//                        }
-//                    }
-//                },
-                {
-                    xtype: 'image',
-                    style: {cursor: "pointer"},
-                    itemId: 'suporteIlli',
-                    src: Illi.app.Util.getPath("/resources/images/icones/suporte.png"),
-                    tooltip: "Suporte",
-                    padding: 0,
-                    height: 36,
-                    listeners: {
-                        click: {
-                            element: 'el',
-                            fn: function () {
-                                try {
-                                    Ext.MessageBox.show({
-                                        title: 'Atenção',
-                                        msg: "<h3>Carregando acesso remoto</h3>",
-                                        waitConfig: {interval: 0}
-                                    });
-                                    var url = Illi.app.Local.get('suporte');
-                                    Ext.Ajax.request({
-                                        method: 'POST',
-                                        url: (url ? url : "http://127.0.0.1:12000/suporte"),
-                                        success: function (response) {
+        control.painelRodape.add({
+            xtype: 'image',
+            style: {cursor: "pointer"},
+            itemId: 'suporteIlli',
+            src: Illi.app.Util.getPath("/resources/images/icones/suporte.png"),
+            tooltip: "Suporte",
+            padding: 0,
+            height: 36,
+            listeners: {
+                click: {
+                    element: 'el',
+                    fn: function () {
+                        try {
+                            Ext.MessageBox.show({
+                                title: 'Atenção',
+                                msg: "<h3>Carregando acesso remoto</h3>",
+                                waitConfig: {interval: 0}
+                            });
+                            var url = Illi.app.Local.get('suporte');
+                            Ext.Ajax.request({
+                                method: 'POST',
+                                url: (url ? url : "http://127.0.0.1:12000/suporte"),
+                                success: function (response) {
+                                    try {
+                                        var retorno = Ext.JSON.decode(response.responseText);
+                                        if (retorno.finalizado === true) {
 
-                                            try {
-                                                var retorno = Ext.JSON.decode(response.responseText);
-                                                if (retorno.finalizado === true) {
-
-                                                } else {
-                                                    window.open("http://app.illi.com.br/Remoto.exe", "illi");
-                                                }
-                                            } catch (err) {
-                                                window.open("http://app.illi.com.br/Remoto.exe", "illi");
-                                            }
-                                            Ext.MessageBox.hide();
-                                        },
-                                        failure: function () {
-                                            Ext.MessageBox.hide();
+                                        } else {
                                             window.open("http://app.illi.com.br/Remoto.exe", "illi");
                                         }
-                                    });
-                                } catch (err) {
-                                    console.error(err);
+                                    } catch (err) {
+                                        window.open("http://app.illi.com.br/Remoto.exe", "illi");
+                                    }
+                                    Ext.MessageBox.hide();
+                                },
+                                failure: function () {
                                     Ext.MessageBox.hide();
                                     window.open("http://app.illi.com.br/Remoto.exe", "illi");
                                 }
-                            }
+                            });
+                        } catch (err) {
+                            console.error(err);
+                            Ext.MessageBox.hide();
+                            window.open("http://app.illi.com.br/Remoto.exe", "illi");
                         }
                     }
-                },
+                }
+            }
+        },
         {
             xtype: 'image',
             style: {cursor: "pointer"},
@@ -819,20 +774,21 @@ Ext.define('Illi.controller.PDV', {
                     }
                 }
             }
-        }
-        );
+        });
     },
     setCache: function (cache) {
         //alert('PDV::setCache()');
         var control = this;
-        var doSucessoCache = function () {
-            closepage = true;
-            window.location.reload(true);
-        };
-        control.xhrCache(cache, doSucessoCache, Ext.emptyFn);
+        if (control.janelaVendaRapida.typeComponent === "FULLSCREEN") {
+            var doSucessoCache = function () {
+                closepage = true;
+                window.location.reload(true);
+            };
+            control.xhrCache(cache, doSucessoCache, Ext.emptyFn);
+        }
     },
     getQuantidadeProduto: function (codigo) {
-        //alert('PDV::getQuantidadeProduto()', codigo);
+        //alert('PDV::getQuantidadeProduto()');
         var quantidade = 1;
         var n = codigo.toLowerCase().split("x", 2);
         if (n.length > 1) {
@@ -857,12 +813,6 @@ Ext.define('Illi.controller.PDV', {
         }
         return false;
     },
-    //
-    //
-    //
-    //
-    //
-    //
     setTabelaPreco: function (id, nome) {
         var control = this;
         control.tabelaSelecionada = {
@@ -884,14 +834,14 @@ Ext.define('Illi.controller.PDV', {
         codigo.store.getProxy().extraParams = proxy;
         codigo.store.load({
             callback: function () {
-                //alert('codigo.store.load.callback()', control.ultimaSessao.contaCaixaPadrao);
+                //alert('codigo.store.load.callback()');
                 codigo.setValue(control.ultimaSessao.contaCaixaPadrao);
                 codigo.focus();
             }
         });
     },
     setConfiguracaoECF: function (form, sucesso, falha) {
-        //alert('PDV::setConfiguracaoECF()', form, sucesso, falha);
+        //alert('PDV::setConfiguracaoECF()');
         var control = this;
         control.MSG('Salvando Configuração...');
         setTimeout(function () {
@@ -906,7 +856,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     setConfiguracaoImpressao: function (form, sucesso, falha) {
-        //alert('PDV::setConfiguracaoImpressao()', form, sucesso, falha);
+        //alert('PDV::setConfiguracaoImpressao()');
         var control = this;
         control.MSG('Salvando Configuração...');
         setTimeout(function () {
@@ -927,46 +877,9 @@ Ext.define('Illi.controller.PDV', {
     },
     MSG: function (mensagem, acao, confirmar) {
         Illi.app.Util.MSG(mensagem, acao, confirmar);
-//        var control = this;
-//        acao = (acao && typeof (acao) === 'function' ? acao : false);
-//        try {
-//            if (mensagem) {
-//                if (acao) {
-//                    if (confirmar) {
-//                        Ext.MessageBox.show({
-//                            title: 'Atenção',
-//                            msg: '<h3>' + mensagem + '</h3>',
-//                            buttons: Ext.Msg.YESNO,
-//                            waitConfig: {interval: 0},
-//                            fn: acao
-//                        });
-//                    } else {
-//                        Ext.MessageBox.alert('Atenção', '<h3>' + mensagem + '</h3>', acao);
-//                    }
-//                } else {
-////                    Ext.MessageBox.show({
-////                        title: 'Atenção',
-////                        msg: '<h3>' + mensagem + '</h3>',
-////                        waitConfig: {interval: 0}
-////                    });
-//                    Ext.MessageBox.wait('<h3>' + mensagem + '</h3>', 'Aguarde...', {interval: 0});
-//                }
-//            } else {
-//                if (Ext.MessageBox.isVisible()) {
-//                    Ext.MessageBox.hide();
-//                }
-//            }
-//        } catch (e) {
-//            if (Ext.MessageBox.isVisible()) {
-//                Ext.MessageBox.hide();
-//            }
-//        }
     },
-    //
-    //
-    //
     xhrRelogio: function (first, sucesso, falha) {
-        //alert('PDV::xhrRelogio()', first, sucesso, falha);
+        //alert('PDV::xhrRelogio()');
         var control = this;
         if (first) {
             control.MSG("Sincronizando relógio!");
@@ -976,9 +889,7 @@ Ext.define('Illi.controller.PDV', {
                 if (response) {
                     error(response);
                 }
-                //if (first) {
                 control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente! (relogio)', falha);
-                //}
             };
             try {
                 var doSucesso = function (data) {
@@ -1014,7 +925,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrPreAbertura: function (idConta, sucesso, falha) {
-        //alert('PDV::xhrPreAbertura()', idConta, sucesso, falha);
+        //alert('PDV::xhrPreAbertura()');
         var control = this;
         control.MSG('Iniciando Sistema...');
         setTimeout(function () {
@@ -1057,7 +968,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrConfiguracao: function (idConta, sucesso, falha) {
-        //alert('PDV::xhrAbertura()', idConta, sucesso, falha);
+        //alert('PDV::xhrAbertura()');
         var control = this;
         control.MSG('Abrindo Caixa...');
         setTimeout(function () {
@@ -1099,7 +1010,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrAbertura: function (idConta, sucesso, falha) {
-        //alert('PDV::xhrAbertura()', idConta, sucesso, falha);
+        //alert('PDV::xhrAbertura()');
         var control = this;
         control.MSG('Abrindo Caixa...');
         setTimeout(function () {
@@ -1141,7 +1052,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrAutenticacao: function (senha, funcao, acao, idConta, sucesso, falha) {
-        //alert('PDV::xhrAutenticacao()', senha, sucesso, falha);
+        //alert('PDV::xhrAutenticacao()');
         var control = this;
         control.MSG('Autenticando...');
         var id_movimentacao = (control.itemImpressaoSelecionado ? control.itemImpressaoSelecionado.get('m.id') : null);
@@ -1190,7 +1101,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrTroca: function (codigo, sucesso, falha) {
-        //alert('PDV::xhrTroca()', codigo, sucesso, falha);
+        //alert('PDV::xhrTroca()');
         var control = this;
         control.MSG('Analizando Troca...');
         setTimeout(function () {
@@ -1234,7 +1145,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrCache: function (caching, sucesso, falha) {
-        //alert('PDV::xhrCache()', caching, sucesso, falha);
+        //alert('PDV::xhrCache()');
         var control = this;
         if (caching) {
             control.MSG('Desativando Cache...');
@@ -1265,7 +1176,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrFinalizaVenda: function (shift, idCliente, idVendedor, documento, idConta, totalVenda, totalDesconto, totalPagamento, totalTroco, listaItensVenda, listaItensCancelados, listaItensPagamento, sucesso, falha) {
-        //alert('PDV::xhrFinalizaVenda(shift, idCliente, idVendedor, documento, idConta, totalVenda, totalDesconto, totalPagamento, totalTroco, listaItensVenda, listaItensCancelados, listaItensPagamento);
+        //alert('PDV::xhrFinalizaVenda()');
         var control = this;
         control.MSG('Finalizando Venda...');
         setTimeout(function () {
@@ -1323,14 +1234,8 @@ Ext.define('Illi.controller.PDV', {
         }, 150);
     },
     xhrImpressao: function (conteudo, sucesso, falha) {
-        //alert('PDV::xhrImpressao()', conteudo, sucesso, falha);
+        //alert('PDV::xhrImpressao()');
         var control = this;
-//        if (control.simulacaoECF === true) {
-//            if (sucesso) {
-//                sucesso(false);
-//            }
-//            return;
-//        }
         var impressoraOffline = true;
         var impressoraServidor = 'http://127.0.0.1:11000/proxy/impressora.php';
         var impressoraPorta = 'COM1';
@@ -1393,7 +1298,7 @@ Ext.define('Illi.controller.PDV', {
                             break;
                     }
                     for (iQuebra = 0; iQuebra < impressoraQuebraPagina; iQuebra++) {
-                        conteudo = conteudo + "\n"; // + iQuebra;
+                        conteudo = conteudo + "\n";
                     }
                     Ext.Ajax.request({
                         url: impressoraServidor,
@@ -1416,7 +1321,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     xhrImpressaoTeste: function (impressoraServidor, impressoraPorta, impressoraDrive, impressoraQuebraPagina, impressoraGuilhotina, impressoraConteudo, sucesso, falha) {
-        //alert('PDV::xhrImpressaoTeste()', impressoraServidor, impressoraPorta, impressoraDrive, impressoraQuebraPagina, impressoraGuilhotina, impressoraConteudo, sucesso, falha);
+        //alert('PDV::xhrImpressaoTeste()');
         var control = this;
         control.MSG('Imprimindo Teste...');
         setTimeout(function () {
@@ -1459,7 +1364,7 @@ Ext.define('Illi.controller.PDV', {
                         break;
                 }
                 for (iQuebra = 0; iQuebra < impressoraQuebraPagina; iQuebra++) {
-                    impressoraConteudo = impressoraConteudo + "\n"; // + iQuebra;
+                    impressoraConteudo = impressoraConteudo + "\n";
                 }
                 Ext.Ajax.request({
                     url: 'http://' + impressoraServidor,
@@ -1479,100 +1384,6 @@ Ext.define('Illi.controller.PDV', {
             }
         }, 250);
     },
-    xhrCupomImprimirPHP: function (params, servidor, drive, concomitante, sucesso, falha) {
-//        var impressoraServidor = '../ecf/send';
-//        var impressoraDrive = 0;
-//        var impressoraConcomitante = false;
-//        var impressoraOffline = true;
-//        if (servidor !== undefined && servidor !== false) {
-//            impressoraDrive = drive;
-//            impressoraConcomitante = true;
-//            impressoraOffline = false;
-//        } else {
-//            var pdvImpressoraECF = Illi.app.Local.get('pdvImpressoraECF');
-//            if (pdvImpressoraECF) {
-//                impressoraDrive = pdvImpressoraECF.drive;
-//                impressoraConcomitante = pdvImpressoraECF.concomitante;
-//                impressoraOffline = pdvImpressoraECF.offline;
-//            }
-//        }
-//        if (impressoraOffline) {
-////            sucesso(false);
-//        } else {
-//            if (!impressoraConcomitante && params.acao !== undefined) {
-//                switch (params.acao) {
-//                    case 'Leitura X':
-//                    case 'Redução Z':
-//                    case 'Sangria':
-//                    case 'Suprimento':
-//                    case 'Relatorio Gerencial':
-//                    case 'Abrir Cupom':
-//                        impressoraConcomitante = true;
-//                        break;
-//                    default:
-//                        if (concomitante) {
-//                            impressoraConcomitante = true;
-//                        }
-//                        break;
-//                }
-//            }
-//            if (impressoraConcomitante) {
-//                Ext.MessageBox.show({
-//                    msg: '<h3>' + params.acao + '</h3>',
-//                    wait: true,
-//                    waitConfig: {interval: 0}
-//                });
-//                //setTimeout(function() {
-//                var doFalha = function(response) {
-//                    alert("doFalha " + params.acao, response);
-//                    if (response) {
-//                        error(response);
-//                    }
-//                    control.MSG('Comunicação com o servidor falhou ou servidor retornou uma operação ilegal, tente novamente!(imprimircupom)', (falha ? falha : false));
-//                };
-//                try {
-//                    var doSucesso = function(data) {
-//                        alert("doSucesso " + params.acao, data);
-//                        if (data.responseText) {
-//                            var response = Ext.JSON.decode(data.responseText);
-//                            if (response.finalizado === true) {
-//                                control.MSG();
-//                                sucesso(response);
-//                            } else {
-//                                if (falha !== 'hide') {
-//                                    control.MSG('Impressão no cupom fiscal não foi efetuada!<br /><b>Motivo:</b> ' + response.observacao, function() {
-//                                        falha(response);
-//                                    });
-//                                } else {
-//                                    alert("***** falha *****", response);
-//                                    control.MSG();
-//                                    sucesso(response);
-//                                }
-//                            }
-//                        } else {
-//                            doFalha(false);
-//                        }
-//                    };
-//                    params.servidor = pdvImpressoraECF.servidor;
-//                    Ext.Ajax.request({
-//                        url: '../paf/ecf/send',
-//                        method: 'POST',
-//                        async: false,
-//                        params: params,
-//                        success: doSucesso,
-//                        failure: doFalha
-//                    });
-//                } catch (e) {
-//                    error(e);
-//                    doFalha(e);
-//                }
-//                // }, 250);
-//            } else {
-//
-//                sucesso(false);
-//            }
-//        }
-    },
     xhrCupomImprimir: function (params, servidor, drive, concomitante, sucesso, falha) {
         console.debug("********* ECF ******** => " + params.comando);
         sucesso = (sucesso && typeof (sucesso) === 'function' ? sucesso : false);
@@ -1580,12 +1391,6 @@ Ext.define('Illi.controller.PDV', {
             falha = (falha && typeof (falha) === 'function' ? falha : false);
         }
         var control = this;
-//        if (control.simulacaoECF === true) {
-//            if (sucesso) {
-//                sucesso(false);
-//            }
-//            return;
-//        }
         var impressoraConcomitante = false;
         var impressoraOffline = true;
         var pdvImpressoraECF = Illi.app.Local.get('pdvImpressoraECF');
@@ -1601,7 +1406,6 @@ Ext.define('Illi.controller.PDV', {
                     case 'Sangria':
                     case 'Suprimento':
                     case 'Relatorio Gerencial':
-                        //case 'Abrir Cupom':
                         impressoraConcomitante = true;
                         break;
                     default:
@@ -1630,9 +1434,8 @@ Ext.define('Illi.controller.PDV', {
                             } else {
                                 if (falha !== 'hide') {
                                     control.MSG('Impressão no cupom fiscal não foi efetuada!<br /><b>Motivo:</b> ' + response.observacao, function () {
-                                        alert("control.MSG >>> ", response.observacao);
+                                        //alert("control.MSG >>> ", response.observacao);
                                         if (/(não está Ativo)/gi.test(response.observacao)) {
-//                                            control.estadoECF = false;
                                             control.doEstado(function () {
                                                 control.xhrCupomImprimir(params, servidor, drive, concomitante, sucesso, falha);
                                             });
@@ -1643,7 +1446,7 @@ Ext.define('Illi.controller.PDV', {
                                         }
                                     });
                                 } else {
-                                    alert("***** falha *****", response);
+                                    //alert("***** falha *****", response);
                                     if (sucesso) {
                                         sucesso(response);
                                     }
@@ -1659,19 +1462,13 @@ Ext.define('Illi.controller.PDV', {
                         listeners: {
                             'beforerequest': {
                                 fn: function (con, opt) {
-                                    alert("ACBR--->", params.acao);
+                                    //alert("ACBR--->", params.acao);
                                     if (params.acao) {
                                         control.MSG(params.acao);
                                     }
                                 },
                                 scope: this
                             },
-//                            'requestcomplete': {
-//                                fn: function(con, res, opt) {
-//                                    Ext.get(document.body).unmask();
-//                                },
-//                                scope: this
-//                            },
                             'requestexception': {
                                 fn: function (con, res, opt) {
                                     control.MSG("Falha ao Conectar ao ECF, Verifique as Configurações!", function () {
@@ -1703,7 +1500,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     xhrCancelamentoVenda: function (efetuarCancelamento, idConta, idCancelamentoVenda, sucesso, falha) {
-        //alert('PDV::xhrCancelamentoVenda()', idCancelamentoVenda, sucesso, falha);
+        //alert('PDV::xhrCancelamentoVenda()');
         var control = this;
         control.MSG('Cancelando Venda...');
         setTimeout(function () {
@@ -1747,7 +1544,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrSegundaVia: function (id_impressao, ecf, confirmacao, sucesso, falha) {
-        //alert('PDV::xhrSegundaVia()', id_impressao, sucesso, falha);
+        //alert('PDV::xhrSegundaVia()');
         var control = this;
         control.MSG('Gerando Segunda Via...');
         setTimeout(function () {
@@ -1790,7 +1587,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrTesteImpressao: function (idConta, sucesso, falha) {
-        //alert('PDV::xhrTesteImpressao()', idConta, sucesso, falha);
+        //alert('PDV::xhrTesteImpressao()');
         var control = this;
         control.MSG('Efetuando Teste de Impressão...');
         setTimeout(function () {
@@ -1833,7 +1630,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrDevolucaoEdicao: function (data, sucesso, falha) {
-        //alert('PDV::xhrDevolucaoEdicao()', data, sucesso, falha);
+        //alert('PDV::xhrDevolucaoEdicao()');
         var control = this;
         control.MSG('Salvando Devolução...');
         setTimeout(function () {
@@ -1877,7 +1674,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrDevolucaoCancelamento: function (idDevolucao, sucesso, falha) {
-        //alert('PDV::xhrDevolucaoCancelamento()', idDevolucao, sucesso, falha);
+        //alert('PDV::xhrDevolucaoCancelamento()');
         var control = this;
         control.MSG('Cancelando Devolução...');
         setTimeout(function () {
@@ -1921,7 +1718,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrDevolucaoImpressao: function (idConta, idDevolucao, sucesso, falha) {
-        //alert('PDV::xhrDevolucaoImpressao()', idConta, idDevolucao, sucesso, falha);
+        //alert('PDV::xhrDevolucaoImpressao()');
         var control = this;
         control.MSG('Gerando Impressão...');
         setTimeout(function () {
@@ -1966,7 +1763,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrSangria: function (data, sucesso, falha) {
-        //alert('PDV::xhrSangria()', data, sucesso, falha);
+        //alert('PDV::xhrSangria()');
         var control = this;
         control.MSG('Gerando Sangria...');
         setTimeout(function () {
@@ -2010,7 +1807,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrSuprimento: function (data, sucesso, falha) {
-        //alert('PDV::xhrSuprimento()', data, sucesso, falha);
+        //alert('PDV::xhrSuprimento()');
         var control = this;
         control.MSG('Gerando Suprimento...');
         setTimeout(function () {
@@ -2054,7 +1851,7 @@ Ext.define('Illi.controller.PDV', {
         }, 250);
     },
     xhrPreFechamento: function (idConta, tentativa, itens, sucesso, falha) {
-        //alert('PDV::xhrPreFechamento()', idConta, tentativa, itens, sucesso, falha);
+        //alert('PDV::xhrPreFechamento()');
         var control = this;
         control.MSG('Conferindo Caixa...');
         var doFalha = function (response) {
@@ -2218,10 +2015,6 @@ Ext.define('Illi.controller.PDV', {
             }
         }, 250);
     },
-    //
-    //
-    //
-
     doAbrirCaixa: function () {
         var control = this;
         control.ultimaSessao = Illi.app.Local.get('pdvUltimaSessao'); // armazena a ultima informação de caixa.
@@ -2276,10 +2069,8 @@ Ext.define('Illi.controller.PDV', {
                         case 'estRequerZ':
                             var ret = function (retz) {
                                 iniciarCaixa();
-                                //control.MSG("Não é possivel operar o ECF, com redução Z pendente!<br/> Verifique se emitiu a redução do dia anterior!");
                             };
                             setTimeout(function () {
-                                //control.doReducaoZCupom(ret, ret, true, "Redução Z Pendente!</br>Emitir Agora !?");
                                 control.doReducaoZ(ret, ret, true, "Redução Z Pendente!</br>Emitir Agora?");
                             }, 50);
                             break;
@@ -2415,7 +2206,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     doAdicionarItemCupom: function (codigo, descricao, unidade, quantidade, valor, desconto, sucesso, falha, concomitante, aliquota) {
-        // //alert('PDV::doAdicionarItemCupom()', codigo, descricao, unidade, quantidade, valor, sucesso, falha, concomitante);
+        //alert('PDV::doAdicionarItemCupom()');
         var control = this;
         var doAdicionarItem = function () {
             aliquota = (aliquota ? aliquota : 19);
@@ -2472,11 +2263,9 @@ Ext.define('Illi.controller.PDV', {
                 }
             });
         }
-        //var estado = control.doEstado(doFalha);
-        //control.xhrCupomImprimir(params, false, false, concomitante, sucesso, 'hide');
     },
     doCancelarItemCupom: function (item, sucesso, falha, concomitante) {
-        //alert('PDV::doCancelarItemCupom()', item, sucesso, falha, concomitante);
+        //alert('PDV::doCancelarItemCupom()');
         var control = this;
         var params = {
             acao: 'Cancelar Item',
@@ -2486,7 +2275,7 @@ Ext.define('Illi.controller.PDV', {
         control.xhrCupomImprimir(params, false, false, concomitante, sucesso, falha);
     },
     doTotalCupom: function (sucesso, falha, concomitante) {
-        //alert('PDV::doTotalCupom()', sucesso, falha, concomitante);
+        //alert('PDV::doTotalCupom()');
         var control = this;
         var params = {
             comando: "ECF.SubtotalizaCupom",
@@ -2495,7 +2284,7 @@ Ext.define('Illi.controller.PDV', {
         control.xhrCupomImprimir(params, false, false, concomitante, sucesso, falha);
     },
     doTotalDescontoCupom: function (valor, sucesso, falha, concomitante) {
-        //alert('PDV::doTotalDescontoCupom()', valor, sucesso, falha, concomitante);
+        //alert('PDV::doTotalDescontoCupom()');
         var control = this;
         var params = {
             comando: "ECF.SubtotalizaCupom(" + valor + ")",
@@ -2505,7 +2294,7 @@ Ext.define('Illi.controller.PDV', {
         control.xhrCupomImprimir(params, false, false, concomitante, sucesso, falha);
     },
     doNumeroCupom: function (sucesso, falha, concomitante) {
-        //alert('PDV::doNumeroCupom()', sucesso, falha, concomitante);
+        //alert('PDV::doNumeroCupom()');
         var control = this;
         var params = {
             comando: "ECF.NumCupom",
@@ -2534,10 +2323,10 @@ Ext.define('Illi.controller.PDV', {
         control.xhrCupomImprimir(params, false, false, true, doSucesso, doFalha);
     },
     doAdicionarPagamentoCupom: function (descricao, valor, sucesso, falha, concomitante) {
-        //alert('PDV::doAdicionarPagamentoCupom()', descricao, valor, sucesso, falha, concomitante);
+        //alert('PDV::doAdicionarPagamentoCupom()');
         var control = this;
         var adicionarPagamento = function (ret) {
-            var codigo = ret.observacao.substr(0, 4).trim(); //(control.simulacaoECF === true ? ret.observacao : );
+            var codigo = ret.observacao.substr(0, 4).trim();
             var params = {
                 comando: "ECF.EfetuaPagamento(" + codigo + ", " + valor + ")",
                 acao: 'Adicionar Pagamento',
@@ -2667,14 +2456,6 @@ Ext.define('Illi.controller.PDV', {
         };
         var doInformacaoECF = function (responseECF) {
             if (!control.ecf) {
-//                if (control.simulacaoECF === true) {
-//                    control.ecf = {
-//                        numero_serie: "000000000000000",
-//                        fabricante: "ILLI",
-//                        modelo: "Fictícia"
-//                    };
-//                    doCallback(responseECF);
-//                } else {
                 if (responseECF.sucesso === true) {
                     var doIdentificaPAF = function (response) {
                         var doInfFabricante = function (response) {
@@ -2706,7 +2487,6 @@ Ext.define('Illi.controller.PDV', {
                 } else {
                     doCallback(responseECF);
                 }
-//                }
             } else {
                 doCallback(responseECF);
             }
@@ -2795,15 +2575,10 @@ Ext.define('Illi.controller.PDV', {
             estadoOffline();
         }
     },
-    //
-    //
-    //
     janelaTeclasAtalhoExibir: function () {
         //alert('PDV::janelaTeclasAtalhoExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
-        // control.cenarioAtivo = 'teclas-atalho';
-        //control.janelaTeclasAtalho.removeAll();
         control.janelaTeclasAtalho.cenario = cenario;
         control.janelaTeclasAtalho.show();
     },
@@ -2815,9 +2590,6 @@ Ext.define('Illi.controller.PDV', {
             control.cenarioAtivo = cenario;
         });
     },
-    //
-    //
-    //
     janelaTecladoExibir: function () {
         //alert('PDV::janelaTecladoExibir()');
         var control = this;
@@ -2828,11 +2600,8 @@ Ext.define('Illi.controller.PDV', {
         var control = this;
         control.janelaTeclado.hide();
     },
-    //
-    //
-    //
     janelaAutenticadorExibir: function (funcao, callback, acao, failback, novoCenario) {
-        //alert('PDV::janelaAutenticadorExibir()', funcao, callback, novoCenario);
+        //alert('PDV::janelaAutenticadorExibir()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var bypass = true;
@@ -2864,7 +2633,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaAutenticadorConfirmar: function (bypass) {
-        //alert('PDV::janelaAutenticadorConfirmar()', bypass);
+        //alert('PDV::janelaAutenticadorConfirmar()');
         var control = this;
         var acao = control.janelaAutenticador.acao;
         var doSucessoAutenticador = function (response, bypass) {
@@ -2887,7 +2656,7 @@ Ext.define('Illi.controller.PDV', {
         control.campoAutenticador.setValue('');
     },
     janelaAutenticadorOcultar: function (callback, bypass, failback) {
-        //alert('PDV::janelaAutenticadorOcultar()', callback, bypass);
+        //alert('PDV::janelaAutenticadorOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = (failback ? control.janelaAutenticador.cenarioOut : control.janelaAutenticador.cenario);
@@ -2899,11 +2668,9 @@ Ext.define('Illi.controller.PDV', {
             control.campoAutenticador.blur();
             control.janelaAutenticador.hide(null, function () {
                 control.cenarioAtivo = cenario;
-                //                setTimeout(function() {
                 if (callback) {
                     callback();
                 }
-                //                }, 250);
             });
         } else {
             control.cenarioAtivo = cenario;
@@ -2912,22 +2679,16 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    //
-    //
-    //
     janelaCancelamentoVendaExibir: function () {
         //alert('PDV::janelaCancelamentoVendaExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
-        //        var doSucessoAutenticador = function() {
         control.cenarioAtivo = 'cancelamento-venda';
         control.janelaCancelamentoVenda.removeAll();
         control.janelaCancelamentoVenda.ultimoItemECF = false;
         control.janelaCancelamentoVenda.add({xtype: 'listaCancelamentoVenda', idConta: control.ultimaSessao.contaCaixa, ecf: control.ecf});
         control.janelaCancelamentoVenda.cenario = cenario; // 'venda'
         control.janelaCancelamentoVenda.show();
-//        };
-        //        control.janelaAutenticadorExibir('cancelamento-venda', doSucessoAutenticador);
     },
     janelaCancelamentoVendaConfirmar: function () {
         //alert('PDV::janelaCancelamentoVendaConfirmar()');
@@ -2943,7 +2704,6 @@ Ext.define('Illi.controller.PDV', {
                 control.listaCancelamentoVendaFocus();
             };
             if (continuarCancelamento === true) {
-                // control.janelaCancelamentoVenda.ultimoItemECF
                 var doSucessoAutenticador = function () {
                     var doSucessoCancelamentoVenda = function (response) {
                         // imprime e fecha a janela
@@ -2990,9 +2750,6 @@ Ext.define('Illi.controller.PDV', {
             control.cenarioAtivo = cenario;
         });
     },
-    //
-    //
-    //
     janelaCancelarItemExibir: function () {
         //alert('PDV::janelaCancelarItemExibir()');
         var control = this;
@@ -3018,9 +2775,6 @@ Ext.define('Illi.controller.PDV', {
             control.cenarioAtivo = cenario;
         });
     },
-    //
-    //
-    //
     janelaClienteExibir: function () {
         //alert('PDV::janelaClienteExibir()');
         var control = this;
@@ -3122,9 +2876,6 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    //
-    //
-    //
     janelaClienteSelecaoExibir: function (store) {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -3155,9 +2906,6 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaVendedorSelecaoExibir: function (store, callback) {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -3186,16 +2934,12 @@ Ext.define('Illi.controller.PDV', {
         var control = this;
         var cenario = control.janelaVendedorSelecao.cenario;
         control.janelaVendedorSelecao.hide(null, function () {
-            //            setTimeout(function() {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
         });
     },
-    //
-    //
-    //
     janelaTabelaPrecoVendaExibir: function (store, callback) {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -3228,22 +2972,13 @@ Ext.define('Illi.controller.PDV', {
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaTabelaPrecoVenda.cenario;
-        //  if (control.campoVendedor !== undefined) {
         control.janelaTabelaPrecoVenda.hide(null, function () {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
         });
-//        } else {
-//            if (callback) {
-//                callback();
-//            }
-//        }
     },
-    //
-    //
-    //
     janelaConfiguracaoECFExibir: function () {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -3272,9 +3007,6 @@ Ext.define('Illi.controller.PDV', {
             control.janelaAutenticadorExibir('configuracao-ecf', doSucessoAutenticador, "Autorizou a configuração da impressora ECF.\nConta ID: " + control.ultimaSessao.contaCaixa);
         }
     },
-    //
-    //
-    //
     janelaConfiguracaoECFEmitirLeituraX: function () {
         var control = this;
         var form = control.formularioConfiguracaoECF.getForm();
@@ -3359,9 +3091,6 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaConfiguracaoImpressaoExibir: function () {
         //alert('PDV::janelaConfiguracaoImpressaoExibir()');
         var control = this;
@@ -3406,22 +3135,17 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaConfiguracaoImpressaoOcultar: function (callback) {
-        //alert('PDV::janelaConfiguracaoImpressaoOcultar()', callback);
+        //alert('PDV::janelaConfiguracaoImpressaoOcultar()');
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaConfiguracaoImpressao.cenario;
         control.janelaConfiguracaoImpressao.hide(null, function () {
-            //            setTimeout(function() {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
-            //            }, 250);
         });
     },
-    //
-    //
-    //
     janelaContaCaixaExibir: function () {
         //alert('PDV::janelaContaCaixaExibir()');
         var control = this;
@@ -3440,7 +3164,7 @@ Ext.define('Illi.controller.PDV', {
 
     },
     janelaContaCaixaConfirmar: function (conta, nome, saldo) {
-        //alert('PDV::janelaContaCaixaConfirmar()', conta, nome, saldo);
+        //alert('PDV::janelaContaCaixaConfirmar()');
         var control = this;
         if (!conta) {
             conta = control.campoContaCaixa.getValue();
@@ -3536,7 +3260,7 @@ Ext.define('Illi.controller.PDV', {
         control.campoContaCaixa.setValue('');
     },
     janelaContaCaixaOcultar: function (callback) {
-        //alert('PDV::janelaContaCaixaOcultar()', callback);
+        //alert('PDV::janelaContaCaixaOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaContaCaixa.cenario;
@@ -3544,20 +3268,15 @@ Ext.define('Illi.controller.PDV', {
             control.campoContaCaixa.triggerBlur();
             control.campoContaCaixa.blur();
             control.janelaContaCaixa.hide(null, function () {
-                //                setTimeout(function() {
                 control.cenarioAtivo = cenario;
                 if (callback) {
                     callback();
                 }
-                //                }, 250);
             });
         } else {
             setTimeout(callback, 250);
         }
     },
-    //
-    //
-    //
     janelaDescontoExibir: function (valor, tipo, titulo) {
         //alert('PDV::janelaDescontoExibir()');
         var control = this;
@@ -3634,7 +3353,6 @@ Ext.define('Illi.controller.PDV', {
                     if ((total_desconto * -1) >= control.janelaVendaRapida.totalVenda) {
                         Ext.MessageBox.alert('Atenção', '<h3>Não é possivel dar desconto maior ou igual ao total da venda!</h3>');
                     } else {
-//                        control.totalDesconto = total_desconto;
                         itemLinha = {
                             id: "D",
                             id_produto_grade: "",
@@ -3651,7 +3369,6 @@ Ext.define('Illi.controller.PDV', {
                     break;
                 case 'acrescimo_venda':
                     tipo_autenticacao = "acrescimo-venda";
-//                    control.totalDesconto = (parseFloat(control.totalDesconto) + parseFloat(valor));
                     itemLinha = {
                         id: "A",
                         id_produto_grade: "",
@@ -3673,36 +3390,26 @@ Ext.define('Illi.controller.PDV', {
                             switch (control.janelaDesconto.tipo) {
                                 case 'desconto_item':
                                     control.janelaDescontoLimpar();
-                                    //
                                     var desconto = control.listaItensVenda.getSelectionModel().getStore().getById("D");
                                     if (desconto) {
                                         control.totalDesconto = (parseFloat(control.totalDesconto) - parseFloat(desconto.get('valor_total')));
-//                                        desconto.set('situacao', 'DESATIVO');
                                         control.listaItensVenda.store.remove(desconto);
                                     }
-                                    //
                                     record.set('valor_pago', (parseFloat(record.get('valor_venda')) - parseFloat(valor)));
                                     record.commit();
-//                                    store.add(itemLinha);
-//                                    break;
                                 case 'desconto_venda':
                                     control.totalDesconto = (parseFloat(control.totalDesconto) - parseFloat(valor));
                                     store.add(itemLinha);
                                     break;
                                 case 'acrescimo_item':
                                     control.janelaDescontoLimpar();
-                                    //
                                     var acrescimo = control.listaItensVenda.getSelectionModel().getStore().getById("A");
                                     if (acrescimo) {
                                         control.totalDesconto = (parseFloat(control.totalDesconto) + parseFloat(acrescimo.get('valor_total')));
-//                                        acrescimo.set('situacao', 'DESATIVO');
                                         control.listaItensVenda.store.remove(acrescimo);
                                     }
-                                    //
                                     record.set('valor_pago', (parseFloat(record.get('valor_venda')) + parseFloat(valor)));
                                     record.commit();
-//                                    store.add(itemLinha);
-//                                    break;
                                 case 'acrescimo_venda':
                                     control.totalDesconto = (parseFloat(control.totalDesconto) + parseFloat(valor));
                                     store.add(itemLinha);
@@ -3722,7 +3429,7 @@ Ext.define('Illi.controller.PDV', {
         control.campoDesconto.setValue('');
     },
     janelaDescontoOcultar: function (callback) {
-        //alert('PDV::janelaDescontoOcultar()', callback);
+        //alert('PDV::janelaDescontoOcultar()');
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaDesconto.cenario;
@@ -3735,9 +3442,6 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaDescontoPorcentagemExibir: function (tipo) {
         //alert('PDV::janelaDescontoPorcentagemExibir()');
         var control = this;
@@ -3752,7 +3456,6 @@ Ext.define('Illi.controller.PDV', {
                 switch (tipo) {
                     case 'desconto_venda':
                         titulo = 'Desconto Venda';
-//                        valor_aplicado = valor_aplicado;
                         break;
                     case 'desconto_item':
                         titulo = 'Desconto Item ' + item;
@@ -3762,7 +3465,6 @@ Ext.define('Illi.controller.PDV', {
                         }
                         break;
                     case 'acrescimo_venda':
-//                        valor_aplicado = valor_aplicado;
                         titulo = 'Acréscimo Venda';
                         break;
                     case 'acrescimo_item':
@@ -3776,7 +3478,7 @@ Ext.define('Illi.controller.PDV', {
                 if (aberto) {
                     control.cenarioAtivo = 'desconto-porcentagem';
                     control.janelaDescontoPorcentagem.removeAll();
-                    control.janelaDescontoPorcentagem.add({xtype: 'campoDescontoPorcentagem'}); // , value: (control.totalDescontoPorcentagem > 0 ? control.totalDescontoPorcentagem : false) || (control.totalDesconto > 0 ? control.totalDesconto / control.janelaVendaRapida.totalVenda : false)
+                    control.janelaDescontoPorcentagem.add({xtype: 'campoDescontoPorcentagem'});
                     control.janelaDescontoPorcentagem.tipo = tipo;
                     control.janelaDescontoPorcentagem.titulo = titulo;
                     control.janelaDescontoPorcentagem.valor = valor_aplicado;
@@ -3789,14 +3491,6 @@ Ext.define('Illi.controller.PDV', {
                     Ext.MessageBox.alert('Atenção', '<h3>Não é possivel dar desconto no item!</h3>');
                 }
             }
-
-//            control.cenarioAtivo = 'desconto-porcentagem';
-//            control.janelaDescontoPorcentagem.removeAll();
-//            control.janelaDescontoPorcentagem.add({xtype: 'campoDescontoPorcentagem', value: (control.totalDescontoPorcentagem > 0 ? control.totalDescontoPorcentagem : false) || (control.totalDesconto > 0 ? control.totalDesconto / control.janelaVendaRapida.totalVenda : false)});
-//            control.janelaDescontoPorcentagem.cenario = cenario;
-//            control.janelaDescontoPorcentagem.show(null, function() {
-//                control.janelaDescontoPorcentagem.down('#pdvDescontoPorcentagemValor').update(Illi.app.Util.valorRenderer(control.totalDesconto, 2));
-//            });
         }
     },
     janelaDescontoPorcentagemConfirmar: function () {
@@ -3808,7 +3502,6 @@ Ext.define('Illi.controller.PDV', {
             var doOcultarDescontoPorcentagem = function () {
                 control.janelaDescontoExibir((valor > 0 ? control.janelaDescontoPorcentagem.valor * valor : false), control.janelaDescontoPorcentagem.tipo, titulo);
             };
-//            control.totalDescontoPorcentagem = valor;
             control.janelaDescontoPorcentagemOcultar(doOcultarDescontoPorcentagem);
         }
     },
@@ -3818,7 +3511,7 @@ Ext.define('Illi.controller.PDV', {
         control.campoDescontoPorcentagem.setValue('');
     },
     janelaDescontoPorcentagemOcultar: function (callback) {
-        //alert('PDV::janelaDescontoPorcentagemOcultar()', callback);
+        //alert('PDV::janelaDescontoPorcentagemOcultar()');
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaDescontoPorcentagem.cenario;
@@ -3831,11 +3524,8 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaFechamentoCaixaExibir: function (fechar, bloqueado) {
-        //alert('PDV::janelaFechamentoCaixaExibir()', fechar, bloqueado);
+        //alert('PDV::janelaFechamentoCaixaExibir()');
         var control = this;
         var doSucessoSaldo = function (response) {
             var cenario = control.cenarioAtivo;
@@ -3904,13 +3594,9 @@ Ext.define('Illi.controller.PDV', {
                 var doSucessoImpressao = function (response3) {
                     var doOcultarFechamentoCaixa = function () {
                         var doVendaCancelar = function () {
-                            //if (fechar === true) {
                             control.ultimaSessao.active = false;
                             Illi.app.Local.set('pdvUltimaSessao', control.ultimaSessao);
                             control.janelaVendaRapidaOcultar();
-//                            } else {
-//                                control.doAbrirCaixa();
-//                            }
                         };
                         control.doCancelarVenda(doVendaCancelar);
                     };
@@ -3921,15 +3607,10 @@ Ext.define('Illi.controller.PDV', {
             };
             control.xhrFechamento(control.ultimaSessao.contaCaixa, formData, doSucessoFechamento, Ext.emptyFn);
         };
-//        if (control.verificaECF()) {
-//            control.doReducaoZ(fechar, fechar, false, "Emitir Redução agora Z!<br/> O ECF ficará bloqueado até as 0:00hs");
-//        } else {
         fechar();
-        //}
-
     },
     janelaFechamentoCaixaOcultar: function (callback) {
-        //alert('PDV::janelaFechamentoCaixaOcultar()', callback);
+        //alert('PDV::janelaFechamentoCaixaOcultar()');
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaFechamentoCaixa.cenario;
@@ -3944,23 +3625,15 @@ Ext.define('Illi.controller.PDV', {
             });
         }
     },
-    //
-    //
-    //
     janelaImpressaoExibir: function () {
         var control = this;
         var cenario = control.cenarioAtivo;
         var callback = function () {
-//        var impressora = Illi.app.Local.get('pdvImpressora');
-//        if (impressora && impressora.offline !== true) {
             control.cenarioAtivo = 'impressao';
             control.janelaImpressao.removeAll();
             control.janelaImpressao.add({xtype: 'listaImpressao', idConta: control.ultimaSessao.contaCaixa, ecf: control.ecf});
             control.janelaImpressao.cenario = cenario;
             control.janelaImpressao.show();
-//        } else {
-//            control.MSG('Impressora desabilitada!', Ext.emptyFn);
-//        }
         };
         control.doEstado(callback);
     },
@@ -4083,9 +3756,6 @@ Ext.define('Illi.controller.PDV', {
     janelaImpressaoVisualizar: function (grid, rowIndex, colIndex, item, e, record) {
         Ext.create("Illi.view.relatorio.JanelaVisualizar", {url: '../pdv/vendarapida/get_impressao/' + record.get('m.id') + '/'});
     },
-    //
-    //
-    //
     janelaPagamentoExibir: function (valor, formaPagamento, prazo, condicao) {
         //alert('PDV::janelaPagamentoExibir()');
         var control = this;
@@ -4201,7 +3871,6 @@ Ext.define('Illi.controller.PDV', {
                     };
                     control.xhrFinalizaVenda(shift, control.clienteSelecionado.id, control.vendedorSelecionado.id, control.documentoSelecionado, control.ultimaSessao.contaCaixa, control.totalVenda, control.totalDesconto, control.totalPagamento, control.totalTroco, listaItensVenda, listaItensCancelados, listaItensPagamento, doSucessoFinalizaVenda, doCancelarVendaCupom);
                 };
-                //TOAK
                 var pdvImpressoraECF = Illi.app.Local.get('pdvImpressoraECF');
                 if (control.verificaECF()) { // impressora configurada
                     if (pdvImpressoraECF.concomitante !== true) { // não é concomitante
@@ -4270,9 +3939,6 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaPagamentoCondicaoExibir: function (forma, novoCenario, callback) {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -4332,9 +3998,6 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    //
-    //
-    //
     janelaPagamentoFormaExibir: function (forma, novoCenario) {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -4420,11 +4083,8 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    //
-    //
-    //
     janelaPagamentoTrocaExibir: function (forma, prazo, condicao, novoCenario) {
-        //alert('PDV::janelaPagamentoTrocaExibir()', forma, prazo, condicao, novoCenario);
+        //alert('PDV::janelaPagamentoTrocaExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
         if (control.getVendaIniciada()) {
@@ -4463,7 +4123,6 @@ Ext.define('Illi.controller.PDV', {
                         efetuarPagamento = false;
                     }
                 }
-                //alert('>>>>>>>>>>>', efetuarPagamento, control.permitirTroco, control.janelaPagamentoTroca.valorSaldo, valorTroca);
                 if (efetuarPagamento) {
                     var doOcultarPagamento = function () {
                         control.janelaPagamentoExibir(valorTroca, control.janelaPagamentoTroca.forma, control.janelaPagamentoTroca.prazo, control.janelaPagamentoTroca.condicao);
@@ -4483,25 +4142,20 @@ Ext.define('Illi.controller.PDV', {
         control.campoPagamentoTroca.setValue('');
     },
     janelaPagamentoTrocaOcultar: function (callback) {
-        //alert('PDV::janelaPagamentoTrocaOcultar()', callback);
+        //alert('PDV::janelaPagamentoTrocaOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaPagamentoTroca.cenario;
         control.campoPagamentoTroca.blur();
         control.janelaPagamentoTroca.hide(null, function () {
-            //            setTimeout(function() {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
-            //            }, 250);
         });
     },
-    //
-    //
-    //
     janelaPagamentoValorExibir: function (formaPagamento, prazo, condicao, novoCenario) {
-        //alert('PDV::janelaPagamentoValorExibir()', formaPagamento, prazo, condicao, novoCenario);
+        //alert('PDV::janelaPagamentoValorExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
         if (control.getVendaIniciada()) {
@@ -4557,7 +4211,7 @@ Ext.define('Illi.controller.PDV', {
         control.campoPagamentoValor.setValue('');
     },
     janelaPagamentoValorOcultar: function (callback) {
-        //alert('PDV::janelaPagamentoValorOcultar()', callback);
+        //alert('PDV::janelaPagamentoValorOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         control.campoPagamentoValor.triggerBlur();
@@ -4571,9 +4225,6 @@ Ext.define('Illi.controller.PDV', {
             }, 250);
         });
     },
-    //
-    //
-    //
     janelaProdutoPesquisaExibir: function () {
         //alert('PDV::janelaProdutoPesquisaExibir()');
         var control = this;
@@ -4591,7 +4242,6 @@ Ext.define('Illi.controller.PDV', {
         var control = this;
         if (control.itemProdutoPesquisaSelecionado) {
             var record = control.itemProdutoPesquisaSelecionado;
-            //var codigo = record.get('codigo');
             var codigo = record.get('id');
             switch (control.ultimaSessao.pesquisaProduto) {
                 case 1:
@@ -4601,7 +4251,7 @@ Ext.define('Illi.controller.PDV', {
                     if (record.raw.codigobarra[0]) {
                         codigo = record.raw.codigobarra[0].codigo;
                     } else {
-                        alert("Código de Barras não configurado para este produto, será utilizado o ID do produto: " + codigo);
+                        //alert("Código de Barras não configurado para este produto, será utilizado o ID do produto: " + codigo);
                     }
                     break;
                 case 3:
@@ -4629,11 +4279,8 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaProdutoSelecaoExibir: function (codigo, quantidade, store, doAdicionarLista) {
-        //alert('PDV::janelaProdutoSelecaoExibir()', codigo, quantidade, store, doAdicionarLista);
+        //alert('PDV::janelaProdutoSelecaoExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
         control.cenarioAtivo = 'produto-selecao';
@@ -4659,22 +4306,17 @@ Ext.define('Illi.controller.PDV', {
         control.janelaProdutoSelecaoOcultar(doOcultarProdutoSelecao);
     },
     janelaProdutoSelecaoOcultar: function (callback) {
-        //alert('PDV::janelaProdutoSelecaoOcultar()', callback);
+        //alert('PDV::janelaProdutoSelecaoOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaProdutoSelecao.cenario;
         control.janelaProdutoSelecao.hide(null, function () {
-            //            setTimeout(function() {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
-            //            }, 250);
         });
     },
-    //
-    //
-    //
     janelaSangriaExibir: function () {
         //alert('PDV::janelaSangriaExibir()');
         var control = this;
@@ -4698,25 +4340,10 @@ Ext.define('Illi.controller.PDV', {
             if (form.conta_origem !== form.conta_destino) {
                 var doSucessoAutenticador = function () {
                     var doSucessoSangria = function (response) {
-//                        var doSucessoSangriaCupom = function(response2) {
-//                            var doSucessoImpressao = function(response3) {
-//                                control.janelaSangriaOcultar(function() {
-//                                    control.MSG((response2 === 'no-ecf' ? 'Sangria efetuada com sucesso, porém não pode ser impressa!' : 'Sangria efetuada com sucesso!'), Ext.emptyFn);
-//                                });
-//                            };
-//                            control.xhrImpressao(response.impressao, doSucessoImpressao, doSucessoImpressao);
-//                        };
-//                        var doFalhaSangriaCupom = function() {
-//                            doSucessoSangriaCupom('no-ecf');
-//                        };
-//                        if (control.verificaECF()) {
-//                            control.doSangriaCupom(form.valor, doSucessoSangriaCupom, doFalhaSangriaCupom, true);
-//                        } else {
                         var doSucessoImpressao = function (retorno) {
                             control.janelaSangriaOcultar();
                         };
                         control.xhrImpressao(response.impressao, doSucessoImpressao, doSucessoImpressao);
-//                        }
 
                     };
                     control.xhrSangria(jsonTransferencia, doSucessoSangria, Ext.emptyFn);
@@ -4728,22 +4355,17 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaSangriaOcultar: function (callback) {
-        //alert('PDV::janelaSangriaOcultar()', callback);
+        //alert('PDV::janelaSangriaOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaSangria.cenario;
         control.janelaSangria.hide(null, function () {
-            //            setTimeout(function() {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
-            //            }, 250);
         });
     },
-    //
-    //
-    //
     janelaSuprimentoExibir: function () {
         //alert('PDV::janelaSuprimentoExibir()');
         var control = this;
@@ -4767,25 +4389,10 @@ Ext.define('Illi.controller.PDV', {
             if (form.conta_origem !== form.conta_destino) {
                 control.janelaAutenticadorExibir('suprimento', function () {
                     var doSucessoSuprimento = function (response) {
-//                        var doSucessoSuprimentoCupom = function(response2) {
-//                            var doSucessoImpressao = function(response3) {
-//                                control.janelaSuprimentoOcultar(function() {
-//                                    control.MSG((response2 === 'no-ecf' ? 'Suprimento efetuado com sucesso, porém não pode ser impressa!' : 'Suprimento efetuado com sucesso!'), Ext.emptyFn);
-//                                });
-//                            };
-//                            control.xhrImpressao(response.impressao, doSucessoImpressao, doSucessoImpressao);
-//                        };
-//                        var doFalhaSuprimentoCupom = function() {
-//                            doSucessoSuprimentoCupom('no-ecf');
-//                        };
-//                        if (control.verificaECF()) {
-//                            control.doSuprimentoCupom(form.valor, doSucessoSuprimentoCupom, doFalhaSuprimentoCupom, true);
-//                        } else {
                         var doSucessoImpressao = function (response3) {
                             control.janelaSuprimentoOcultar();
                         };
                         control.xhrImpressao(response.impressao, doSucessoImpressao, doSucessoImpressao);
-//                        }
                     };
                     control.xhrSuprimento(jsonTransferencia, doSucessoSuprimento, Ext.emptyFn);
                 }, "Autorizou o suprimento.\nValor: " + form.valor + "\nConta ID (origem): " + form.conta_origem + "\nConta ID (destino): " + form.conta_destino);
@@ -4805,9 +4412,6 @@ Ext.define('Illi.controller.PDV', {
             }
         });
     },
-    //
-    //
-    //
     janelaDevolucaoExibir: function () {
         var control = this;
         var cenario = control.cenarioAtivo;
@@ -4820,7 +4424,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaDevolucaoEditar: function (novo) {
-        //alert('PDV::janelaDevolucaoEditar()', novo);
+        //alert('PDV::janelaDevolucaoEditar()');
         var control = this;
         control.janelaDevolucaoEdicaoExibir((novo ? false : control.itemDevolucaoSelecionado), false);
     },
@@ -4847,7 +4451,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaDevolucaoImprimir: function (callback, id_devolucao, no_print) {
-        //alert('PDV::janelaDevolucaoImprimir()', callback, id_devolucao, no_print);
+        //alert('PDV::janelaDevolucaoImprimir()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         if (control.itemDevolucaoSelecionado || id_devolucao) {
@@ -4864,24 +4468,19 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaDevolucaoOcultar: function (callback) {
-        //alert('PDV::janelaDevolucaoOcultar()', callback);
+        //alert('PDV::janelaDevolucaoOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaDevolucao.cenario;
         control.janelaDevolucao.hide(null, function () {
-            //            setTimeout(function() {
             control.cenarioAtivo = cenario;
             if (callback) {
                 callback();
             }
-            //            }, 250);
         });
     },
-    //
-    //
-    //
     janelaDevolucaoEdicaoExibir: function (record, resumida) {
-        //alert('PDV::janelaDevolucaoEdicaoExibir()', record, resumida);
+        //alert('PDV::janelaDevolucaoEdicaoExibir()');
         var control = this;
         var cenario = control.cenarioAtivo;
         var finalizado = false;
@@ -4896,12 +4495,10 @@ Ext.define('Illi.controller.PDV', {
             control.janelaDevolucaoEdicao.id_movimentacao = (record ? record.get('id') : false);
             control.janelaDevolucaoEdicao.resumida = resumida;
             control.janelaDevolucaoEdicao.show(null, function () {
-                //                setTimeout(function() {
                 if (record) {
                     control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnSalvar").setIconCls('icon-salvar');
                     control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnSalvar").setText('Salvar');
                     control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnImprimir").show();
-                    //                        control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoTitulo").setText('Devolução (editando)');
                     control.formularioDevolucaoEdicao.getForm().loadRecord(record);
                     control.formularioDevolucaoEdicao.down('combo[name=numero]').setValue(record.get('numero'));
                     control.formularioDevolucaoEdicao.down('combo[name=p.id]').setValue(record.get('p.id'));
@@ -4918,14 +4515,13 @@ Ext.define('Illi.controller.PDV', {
                 } else {
                     control.formularioDevolucaoEdicao.down('combo[name=p.id]').setValue(control.clienteSelecionado.id);
                 }
-                //                }, 300);
             });
         } else {
             control.MSG('Devolução já finalizado ou impresso!', Ext.emptyFn);
         }
     },
     janelaDevolucaoEdicaoEditar: function (novo) {
-        //alert('PDV::janelaDevolucaoEdicaoEditar()', novo);
+        //alert('PDV::janelaDevolucaoEdicaoEditar()');
         var control = this;
         if (novo) {
             control.listaDevolucaoEdicao.getStore().insert(0, 0);
@@ -4939,7 +4535,7 @@ Ext.define('Illi.controller.PDV', {
         control.listaDevolucaoEdicao.store.load();
     },
     janelaDevolucaoEdicaoConfirmar: function (imprimir) {
-        //alert('PDV::janelaDevolucaoEdicaoConfirmar()', imprimir);
+        //alert('PDV::janelaDevolucaoEdicaoConfirmar()');
         var control = this;
         var form = control.formularioDevolucaoEdicao.getForm();
         if (form.isValid()) {
@@ -4954,9 +4550,7 @@ Ext.define('Illi.controller.PDV', {
                         control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnSalvar").setIconCls('icon-salvar');
                         control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnSalvar").setText('Salvar');
                         control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnImprimir").show();
-                        //                        control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnCancelar").setText('Fechar');
                         control.formularioDevolucaoEdicao.down('#pdvDevolucaoEdicaoIdMovimentacao').setValue(control.janelaDevolucaoEdicao.id_movimentacao);
-                        //                        setTimeout(function() {
                         control.painelDevolucaoEdicao.add({
                             title: 'Produtos',
                             xtype: 'listaDevolucaoEdicao',
@@ -4965,7 +4559,6 @@ Ext.define('Illi.controller.PDV', {
                             numero: form.numero
                         });
                         control.painelDevolucaoEdicao.setActiveTab(1);
-                        //                        }, 300);
                     } else {
                         var doOcultarDevolucaoEdicaoResumida = function () {
                             control.janelaDevolucaoEdicaoOcultar();
@@ -4989,23 +4582,6 @@ Ext.define('Illi.controller.PDV', {
                                 doOcultarDevolucaoEdicao();
                             }
                         }
-//                        if (control.janelaDevolucaoEdicao.resumida || imprimir) {
-//                            var doConfirma = (control.janelaDevolucaoEdicao.resumida ? doOcultarDevolucaoEdicaoResumida : doOcultarDevolucaoEdicao);
-//                            var doSucessoDevolucaoImprimir = function(response) {
-//                               control.MSG( 'Devolução gerada com sucesso!<br /><br /><span style="font-size: xx-large;">Código: <span style="color: #FF0000;">' + control.janelaDevolucaoEdicao.id_movimentacao + '</span></span>', doConfirma);
-//                            };
-//                            control.janelaDevolucaoImprimir(doSucessoDevolucaoImprimir, control.janelaDevolucaoEdicao.id_movimentacao, (imprimir ? false : true));
-//                        } else {
-//                            doOcultarDevolucaoEdicao();
-//                        }
-//                        if (imprimir) {
-//                        } else {
-//                            control.janelaDevolucaoEdicaoOcultar((control.janelaDevolucaoEdicao.resumida ? false : function() {
-//                                control.janelaDevolucaoEdicaoOcultar(function() {
-//                                    control.janelaDevolucaoAtualizar();
-//                                });
-//                            }));
-                        //                        }
                     }
                 };
                 control.xhrDevolucaoEdicao(jsonTransferencia, doSucessoDevolucaoEdicao, Ext.emptyFn);
@@ -5018,12 +4594,11 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     janelaDevolucaoEdicaoOcultar: function (callback) {
-        //alert('PDV::janelaDevolucaoEdicaoOcultar()', callback);
+        //alert('PDV::janelaDevolucaoEdicaoOcultar()');
         callback = (callback && typeof (callback) == 'function' ? callback : false);
         var control = this;
         var cenario = control.janelaDevolucaoEdicao.cenario;
         control.janelaDevolucaoEdicao.hide(null, function () {
-            //            setTimeout(function() {
             control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnSalvar").setIconCls('icon-avancar');
             control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnSalvar").setText('Continuar');
             control.janelaDevolucaoEdicao.down("#pdvDevolucaoEdicaoBtnImprimir").hide();
@@ -5031,12 +4606,8 @@ Ext.define('Illi.controller.PDV', {
             if (callback) {
                 callback();
             }
-            //            }, 250);
         });
     },
-    //
-    //
-    //
     janelaVendaRapidaExibir: function () {
         //alert('PDV::janelaVendaRapidaExibir()');
         var control = this;
@@ -5055,13 +4626,22 @@ Ext.define('Illi.controller.PDV', {
     janelaVendaRapidaOcultar: function () {
         //alert('PDV::janelaVendaRapidaOcultar()');
         var control = this;
-        control.MSG('Encerrando Sistema...');
-        closepage = true;
-        window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
+        switch (control.janelaVendaRapida.typeComponent) {
+            case "TAB":
+                var panel = control.janelaVendaRapida.up("panel");
+                panel.hide();
+                break;
+            case "TAB":
+                var panel = control.janelaVendaRapida.up("window");
+                panel.hide();
+                break;
+            default:
+                control.MSG('Encerrando Sistema...');
+                closepage = true;
+                window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
+                break;
+        }
     },
-    //
-    //
-    //
     janelaVendedorExibir: function (callback) {
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
@@ -5127,9 +4707,6 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    //
-    //
-    //
     janelaDocumentoExibir: function (callback) {
         callback = (callback && typeof (callback) === 'function' ? callback : false);
         var control = this;
@@ -5169,15 +4746,6 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     listaTabelaPrecoFocus: function () {
         //alert('PDV::listaTabelaPrecoFocus()');
         var control = this;
@@ -5189,14 +4757,8 @@ Ext.define('Illi.controller.PDV', {
             }
         }, 300);
     },
-    //
-    //
-    //
-    //
-    //
-    //
     listaItensCanceladosToggle: function (callback) {
-        //alert('PDV::listaItensCanceladosToggle()', callback);
+        //alert('PDV::listaItensCanceladosToggle()');
         var control = this;
         if (control.listaItensCancelados.isHidden()) {
             control.listaItensCancelados.show();
@@ -5204,9 +4766,6 @@ Ext.define('Illi.controller.PDV', {
             control.listaItensCancelados.hide(null, setTimeout(callback, 250));
         }
     },
-    //
-    //
-    //
     listaItensPagamentoFocus: function () {
         //alert('PDV::listaItensPagamentoFocus()');
         var control = this;
@@ -5224,7 +4783,7 @@ Ext.define('Illi.controller.PDV', {
         }, 300);
     },
     listaItensPagamentoAdicionar: function (valor, formaPagamento, prazo, condicao) {
-        //alert('PDV::listaItensPagamentoAdicionar()', valor, formaPagamento, prazo, condicao);
+        //alert('PDV::listaItensPagamentoAdicionar()');
         var control = this;
         if (formaPagamento.length > 0) {
             control.itemPagamentoUltimoInserido = control.itemPagamentoUltimoInserido + 1;
@@ -5253,9 +4812,6 @@ Ext.define('Illi.controller.PDV', {
             control.listaItensPagamentoFocus();
         }
     },
-    //
-    //
-    //
     listaItensVendaFocus: function () {
         //alert('PDV::listaItensVendaFocus()');
         var control = this;
@@ -5272,7 +4828,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     listaItensVendaAdicionar: function (codigo, quantidade, record) {
-        //alert('PDV::listaItensVendaAdicionar()', codigo, quantidade, record);
+        //alert('PDV::listaItensVendaAdicionar()');
         var control = this;
         control.campoProdutoCodigo.setDisabled(true);
         if (codigo.length > 0) {
@@ -5476,37 +5032,28 @@ Ext.define('Illi.controller.PDV', {
         var control = this;
         control.setFocusLista(control.listaImpressao, 0);
     },
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
     onAfterRender: function (me) {
-        //alert('PDV::onAfterRender()', me);
+        //alert('PDV::onAfterRender()');
         var control = this;
+        //alert('>', me.getXType());
+        //alert('>', me.typeComponent);
         control[me.getXType()] = me;
+        switch (me.getXType()) {
+            case 'janelaVendaRapida':
+                var panel = me.up((me.typeComponent === "TAB" ? "panel" : "window"));
+                panel.handlerActiveAction = function (tab, opt) {
+                    control.setMapaTecladoEstado(true);
+                };
+                panel.handlerDesactiveAction = function (tab, opt) {
+                    control.setMapaTecladoEstado(false);
+                };
+                control.setMapaTeclado();
+                control.doAbrirCaixa();
+                break;
+        }
     },
     onKeyUp: function (me, e) {
-        //alert('PDV::onKeyUp()', me, e);
+        //alert('PDV::onKeyUp()');
         var control = this;
         switch (me.getXType()) {
             case 'campoDescontoPorcentagem':
@@ -5518,10 +5065,9 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     onClick: function (me, e) {
-        //alert('PDV::opcaoClick()', me, e);
+        //alert('PDV::opcaoClick()');
         var control = this;
         if (me.action) {
-            //alert(me.action);
             switch (me.action) {
                 case 'processar-fechamento':
                     return control.doConferirCaixa(false);
@@ -5610,19 +5156,8 @@ Ext.define('Illi.controller.PDV', {
             }
         }
     },
-    onShow: function (me) {
-        //alert('PDV::onShow()', me);
-        var control = this;
-        switch (me.getXType()) {
-            case 'janelaVendaRapida':
-                control.setMapaTeclado();
-//                control.janelaTecladoExibir();
-                control.doAbrirCaixa();
-                break;
-        }
-    },
     onSelect: function (me, record, index) {
-        //alert('PDV::onSelect()', me, record, index);
+        //alert('PDV::onSelect()');
         var control = this;
         var xtype = me.view.ownerCt.xtype;
         if (xtype) {
@@ -5670,7 +5205,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     onCellKeyDown: function (me, td, cellIndex, record, tr, rowIndex, e) {
-        //alert('PDV::onCellKeyDown()', me, td, cellIndex, record, tr, rowIndex, e);
+        //alert('PDV::onCellKeyDown()');
         var control = this;
         var cenario = control.cenarioAtivo;
         if (e.getKey() === e.ENTER) {
@@ -5706,7 +5241,7 @@ Ext.define('Illi.controller.PDV', {
         }
     },
     onItemDblClick: function (me, record, item, index, e) {
-        //alert('PDV::onItemDblClick()', me, record, item, index, e);
+        //alert('PDV::onItemDblClick()');
         var control = this;
         var cenario = control.cenarioAtivo;
         switch (cenario) {
@@ -5715,540 +5250,548 @@ Ext.define('Illi.controller.PDV', {
                 break;
         }
     },
+    setMapaTecladoEstado: function (estado) {
+        //alert('PDV::setMapaTecladoEstado()');
+        var control = this;
+        control.tecladoEstadoMapa = (estado === true);
+    },
     setMapaTeclado: function () {
         //alert('PDV::setMapaTeclado()');
         var control = this;
         Ext.EventManager.on(window, 'keydown', function (e, t) {
-            var stopEvent = true;
-            var cenario = control.cenarioAtivo;
-            //console.log('Ext.EventManager.on', cenario, e.getKey(), (e.altKey ? "alt" : false), (e.ctrlKey ? "ctrl" : false), (e.shiftKey ? "shift" : false));
-            if (e.ctrlKey && e.shiftKey && e.getKey() === e.R) {
-                control.MSG('Atualizando Sistema...');
-                closepage = true;
-                window.location.reload(true);
-            } else {
-                if (e.ctrlKey && e.shiftKey && e.getKey() === e.C) {
-                    control.setCache();
+            if (control.tecladoEstadoMapa) {
+                var stopEvent = true;
+                var cenario = control.cenarioAtivo;
+                //console.log('Ext.EventManager.on', cenario, e.getKey(), (e.altKey ? "alt" : false), (e.ctrlKey ? "ctrl" : false), (e.shiftKey ? "shift" : false));
+                if (e.ctrlKey && e.shiftKey && e.getKey() === e.R) {
+                    if (control.janelaVendaRapida.typeComponent === "FULLSCREEN") {
+                        control.MSG('Atualizando Sistema...');
+                        closepage = true;
+                    }
+                    window.location.reload(true);
                 } else {
-                    if (e.ctrlKey && e.getKey() === e.K) {
-                        control.janelaTecladoExibir();
+                    if (e.ctrlKey && e.shiftKey && e.getKey() === e.C) {
+                        control.setCache();
                     } else {
-                        if (e.ctrlKey && e.getKey() === e.H) {
-                            control.janelaTeclasAtalhoExibir();
+                        if (e.ctrlKey && e.getKey() === e.K) {
+                            control.janelaTecladoExibir();
                         } else {
-                            switch (e.getKey()) {
-                                case e.F1:
-                                    switch (cenario) {
-                                        case 'venda':
-                                            control.janelaProdutoPesquisaExibir();
-                                            break;
-                                    }
-                                    break;
-                                case e.F2:
-                                    switch (cenario) {
-                                        case 'venda':
-                                        case 'pagamento':
-                                            control.janelaPagamentoFormaExibir('dinheiro', control.cenarioAtivo);
-                                            break;
-                                    }
-                                    break;
-                                case e.F3:
-                                    switch (cenario) {
-                                        case 'venda':
-                                            if (control.getVendaIniciada(true)) {
-                                                control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
-                                            } else {
-                                                control.janelaSangriaExibir();
-                                            }
-                                            break;
-                                        case 'pagamento':
-                                            control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
-                                            break;
-                                    }
-                                    break;
-                                case e.F4:
-                                    switch (cenario) {
-                                        case 'venda':
-                                            if (control.getVendaIniciada(true)) {
-                                                control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
-                                            } else {
-                                                control.janelaSuprimentoExibir();
-                                            }
-                                            break;
-                                        case 'pagamento':
-                                            control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
-                                            break;
-                                    }
-                                    break;
-                                case e.F5:
-                                    switch (cenario) {
-                                        case 'venda':
-                                        case 'pagamento':
-                                            control.janelaPagamentoFormaExibir('ticket', control.cenarioAtivo);
-                                            break;
-                                    }
-                                    break;
-                                case e.F6:
-                                    switch (cenario) {
-                                        case 'venda':
-                                        case 'pagamento':
-                                            control.janelaPagamentoFormaExibir('boleto', control.cenarioAtivo);
-                                            break;
-                                    }
-                                    break;
-                                case e.F7:
-                                    switch (cenario) {
-                                        case 'venda':
-                                        case 'pagamento':
-                                            control.janelaPagamentoFormaExibir('vale', control.cenarioAtivo);
-                                            break;
-                                    }
-                                    break;
-                                case e.F8:
-                                    switch (cenario) {
-                                        case 'venda':
-                                        case 'pagamento':
-                                            if (e.ctrlKey && cenario === 'venda') {
-                                                control.janelaDevolucaoEdicaoExibir(false, true);
-                                            } else {
-                                                control.janelaPagamentoFormaExibir('troca', control.cenarioAtivo);
-                                            }
-                                            break;
-                                    }
-                                    break;
-                                case e.F9:
-                                    switch (cenario) {
-                                        case 'venda':
-                                            control.janelaVendaRapidaFechar();
-                                            break;
-                                    }
-                                    break;
-                                case e.F10:
-                                    switch (cenario) {
-                                        case 'pagamento':
-                                            control.janelaPagamentoConfirmar(e.shiftKey);
-                                            break;
-                                    }
-                                    break;
-                                case e.F11:
-                                    switch (cenario) {
-                                        case 'venda':
-                                        case 'abertura':
-                                            if (e.shiftKey) {
-                                                control.janelaConfiguracaoImpressaoExibir();
-                                            } else {
-                                                control.janelaConfiguracaoECFExibir();
-                                            }
-                                            break;
-                                    }
-                                    break;
-                                case e.F12:
-                                    switch (cenario) {
-                                        case 'venda':
-                                            if (e.ctrlKey) {
-                                                control.janelaCancelamentoVendaExibir();
-                                            } else {
-                                                control.doCancelarVenda(function () {
-                                                    control.doIniciarVenda();
-                                                });
-                                            }
-                                            break;
-                                    }
-                                    break;
-                                case e.DELETE:
-                                    switch (cenario) {
-                                        case 'venda':
-                                            if (e.ctrlKey) {
-                                                control.listaItensCanceladosToggle();
-                                            } else {
-                                                if (control.itemVendaSelecionado) {
-                                                    control.listaItensVendaRemover();
-                                                } else {
-                                                    control.janelaCancelarItemExibir();
-                                                }
-                                            }
-                                            break;
-                                        case 'pagamento':
-                                            control.listaItensPagamentoRemover();
-                                            break;
-                                        case 'pagamento-troca':
-                                            control.janelaPagamentoTrocaLimpar();
-                                            break;
-                                        case 'pagamento-valor':
-                                            control.janelaPagamentoValorLimpar();
-                                            break;
-                                        case 'desconto':
-                                            control.janelaDescontoLimpar();
-                                            break;
-                                        case 'desconto-porcentagem':
-                                            control.janelaDescontoPorcentagemLimpar();
-                                            break;
-                                        case 'autenticador':
-                                            control.janelaAutenticadorLimpar();
-                                            break;
-                                        case 'conta-caixa':
-                                            control.janelaContaCaixaLimpar();
-                                            break;
-                                        case 'cliente':
-                                            control.janelaClienteLimpar();
-                                            break;
-                                        case 'vendedor':
-                                            control.janelaVendedorLimpar();
-                                            break;
-                                        case 'documento':
-                                            control.janelaDocumentoLimpar();
-                                            break;
-                                    }
-                                    break;
-                                case e.ESC:
-                                    switch (cenario) {
-                                        case 'fechamento':
-                                            control.janelaFechamentoCaixaOcultar();
-                                            break;
-                                        case 'pagamento':
-                                            control.janelaPagamentoOcultar();
-                                            break;
-                                        case 'pagamento-troca':
-                                            control.janelaPagamentoTrocaOcultar();
-                                            break;
-                                        case 'pagamento-valor':
-                                            control.janelaPagamentoValorOcultar();
-                                            break;
-                                        case 'pagamento-condicao':
-                                            control.janelaPagamentoCondicaoOcultar(false, false);
-                                            break;
-                                        case 'pagamento-forma':
-                                            control.janelaPagamentoFormaOcultar(false, false);
-                                            break;
-                                        case 'impressao':
-                                            control.janelaImpressaoOcultar();
-                                            break;
-                                        case 'cancelamento-venda':
-                                            control.janelaCancelamentoVendaOcultar();
-                                            break;
-                                        case 'desconto':
-                                            control.janelaDescontoOcultar();
-                                            break;
-                                        case 'desconto-porcentagem':
-                                            control.janelaDescontoPorcentagemOcultar();
-                                            break;
-                                        case 'autenticador':
-                                            control.janelaAutenticadorOcultar(false, false, true);
-                                            break;
-                                        case 'produto-pesquisa':
-                                            control.campoProdutoCodigo.setValue('');
-                                            control.janelaProdutoPesquisaOcultar(function () {
-                                                control.listaItensVendaFocus();
-                                            });
-                                            break;
-                                        case 'produto-selecao':
-                                            control.campoProdutoCodigo.setValue('');
-                                            control.janelaProdutoSelecaoOcultar(function () {
-                                                control.listaItensVendaFocus();
-                                            });
-                                            break;
-                                        case 'cliente-selecao':
-                                            control.janelaClienteSelecaoOcultar();
-                                            break;
-                                        case 'vendedor-selecao':
-                                            control.janelaVendedorSelecaoOcultar();
-                                            break;
-                                        case 'tabela-preco':
-                                            control.janelaTabelaPrecoVendaOcultar();
-                                            break;
-                                        case 'sangria':
-                                            control.janelaSangriaOcultar();
-                                            break;
-                                        case 'configuracao-ecf':
-                                            control.janelaConfiguracaoECFOcultar();
-                                            break;
-                                        case 'configuracao-impressao':
-                                            control.janelaConfiguracaoImpressaoOcultar();
-                                            break;
-                                        case 'teclas-atalho':
-                                            control.janelaTeclasAtalhoOcultar();
-                                            break;
-                                        case 'suprimento':
-                                            control.janelaSuprimentoOcultar();
-                                            break;
-                                        case 'devolucao':
-                                            control.janelaDevolucaoOcultar();
-                                            break;
-                                        case 'devolucao-edicao':
-                                            control.janelaDevolucaoEdicaoOcultar();
-                                            break;
-                                        case 'cliente-cadastro':
-                                            control.down("#janelaCadastroCliente").destroy();
-                                            break;
-                                        case 'troco':
-                                            control.janelaTrocoOcultar();
-                                            break;
-                                        case 'cancela-item':
-                                            control.janelaCancelarItemOcultar();
-                                            break;
-                                        case 'cliente':
-                                            control.janelaClienteOcultar();
-                                            break;
-                                        case 'vendedor':
-                                            control.janelaVendedorOcultar();
-                                            break;
-                                        case 'documento':
-                                            control.janelaDocumentoOcultar();
-                                            break;
-                                    }
-                                    break;
-                                case e.ENTER:
-                                    if (/(x-message-box|x-btn-button)/gi.test(t.className)) { // x-message-box
-                                        stopEvent = false;
-                                    } else {
+                            if (e.ctrlKey && e.getKey() === e.H) {
+                                control.janelaTeclasAtalhoExibir();
+                            } else {
+                                switch (e.getKey()) {
+                                    case e.F1:
                                         switch (cenario) {
+                                            case 'venda':
+                                                control.janelaProdutoPesquisaExibir();
+                                                break;
+                                        }
+                                        break;
+                                    case e.F2:
+                                        switch (cenario) {
+                                            case 'venda':
+                                            case 'pagamento':
+                                                control.janelaPagamentoFormaExibir('dinheiro', control.cenarioAtivo);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F3:
+                                        switch (cenario) {
+                                            case 'venda':
+                                                if (control.getVendaIniciada(true)) {
+                                                    control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
+                                                } else {
+                                                    control.janelaSangriaExibir();
+                                                }
+                                                break;
+                                            case 'pagamento':
+                                                control.janelaPagamentoFormaExibir('cheque', control.cenarioAtivo);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F4:
+                                        switch (cenario) {
+                                            case 'venda':
+                                                if (control.getVendaIniciada(true)) {
+                                                    control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
+                                                } else {
+                                                    control.janelaSuprimentoExibir();
+                                                }
+                                                break;
+                                            case 'pagamento':
+                                                control.janelaPagamentoFormaExibir('cartao', control.cenarioAtivo);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F5:
+                                        switch (cenario) {
+                                            case 'venda':
+                                            case 'pagamento':
+                                                control.janelaPagamentoFormaExibir('ticket', control.cenarioAtivo);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F6:
+                                        switch (cenario) {
+                                            case 'venda':
+                                            case 'pagamento':
+                                                control.janelaPagamentoFormaExibir('boleto', control.cenarioAtivo);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F7:
+                                        switch (cenario) {
+                                            case 'venda':
+                                            case 'pagamento':
+                                                control.janelaPagamentoFormaExibir('vale', control.cenarioAtivo);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F8:
+                                        switch (cenario) {
+                                            case 'venda':
+                                            case 'pagamento':
+                                                if (e.ctrlKey && cenario === 'venda') {
+                                                    control.janelaDevolucaoEdicaoExibir(false, true);
+                                                } else {
+                                                    control.janelaPagamentoFormaExibir('troca', control.cenarioAtivo);
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case e.F9:
+                                        switch (cenario) {
+                                            case 'venda':
+                                                control.janelaVendaRapidaFechar();
+                                                break;
+                                        }
+                                        break;
+                                    case e.F10:
+                                        switch (cenario) {
+                                            case 'pagamento':
+                                                control.janelaPagamentoConfirmar(e.shiftKey);
+                                                break;
+                                        }
+                                        break;
+                                    case e.F11:
+                                        switch (cenario) {
+                                            case 'venda':
+                                            case 'abertura':
+                                                if (e.shiftKey) {
+                                                    control.janelaConfiguracaoImpressaoExibir();
+                                                } else {
+                                                    control.janelaConfiguracaoECFExibir();
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case e.F12:
+                                        switch (cenario) {
+                                            case 'venda':
+                                                if (e.ctrlKey) {
+                                                    control.janelaCancelamentoVendaExibir();
+                                                } else {
+                                                    control.doCancelarVenda(function () {
+                                                        control.doIniciarVenda();
+                                                    });
+                                                }
+                                                break;
+                                        }
+                                        break;
+                                    case e.DELETE:
+                                        switch (cenario) {
+                                            case 'venda':
+                                                if (e.ctrlKey) {
+                                                    control.listaItensCanceladosToggle();
+                                                } else {
+                                                    if (control.itemVendaSelecionado) {
+                                                        control.listaItensVendaRemover();
+                                                    } else {
+                                                        control.janelaCancelarItemExibir();
+                                                    }
+                                                }
+                                                break;
+                                            case 'pagamento':
+                                                control.listaItensPagamentoRemover();
+                                                break;
                                             case 'pagamento-troca':
-                                                control.janelaPagamentoTrocaConfirmar();
+                                                control.janelaPagamentoTrocaLimpar();
                                                 break;
                                             case 'pagamento-valor':
-                                                control.janelaPagamentoValorConfirmar();
-                                                break;
-                                            case 'pagamento-condicao':
-                                                control.janelaPagamentoCondicaoConfirmar();
-                                                break;
-                                            case 'pagamento-forma':
-                                                control.janelaPagamentoFormaConfirmar();
-                                                break;
-                                            case 'impressao':
-                                                control.janelaImpressaoConfirmar(e.shiftKey);
-                                                break;
-                                            case 'cancelamento-venda':
-                                                control.janelaCancelamentoVendaConfirmar();
+                                                control.janelaPagamentoValorLimpar();
                                                 break;
                                             case 'desconto':
-                                                control.janelaDescontoConfirmar();
+                                                control.janelaDescontoLimpar();
                                                 break;
                                             case 'desconto-porcentagem':
-                                                control.janelaDescontoPorcentagemConfirmar();
+                                                control.janelaDescontoPorcentagemLimpar();
                                                 break;
                                             case 'autenticador':
-                                                control.janelaAutenticadorConfirmar(false);
+                                                control.janelaAutenticadorLimpar();
                                                 break;
                                             case 'conta-caixa':
-                                                control.janelaContaCaixaConfirmar();
+                                                control.janelaContaCaixaLimpar();
                                                 break;
                                             case 'cliente':
-                                                control.janelaClienteConfirmar();
+                                                control.janelaClienteLimpar();
                                                 break;
                                             case 'vendedor':
-                                                control.janelaVendedorConfirmar();
+                                                control.janelaVendedorLimpar();
                                                 break;
                                             case 'documento':
-                                                control.janelaDocumentoConfirmar();
+                                                control.janelaDocumentoLimpar();
+                                                break;
+                                        }
+                                        break;
+                                    case e.ESC:
+                                        switch (cenario) {
+                                            case 'fechamento':
+                                                control.janelaFechamentoCaixaOcultar();
+                                                break;
+                                            case 'pagamento':
+                                                control.janelaPagamentoOcultar();
+                                                break;
+                                            case 'pagamento-troca':
+                                                control.janelaPagamentoTrocaOcultar();
+                                                break;
+                                            case 'pagamento-valor':
+                                                control.janelaPagamentoValorOcultar();
+                                                break;
+                                            case 'pagamento-condicao':
+                                                control.janelaPagamentoCondicaoOcultar(false, false);
+                                                break;
+                                            case 'pagamento-forma':
+                                                control.janelaPagamentoFormaOcultar(false, false);
+                                                break;
+                                            case 'impressao':
+                                                control.janelaImpressaoOcultar();
+                                                break;
+                                            case 'cancelamento-venda':
+                                                control.janelaCancelamentoVendaOcultar();
+                                                break;
+                                            case 'desconto':
+                                                control.janelaDescontoOcultar();
+                                                break;
+                                            case 'desconto-porcentagem':
+                                                control.janelaDescontoPorcentagemOcultar();
+                                                break;
+                                            case 'autenticador':
+                                                control.janelaAutenticadorOcultar(false, false, true);
+                                                break;
+                                            case 'produto-pesquisa':
+                                                control.campoProdutoCodigo.setValue('');
+                                                control.janelaProdutoPesquisaOcultar(function () {
+                                                    control.listaItensVendaFocus();
+                                                });
+                                                break;
+                                            case 'produto-selecao':
+                                                control.campoProdutoCodigo.setValue('');
+                                                control.janelaProdutoSelecaoOcultar(function () {
+                                                    control.listaItensVendaFocus();
+                                                });
+                                                break;
+                                            case 'cliente-selecao':
+                                                control.janelaClienteSelecaoOcultar();
+                                                break;
+                                            case 'vendedor-selecao':
+                                                control.janelaVendedorSelecaoOcultar();
                                                 break;
                                             case 'tabela-preco':
-                                                control.janelaTabelaPrecoVendaConfirmar();
+                                                control.janelaTabelaPrecoVendaOcultar();
                                                 break;
                                             case 'sangria':
-                                                control.janelaSangriaConfirmar();
+                                                control.janelaSangriaOcultar();
                                                 break;
                                             case 'configuracao-ecf':
-                                                control.janelaConfiguracaoECFConfirmar();
+                                                control.janelaConfiguracaoECFOcultar();
                                                 break;
                                             case 'configuracao-impressao':
-                                                control.janelaConfiguracaoImpressaoConfirmar();
+                                                control.janelaConfiguracaoImpressaoOcultar();
+                                                break;
+                                            case 'teclas-atalho':
+                                                control.janelaTeclasAtalhoOcultar();
                                                 break;
                                             case 'suprimento':
-                                                control.janelaSuprimentoConfirmar();
+                                                control.janelaSuprimentoOcultar();
+                                                break;
+                                            case 'devolucao':
+                                                control.janelaDevolucaoOcultar();
+                                                break;
+                                            case 'devolucao-edicao':
+                                                control.janelaDevolucaoEdicaoOcultar();
+                                                break;
+                                            case 'cliente-cadastro':
+                                                control.down("#janelaCadastroCliente").destroy();
                                                 break;
                                             case 'troco':
                                                 control.janelaTrocoOcultar();
                                                 break;
                                             case 'cancela-item':
-                                                control.janelaCancelarItemConfirmar();
-                                                break;
-                                            case 'venda':
-                                                control.setProduto();
-                                                break;
-                                            case 'produto-pesquisa':
-                                                control.janelaProdutoPesquisaConfirmar();
-                                                break;
-                                            case 'produto-selecao':
-                                                control.janelaProdutoSelecaoConfirmar();
-                                                break;
-                                            case 'cliente-selecao':
-                                                control.janelaClienteSelecaoConfirmar();
-                                                break;
-                                            case 'vendedor-selecao':
-                                                control.janelaVendedorSelecaoConfirmar();
-                                                break;
-                                        }
-                                    }
-                                    break;
-                                case e.TAB:
-                                    switch (cenario) {
-                                        case 'sangria':
-                                        case 'suprimento':
-                                        case 'configuracao-ecf':
-                                        case 'configuracao-impressao':
-                                        case 'cliente-cadastro':
-                                        case 'devolucao-edicao':
-                                            stopEvent = false;
-                                            break;
-                                    }
-                                    break;
-                                default:
-                                    var isBackspace = false;
-                                    if (e.getKey() === e.BACKSPACE) {
-                                        isBackspace = true;
-                                    }
-                                    var isCharEnabled = false;
-                                    switch (e.getKey()) {
-                                        case e.END:
-                                        case e.HOME:
-                                        case e.LEFT :
-                                        case e.UP:
-                                        case e.RIGHT:
-                                        case e.DOWN:
-                                        case e.SPACE:
-                                        case e.NUM_ZERO:
-                                        case 186:
-                                        case 188:
-                                        case 190:
-                                        case 191:
-                                        case 194:
-                                            isCharEnabled = true;
-                                            break;
-                                    }
-                                    if (/\w+$/gi.test(String.fromCharCode(e.getKey())) || isBackspace || isCharEnabled) {
-                                        switch (cenario) {
-                                            case 'venda':
-                                                if (e.ctrlKey) {
-                                                    switch (e.getKey()) {
-                                                        case e.C:
-                                                            control.janelaClienteExibir();
-                                                            break;
-                                                        case e.V:
-                                                            control.janelaVendedorExibir();
-                                                            break;
-                                                        case e.N:
-                                                            control.janelaDocumentoExibir();
-                                                            break;
-                                                        case e.T:
-                                                            control.janelaTabelaPrecoVendaExibir();
-                                                            break;
-                                                        case e.D:
-                                                            if (control.getVendaIniciada(true)) {
-                                                                if (e.shiftKey) {
-                                                                    control.janelaDescontoPorcentagemExibir("desconto_item");
-                                                                } else {
-                                                                    control.janelaDescontoPorcentagemExibir("desconto_venda");
-                                                                }
-//                                                            control.janelaDescontoPorcentagemExibir();
-                                                            } else {
-                                                                control.janelaDevolucaoExibir();
-                                                            }
-                                                            break;
-                                                        case e.A:
-                                                            if (e.shiftKey) {
-                                                                control.janelaDescontoPorcentagemExibir("acrescimo_item");
-                                                            } else {
-                                                                control.janelaDescontoPorcentagemExibir("acrescimo_venda");
-                                                            }
-                                                            break;
-                                                        case e.M:
-                                                            control.janelaVendaRapidaMinimizar();
-                                                            break;
-                                                        case e.I:
-                                                            control.janelaImpressaoExibir();
-                                                            break;
-                                                    }
-                                                } else {
-                                                    control.campoProdutoCodigo.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'pagamento-troca':
-                                                if (!e.ctrlKey) {
-                                                    control.campoPagamentoTroca.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'pagamento-valor':
-                                                if (!e.ctrlKey) {
-                                                    control.campoPagamentoValor.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'desconto':
-                                                if (!e.ctrlKey) {
-                                                    control.campoDesconto.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'desconto-porcentagem':
-                                                if (!e.ctrlKey) {
-                                                    control.campoDescontoPorcentagem.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'autenticador':
-                                                if (!e.ctrlKey) {
-                                                    control.campoAutenticador.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'conta-caixa':
-                                                if (!e.ctrlKey) {
-                                                    control.campoContaCaixa.focus();
-                                                    stopEvent = false;
-                                                }
+                                                control.janelaCancelarItemOcultar();
                                                 break;
                                             case 'cliente':
-                                                if (!e.ctrlKey) {
-                                                    control.campoCliente.focus();
-                                                    stopEvent = false;
-                                                }
+                                                control.janelaClienteOcultar();
                                                 break;
                                             case 'vendedor':
-                                                if (!e.ctrlKey) {
-                                                    control.campoVendedor.focus();
-                                                    stopEvent = false;
-                                                }
+                                                control.janelaVendedorOcultar();
                                                 break;
                                             case 'documento':
-                                                if (!e.ctrlKey) {
-                                                    control.campoDocumento.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'cancela-item':
-                                                if (!e.ctrlKey) {
-                                                    control.campoCancelarItem.focus();
-                                                    stopEvent = false;
-                                                }
-                                                break;
-                                            case 'sangria':
-                                            case 'suprimento':
-                                            case 'fechamento':
-                                            case 'configuracao-ecf':
-                                            case 'configuracao-impressao':
-                                            case 'devolucao-edicao':
-                                            case 'cliente-cadastro':
-                                                stopEvent = false;
-                                                break;
-                                            default:
-                                                if (isBackspace) {
-                                                    if (!((!/^input$/i.test(t.tagName) || t.disabled || t.readOnly) && (!/^textArea$/i.test(t.tagName) || t.disabled || t.readOnly))) {
-                                                        isBackspace = true;
-                                                    }
-                                                }
+                                                control.janelaDocumentoOcultar();
                                                 break;
                                         }
-                                    }
-                                    break;
+                                        break;
+                                    case e.ENTER:
+                                        if (/(x-message-box|x-btn-button)/gi.test(t.className)) { // x-message-box
+                                            stopEvent = false;
+                                        } else {
+                                            switch (cenario) {
+                                                case 'pagamento-troca':
+                                                    control.janelaPagamentoTrocaConfirmar();
+                                                    break;
+                                                case 'pagamento-valor':
+                                                    control.janelaPagamentoValorConfirmar();
+                                                    break;
+                                                case 'pagamento-condicao':
+                                                    control.janelaPagamentoCondicaoConfirmar();
+                                                    break;
+                                                case 'pagamento-forma':
+                                                    control.janelaPagamentoFormaConfirmar();
+                                                    break;
+                                                case 'impressao':
+                                                    control.janelaImpressaoConfirmar(e.shiftKey);
+                                                    break;
+                                                case 'cancelamento-venda':
+                                                    control.janelaCancelamentoVendaConfirmar();
+                                                    break;
+                                                case 'desconto':
+                                                    control.janelaDescontoConfirmar();
+                                                    break;
+                                                case 'desconto-porcentagem':
+                                                    control.janelaDescontoPorcentagemConfirmar();
+                                                    break;
+                                                case 'autenticador':
+                                                    control.janelaAutenticadorConfirmar(false);
+                                                    break;
+                                                case 'conta-caixa':
+                                                    control.janelaContaCaixaConfirmar();
+                                                    break;
+                                                case 'cliente':
+                                                    control.janelaClienteConfirmar();
+                                                    break;
+                                                case 'vendedor':
+                                                    control.janelaVendedorConfirmar();
+                                                    break;
+                                                case 'documento':
+                                                    control.janelaDocumentoConfirmar();
+                                                    break;
+                                                case 'tabela-preco':
+                                                    control.janelaTabelaPrecoVendaConfirmar();
+                                                    break;
+                                                case 'sangria':
+                                                    control.janelaSangriaConfirmar();
+                                                    break;
+                                                case 'configuracao-ecf':
+                                                    control.janelaConfiguracaoECFConfirmar();
+                                                    break;
+                                                case 'configuracao-impressao':
+                                                    control.janelaConfiguracaoImpressaoConfirmar();
+                                                    break;
+                                                case 'suprimento':
+                                                    control.janelaSuprimentoConfirmar();
+                                                    break;
+                                                case 'troco':
+                                                    control.janelaTrocoOcultar();
+                                                    break;
+                                                case 'cancela-item':
+                                                    control.janelaCancelarItemConfirmar();
+                                                    break;
+                                                case 'venda':
+                                                    control.setProduto();
+                                                    break;
+                                                case 'produto-pesquisa':
+                                                    control.janelaProdutoPesquisaConfirmar();
+                                                    break;
+                                                case 'produto-selecao':
+                                                    control.janelaProdutoSelecaoConfirmar();
+                                                    break;
+                                                case 'cliente-selecao':
+                                                    control.janelaClienteSelecaoConfirmar();
+                                                    break;
+                                                case 'vendedor-selecao':
+                                                    control.janelaVendedorSelecaoConfirmar();
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                    case e.TAB:
+                                        switch (cenario) {
+                                            case 'sangria':
+                                            case 'suprimento':
+                                            case 'configuracao-ecf':
+                                            case 'configuracao-impressao':
+                                            case 'cliente-cadastro':
+                                            case 'devolucao-edicao':
+                                                stopEvent = false;
+                                                break;
+                                        }
+                                        break;
+                                    default:
+                                        var isBackspace = false;
+                                        if (e.getKey() === e.BACKSPACE) {
+                                            isBackspace = true;
+                                        }
+                                        var isCharEnabled = false;
+                                        switch (e.getKey()) {
+                                            case e.END:
+                                            case e.HOME:
+                                            case e.LEFT :
+                                            case e.UP:
+                                            case e.RIGHT:
+                                            case e.DOWN:
+                                            case e.SPACE:
+                                            case e.NUM_ZERO:
+                                            case 186:
+                                            case 188:
+                                            case 190:
+                                            case 191:
+                                            case 194:
+                                                isCharEnabled = true;
+                                                break;
+                                        }
+                                        if (/\w+$/gi.test(String.fromCharCode(e.getKey())) || isBackspace || isCharEnabled) {
+                                            switch (cenario) {
+                                                case 'venda':
+                                                    if (e.ctrlKey) {
+                                                        switch (e.getKey()) {
+                                                            case e.C:
+                                                                control.janelaClienteExibir();
+                                                                break;
+                                                            case e.V:
+                                                                control.janelaVendedorExibir();
+                                                                break;
+                                                            case e.N:
+                                                                control.janelaDocumentoExibir();
+                                                                break;
+                                                            case e.T:
+                                                                control.janelaTabelaPrecoVendaExibir();
+                                                                break;
+                                                            case e.D:
+                                                                if (control.getVendaIniciada(true)) {
+                                                                    if (e.shiftKey) {
+                                                                        control.janelaDescontoPorcentagemExibir("desconto_item");
+                                                                    } else {
+                                                                        control.janelaDescontoPorcentagemExibir("desconto_venda");
+                                                                    }
+                                                                } else {
+                                                                    control.janelaDevolucaoExibir();
+                                                                }
+                                                                break;
+                                                            case e.A:
+                                                                if (e.shiftKey) {
+                                                                    control.janelaDescontoPorcentagemExibir("acrescimo_item");
+                                                                } else {
+                                                                    control.janelaDescontoPorcentagemExibir("acrescimo_venda");
+                                                                }
+                                                                break;
+                                                            case e.M:
+                                                                control.janelaVendaRapidaMinimizar();
+                                                                break;
+                                                            case e.I:
+                                                                control.janelaImpressaoExibir();
+                                                                break;
+                                                        }
+                                                    } else {
+                                                        control.campoProdutoCodigo.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'pagamento-troca':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoPagamentoTroca.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'pagamento-valor':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoPagamentoValor.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'desconto':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoDesconto.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'desconto-porcentagem':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoDescontoPorcentagem.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'autenticador':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoAutenticador.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'conta-caixa':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoContaCaixa.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'cliente':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoCliente.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'vendedor':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoVendedor.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'documento':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoDocumento.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'cancela-item':
+                                                    if (!e.ctrlKey) {
+                                                        control.campoCancelarItem.focus();
+                                                        stopEvent = false;
+                                                    }
+                                                    break;
+                                                case 'sangria':
+                                                case 'suprimento':
+                                                case 'fechamento':
+                                                case 'configuracao-ecf':
+                                                case 'configuracao-impressao':
+                                                case 'devolucao-edicao':
+                                                case 'cliente-cadastro':
+                                                    stopEvent = false;
+                                                    break;
+                                                default:
+                                                    if (isBackspace) {
+                                                        if (!((!/^input$/i.test(t.tagName) || t.disabled || t.readOnly) && (!/^textArea$/i.test(t.tagName) || t.disabled || t.readOnly))) {
+                                                            isBackspace = true;
+                                                        }
+                                                    }
+                                                    break;
+                                            }
+                                        }
+                                        break;
+                                }
                             }
                         }
                     }
                 }
-            }
-            if (stopEvent) {
-                e.stopEvent();
+                if (stopEvent) {
+                    e.stopEvent();
+                }
             }
         });
     }

@@ -40,7 +40,7 @@ Ext.define('Illi.view.financeiro.pdv.ListaItensVenda', {
                     datachanged: {
                         element: this,
                         fn: function (store) {
-                            var win = me.up('window');
+                            var win = me.up('janelaVendaRapida');
                             var storeCancelados = win.down('#pdvListaItensCancelados').getStore();
                             win.quantidadeVenda = store.sum("quantidade") - storeCancelados.sum("quantidade");
                             win.totalVenda = (store.sum('valor_total') - storeCancelados.sum('valor_total'));
