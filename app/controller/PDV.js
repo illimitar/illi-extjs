@@ -4629,9 +4629,15 @@ Ext.define('Illi.controller.PDV', {
         switch (control.janelaVendaRapida.typeComponent) {
             case "TAB":
                 var panel = control.janelaVendaRapida.up("panel");
-                panel.hide();
+                if (panel.closable) {
+                    panel.hide();
+                } else {
+                    control.MSG('Encerrando Sistema...');
+                    closepage = true;
+                    window.location = "http://" + window.document.location.host + (pdv ? "/illi/inicial" : "");
+                }
                 break;
-            case "TAB":
+            case "WINDOW":
                 var panel = control.janelaVendaRapida.up("window");
                 panel.hide();
                 break;
