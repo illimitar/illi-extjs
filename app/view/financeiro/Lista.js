@@ -536,15 +536,17 @@ Ext.define('Illi.view.financeiro.Lista', {
                                 return false;
                             } else {
 
-                                var permissao = Illi.app.permissao;
-                                if (!permissao[Illi.app.Local.get('usuario').entidade.id]["alterar"]) {
-                                    Ext.MessageBox.show({
-                                        title: 'Alerta',
-                                        msg: 'Sem Permisão para Alterar o Titulo',
-                                        icon: Ext.MessageBox.ERROR,
-                                        buttons: Ext.Msg.OK
-                                    });
-                                    return false;
+                                if (grid.record.get('id')) {
+                                    var permissao = Illi.app.permissao;
+                                    if (!permissao[Illi.app.Local.get('usuario').entidade.id]["alterar"]) {
+                                        Ext.MessageBox.show({
+                                            title: 'Alerta',
+                                            msg: 'Sem Permisão para Alterar o Titulo',
+                                            icon: Ext.MessageBox.ERROR,
+                                            buttons: Ext.Msg.OK
+                                        });
+                                        return false;
+                                    }
                                 }
 
                                 if (grid.record.get('data_baixa')) {
