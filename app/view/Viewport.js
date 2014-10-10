@@ -58,9 +58,6 @@ Ext.define('Illi.view.Viewport', {
                             usuario_acesso_inicial = 1028;
                         }
                     }
-                    var obj = viewport.down("#tbarButtonItem" + usuario_acesso_inicial);
-                    obj.initial = true;
-                    obj.fireHandler('click');
                 }
                 if (typeof (usuario_acesso_inicial) !== "object") {
                     usuario_acesso_inicial = [usuario_acesso_inicial];
@@ -73,7 +70,6 @@ Ext.define('Illi.view.Viewport', {
                         obj.fireHandler('click');
                     }
                 });
-                // fim1
                 viewport.setVerificadorSessao();
             }, falha);
         }
@@ -174,7 +170,7 @@ Ext.define('Illi.view.Viewport', {
                     if (!abaAberta) {
                         var widget = raw.xtypeClass;
                         var abrir = Ext.widget(widget, Illi.app.Local.get(raw.xtypeClass));
-                        if (obj.initial) {
+                        if (obj.initial || Illi.app.permissao === undefined) {
                             Illi.app.permissao = raw.permissao;
                         }
                         tabCenter.add({
