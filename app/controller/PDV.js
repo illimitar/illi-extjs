@@ -3806,8 +3806,11 @@ Ext.define('Illi.controller.PDV', {
                 Ext.Array.each(control.listaItensPagamento.getStore().data.items, function (item) {
                     listaItensPagamento.push(item.raw);
                 });
-                var doCancelarVendaCupom = function () {
+                var doCancelarVenda = function() {
                     control.listaItensPagamentoFocus();
+                }
+                var doCancelarVendaCupom = function () {
+                    doCancelarVenda();
                     control.doCancelarVendaCupom(Ext.emptyFn, Ext.emptyFn, true);
                 };
                 var doAdicionarItemCupom = function (thisItem) { // adiciona item ao cupom
@@ -3869,7 +3872,7 @@ Ext.define('Illi.controller.PDV', {
                             control.xhrImpressao(response2.impressao, doSucessoImpressao, doSucessoImpressao);
                         }
                     };
-                    control.xhrFinalizaVenda(shift, control.clienteSelecionado.id, control.vendedorSelecionado.id, control.documentoSelecionado, control.ultimaSessao.contaCaixa, control.totalVenda, control.totalDesconto, control.totalPagamento, control.totalTroco, listaItensVenda, listaItensCancelados, listaItensPagamento, doSucessoFinalizaVenda, doCancelarVendaCupom);
+                    control.xhrFinalizaVenda(shift, control.clienteSelecionado.id, control.vendedorSelecionado.id, control.documentoSelecionado, control.ultimaSessao.contaCaixa, control.totalVenda, control.totalDesconto, control.totalPagamento, control.totalTroco, listaItensVenda, listaItensCancelados, listaItensPagamento, doSucessoFinalizaVenda, doCancelarVenda);
                 };
                 var pdvImpressoraECF = Illi.app.Local.get('pdvImpressoraECF');
                 if (control.verificaECF()) { // impressora configurada
