@@ -1400,7 +1400,9 @@ Ext.ClassManager.addNameAlternateMappings({
   "Illi.view.usuario.acesso_grupo_usuario.Arvore": [],
   "Illi.view.usuario.acesso_grupo_usuario.Janela": [],
   "Illi.view.usuario.configuracao.Form": [],
+  "Illi.view.usuario.configuracao.ImagemQRCode": [],
   "Illi.view.usuario.configuracao.Janela": [],
+  "Illi.view.usuario.configuracao.JanelaGAuth": [],
   "Illi.view.usuario.entidade.ArvoreEntidadeGrupoUsuario": [],
   "Illi.view.usuario.entidade.Combo": [],
   "Illi.view.usuario.entidade.JanelaEntidadeGrupoUsuario": [],
@@ -3618,8 +3620,14 @@ Ext.ClassManager.addNameAliasMappings({
   "Illi.view.usuario.configuracao.Form": [
     "widget.formConfiguracaoUsuario"
   ],
+  "Illi.view.usuario.configuracao.ImagemQRCode": [
+    "widget.imagemQrCode"
+  ],
   "Illi.view.usuario.configuracao.Janela": [
     "widget.janelaConfiguracaoUsuario"
+  ],
+  "Illi.view.usuario.configuracao.JanelaGAuth": [
+    "widget.janelaConfiguracaoGAuthUsuario"
   ],
   "Illi.view.usuario.entidade.ArvoreEntidadeGrupoUsuario": [
     "widget.arvoreEntidadeGrupoUsuario"
