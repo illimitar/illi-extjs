@@ -23,6 +23,9 @@ Ext.define('Illi.model.Usuario', {
             name: 'situacao', mapping: 'situacao'
         },
         {
+            name: 'segredo', mapping: 'segredo'
+        },
+        {
             name: 'email', mapping: 'email'
         },
         {

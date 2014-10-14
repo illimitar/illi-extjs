@@ -5,7 +5,8 @@ Ext.define('Illi.controller.Usuario', {
     views: [
         'usuario.Lista',
         'usuario.Janela',
-        'usuario.configuracao.Janela'
+        'usuario.configuracao.Janela',
+        'usuario.configuracao.JanelaGAuth'
     ],
     refs: [
         {
@@ -27,9 +28,13 @@ Ext.define('Illi.controller.Usuario', {
         {
             ref: 'janelaConfiguracaoUsuario',
             selector: 'janelaConfiguracaoUsuario'
+        },
+        {
+            ref: 'janelaConfiguracaoGAuthUsuario',
+            selector: 'janelaConfiguracaoGAuthUsuario'
         }
     ],
-    init: function() {
+    init: function () {
         var me = this;
         me.control({
             'listaUsuario': {
@@ -73,10 +78,22 @@ Ext.define('Illi.controller.Usuario', {
             },
             'janelaConfiguracaoUsuario button[action=gerar]': {
                 click: me.gerarConfiguracao
+            },
+            'janelaConfiguracaoUsuario button[action=gauth-ativar]': {
+                click: me.ativarGAuth
+            },
+            'janelaConfiguracaoUsuario button[action=gauth-desativar]': {
+                click: me.desativarGAuth
+            },
+            'janelaConfiguracaoUsuario button[action=fechar]': {
+                click: me.fecharConfiguracao
+            },
+            'janelaConfiguracaoGAuthUsuario button[action=fechar]': {
+                click: me.fecharConfiguracaoGAuth
             }
         });
     },
-    duplicar: function(button) {
+    duplicar: function (button) {
         var grid = this.getGridIlli();
         var store = grid.getStore();
         var records = grid.getSelectionModel().getSelection()[0].getData();
@@ -89,13 +106,13 @@ Ext.define('Illi.controller.Usuario', {
         grid.editingPlugin.startEdit(0, 0);
 
     },
-    dispositivo: function() {
+    dispositivo: function () {
         Ext.create('Illi.view.dispositivo.Janela').show();
     },
-    gravatar: function() {
+    gravatar: function () {
         window.open("http://curte.eu/gravatar", true);
     },
-    associar: function(btn, evt, opt) {
+    associar: function (btn, evt, opt) {
         var grid = btn.up('grid');
         var records = grid.getSelectionModel().getSelection();
 //        Illi.app.getController('UsuarioGrupoUsuario');
@@ -104,7 +121,74 @@ Ext.define('Illi.controller.Usuario', {
             title: 'Associação de Entidade / Grupo Usuário com Usuário: ' + records[0].data.nome
         }).show();
     },
-    gerarConfiguracao: function() {
+    ativarGAuth: function (btn, evt, opt) {
+        Ext.MessageBox.wait('Ativando GAuth...', 'Aguarde!');
+        var me = this;
+        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
+        var fields = {
+            data: Ext.JSON.encode({
+                id: janelaConfiguracaoUsuario.id_usuario
+            })
+        };
+        Ext.Ajax.request({
+            url: '../usuario/usuario/ijson/ativar_gauth',
+            async: true,
+            params: fields,
+            success: function (response) {
+                Ext.MessageBox.hide();
+                var retorno = Ext.JSON.decode(response.responseText);
+                if (retorno.situacao) {
+                    Ext.create('Illi.view.usuario.configuracao.JanelaGAuth', {
+                        url: '../usuario/usuario/qrcode_gauth/' + janelaConfiguracaoUsuario.id_usuario
+                    }).show();
+                } else {
+                    Ext.Msg.show({
+                        title: 'Alerta',
+                        msg: retorno.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.MessageBox.ERROR
+                    });
+                }
+            }
+        });
+    },
+    desativarGAuth: function (btn, evt, opt) {
+        Ext.MessageBox.wait('Desativando GAuth...', 'Aguarde!');
+        var me = this;
+        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
+        var listaUsuario = me.getListaUsuario();
+        var fields = {
+            data: Ext.JSON.encode({
+                id: janelaConfiguracaoUsuario.id_usuario
+            })
+        };
+        Ext.Ajax.request({
+            url: '../usuario/usuario/ijson/desativar_gauth',
+            async: true,
+            params: fields,
+            success: function (response) {
+                Ext.MessageBox.hide();
+                var retorno = Ext.JSON.decode(response.responseText);
+                if (retorno.situacao) {
+                    listaUsuario.store.load();
+                    janelaConfiguracaoUsuario.close();
+                    me.setFocusLista(listaUsuario, 0);
+                    Ext.ux.Msg.flash({
+                        msg: retorno.msg,
+                        type: 'success'
+                    });
+                } else {
+                    Ext.Msg.show({
+                        title: 'Alerta',
+                        msg: retorno.msg,
+                        buttons: Ext.Msg.OK,
+                        icon: Ext.MessageBox.ERROR
+                    });
+                }
+            }
+        });
+    },
+    gerarConfiguracao: function () {
         Ext.MessageBox.wait('Carregando...', 'Aguarde!');
         var formConfiguracaoUsuario = this.getJanelaConfiguracaoUsuario().down('#formConfiguracaoUsuario');
         var number = "";
@@ -114,37 +198,61 @@ Ext.define('Illi.controller.Usuario', {
         formConfiguracaoUsuario.down("#pdv_pin_fiscal").setValue(number);
         Ext.MessageBox.hide();
     },
-    configurar: function(btn, evt, opt) {
+    configurar: function (btn, evt, opt) {
         var grid = btn.up('grid');
-        var records = grid.getSelectionModel().getSelection();
-//        Illi.app.getController('UsuarioGrupoUsuario');
-        Ext.create('Illi.view.usuario.configuracao.Janela', {
-            id_usuario: records[0].data.id,
-            title: 'Configuração do Usuário: ' + records[0].data.nome
-        }).show();
+        if (grid) {
+            Illi.app.Util.MSG('Carregando...');
+            setTimeout(function () {
+                var records = grid.getSelectionModel().getSelection();
+                //        Illi.app.getController('UsuarioGrupoUsuario');
+                Ext.create('Illi.view.usuario.configuracao.Janela', {
+                    id_usuario: records[0].data.id,
+                    segredo: records[0].data.segredo,
+                    title: 'Configuração do Usuário: ' + records[0].data.nome
+                }).show(null, function () {
+                    Illi.app.Util.MSG('');
+                });
+            }, 250);
+        }
     },
-    carregarConfiguracao: function() {
-        Ext.MessageBox.wait('Carregando...', 'Aguarde!');
+    carregarConfiguracao: function () {
         var formConfiguracaoUsuario = this.getJanelaConfiguracaoUsuario().down('#formConfiguracaoUsuario');
+        formConfiguracaoUsuario.setLoading("Carregando...");
         formConfiguracaoUsuario.getForm().load({
             url: '../usuario/usuario/ijson/carregar_configuracao',
             params: {
                 'id_usuario': this.getJanelaConfiguracaoUsuario().id_usuario
             },
-            failure: function(form, action) {
+            failure: function (form, action) {
                 Ext.Msg.alert("Load failed", action.result.errorMessage);
             },
-            success: function(data) {
-                Ext.MessageBox.hide();
+            success: function (data) {
+                formConfiguracaoUsuario.setLoading(false);
             }
         });
     },
-    salvarConfiguracao: function(button) {
+    fecharConfiguracao: function () {
+        var me = this;
+        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
+        janelaConfiguracaoUsuario.close();
+    },
+    fecharConfiguracaoGAuth: function () {
+        var me = this;
+        var me = this;
+        var listaUsuario = me.getListaUsuario();
+        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
+        var janelaConfiguracaoGAuthUsuario = me.getJanelaConfiguracaoGAuthUsuario();
+        janelaConfiguracaoGAuthUsuario.close();
+        listaUsuario.store.load();
+        janelaConfiguracaoUsuario.close();
+        me.setFocusLista(listaUsuario, 0);
+    },
+    salvarConfiguracao: function (button) {
         var janelaConfiguracaoUsuario = this.getJanelaConfiguracaoUsuario();
         var formConfiguracaoUsuario = janelaConfiguracaoUsuario.down('#formConfiguracaoUsuario');
         var listaUsuario = this.getListaUsuario();
         var fields = {};
-        formConfiguracaoUsuario.getForm().getFields().each(function(field) {
+        formConfiguracaoUsuario.getForm().getFields().each(function (field) {
             fields[field.getName()] = Ext.JSON.encode(field.getValue());
         });
         fields.id_usuario = janelaConfiguracaoUsuario.id_usuario;
@@ -152,7 +260,7 @@ Ext.define('Illi.controller.Usuario', {
             url: '../usuario/usuario/ijson/alterar_configuracao',
             async: true,
             params: fields, //formConfiguracaoUsuario.getForm().getFieldValues(),
-            success: function(response) {
+            success: function (response) {
                 var retorno = Ext.JSON.decode(response.responseText);
                 if (retorno.situacao) {
                     listaUsuario.store.load();
@@ -172,15 +280,15 @@ Ext.define('Illi.controller.Usuario', {
             }
         });
     },
-    redefinir: function(btn, evt, opt) {
+    redefinir: function (btn, evt, opt) {
         Ext.MessageBox.wait('Redefinindo Configurações', 'Aguarde...');
         Ext.Ajax.request({
             url: '../usuario/usuario/iJson/redefinir_configuracao',
             params: {},
-            failure: function() {
+            failure: function () {
                 Illi.app.Util.mensagemFalha();
             },
-            success: function(response) {
+            success: function (response) {
                 var retorno = false;
                 try {
                     retorno = Ext.JSON.decode(response.responseText);
@@ -205,10 +313,10 @@ Ext.define('Illi.controller.Usuario', {
                             title: 'Aviso Importante',
                             msg: retorno.message + '</br>Sua sessão será reiniciada para completar a operação!',
                             buttons: Ext.MessageBox.OK,
-                            fn: function() {
+                            fn: function () {
                                 Ext.Ajax.request({
                                     url: '../illi/redefinir_sessao/',
-                                    success: function(response) {
+                                    success: function (response) {
                                         closepage = true;
                                         window.location.reload(true);
                                     }
@@ -225,7 +333,7 @@ Ext.define('Illi.controller.Usuario', {
             }
         });
     },
-    salvar: function(btn, evt, opt) {
+    salvar: function (btn, evt, opt) {
         var janela = this.getJanelaUsuario();
         var form = janela.down('form').getForm();
         var validou = form.isValid();
@@ -238,10 +346,10 @@ Ext.define('Illi.controller.Usuario', {
                 params: {
                     data: jsonForm
                 },
-                failure: function() {
+                failure: function () {
                     Illi.app.Util.mensagemFalha();
                 },
-                success: function(response) {
+                success: function (response) {
                     var retorno = false;
                     try {
                         retorno = Ext.JSON.decode(response.responseText);
@@ -267,10 +375,10 @@ Ext.define('Illi.controller.Usuario', {
                                 title: 'Aviso Importante',
                                 msg: retorno.message + '</br>Sua sessão será reiniciada para completar a operação!',
                                 buttons: Ext.MessageBox.OK,
-                                fn: function() {
+                                fn: function () {
                                     Ext.Ajax.request({
                                         url: '../illi/redefinir_sessao/',
-                                        success: function(response) {
+                                        success: function (response) {
                                             closepage = true;
                                             window.location.reload(true);
                                         }
@@ -293,5 +401,21 @@ Ext.define('Illi.controller.Usuario', {
                 buttons: Ext.MessageBox.OK
             });
         }
-    }
+    },
+    setFocusLista: function (grid, indice) {
+        //alert("Illi.controller.paf.Ecf::setFocusLista()");
+        try {
+            var control = this;
+            indice = (indice !== undefined ? indice : 0);
+            setTimeout(function () {
+                grid.getView().focusRow(0);
+                var row = grid.getStore().getAt(0);
+                if (row) {
+                    grid.getSelectionModel().select(row);
+                }
+            }, 300);
+        } catch (e) {
+            error(e);
+        }
+    },
 });

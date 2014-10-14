@@ -8,7 +8,7 @@ Ext.define('Illi.view.usuario.configuracao.Janela', {
         'Ext.ux.TextMaskPlugin'
     ],
     modal: true,
-    initComponent: function() {
+    initComponent: function () {
         var me = this;
         Ext.apply(me, {
             scope: me,
@@ -42,6 +42,15 @@ Ext.define('Illi.view.usuario.configuracao.Janela', {
                         text: 'Gerar novo PIN',
                         action: 'gerar'
                     },
+                    (me.segredo ? {
+                        iconCls: 'icon-gauthdesativo',
+                        text: 'Desativar GAuth',
+                        action: 'gauth-desativar'
+                    } : {
+                        iconCls: 'icon-gauthativo',
+                        text: 'Ativar GAuth',
+                        action: 'gauth-ativar'
+                    }),
                     '->',
                     {
                         iconCls: 'icon-salvar',
@@ -52,7 +61,7 @@ Ext.define('Illi.view.usuario.configuracao.Janela', {
                         text: 'Cancelar',
                         scope: this,
                         iconCls: 'icon-cancelar',
-                        handler: this.close
+                        action: 'fechar'
                     }
                 ]
             }
