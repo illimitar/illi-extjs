@@ -231,6 +231,13 @@ Ext.define('Illi.view.produto.produto.Lista', {
                     {
                         header: 'Estoque',
                         align: 'right',
+                        dataIndex: 'pge.qtde',
+                        id: me.setIdColuna('pge_qtde'),
+                        editor: false
+                    },
+                    {
+                        header: 'Estoque Geral',
+                        align: 'right',
                         dataIndex: 'pg.estoque',
                         id: me.setIdColuna('pg_estoque'),
                         editor: false,
