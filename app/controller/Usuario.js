@@ -442,5 +442,5 @@ Ext.define('Illi.controller.Usuario', {
         } catch (e) {
             error(e);
         }
-    },
+    }
 });
