@@ -46,23 +46,23 @@ Ext.define('Illi.view.usuario.Menu', {
                     }
                 }
             });
+            var id_usuario = Illi.app.Local.get("usuario").id;
+            var segredo = Illi.app.Local.get("usuario").segredo;
             var gravatar = Illi.app.Util.getGravatar(Illi.app.Local.get("usuario").email);
             var iconCache = (caching ? 'icon-cache' : 'icon-homem');
-            tbar.add(
-                    {
-                        tooltip: "Perfil: " + nome_usuario,
-                        iconCls: 'large',
-                        scale: 'large',
-                        style: {
-                            "background-image": "url('" + gravatar + "') !important;",
-                            "background-repeat": "no-repeat",
-                            "background-size": "100% 100%"
-                        },
-                        handler: function () {
-                            Ext.create('Illi.view.usuario.Janela', {iconCache: iconCache}).show();
-                        }
-                    }
-            );
+            tbar.add({
+                tooltip: "Perfil: " + nome_usuario,
+                iconCls: 'large',
+                scale: 'large',
+                style: {
+                    "background-image": "url('" + gravatar + "') !important;",
+                    "background-repeat": "no-repeat",
+                    "background-size": "100% 100%"
+                },
+                handler: function () {
+                    Ext.create('Illi.view.usuario.Janela', {iconCache: iconCache, id_usuario: id_usuario, segredo: segredo}).show();
+                }
+            });
             tbar.add({
                 xtype: 'button',
                 tooltip: "Suporte",

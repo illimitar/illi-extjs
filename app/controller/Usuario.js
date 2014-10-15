@@ -70,6 +70,12 @@ Ext.define('Illi.controller.Usuario', {
             'janelaUsuario button[action=dispositivo]': {
                 click: me.dispositivo
             },
+            'janelaUsuario button[action=gauth-ativar]': {
+                click: me.ativarGAuth
+            },
+            'janelaUsuario button[action=gauth-desativar]': {
+                click: me.desativarGAuth
+            },
             'janelaConfiguracaoUsuario': {
                 render: me.carregarConfiguracao
             },
@@ -79,14 +85,14 @@ Ext.define('Illi.controller.Usuario', {
             'janelaConfiguracaoUsuario button[action=gerar]': {
                 click: me.gerarConfiguracao
             },
+            'janelaConfiguracaoUsuario button[action=fechar]': {
+                click: me.fecharConfiguracao
+            },
             'janelaConfiguracaoUsuario button[action=gauth-ativar]': {
                 click: me.ativarGAuth
             },
             'janelaConfiguracaoUsuario button[action=gauth-desativar]': {
                 click: me.desativarGAuth
-            },
-            'janelaConfiguracaoUsuario button[action=fechar]': {
-                click: me.fecharConfiguracao
             },
             'janelaConfiguracaoGAuthUsuario button[action=fechar]': {
                 click: me.fecharConfiguracaoGAuth
@@ -124,10 +130,13 @@ Ext.define('Illi.controller.Usuario', {
     ativarGAuth: function (btn, evt, opt) {
         Ext.MessageBox.wait('Ativando GAuth...', 'Aguarde!');
         var me = this;
-        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
+        var janela = me.getJanelaUsuario();
+        if (!janela) {
+            janela = me.getJanelaConfiguracaoUsuario();
+        }
         var fields = {
             data: Ext.JSON.encode({
-                id: janelaConfiguracaoUsuario.id_usuario
+                id: janela.id_usuario
             })
         };
         Ext.Ajax.request({
@@ -139,7 +148,7 @@ Ext.define('Illi.controller.Usuario', {
                 var retorno = Ext.JSON.decode(response.responseText);
                 if (retorno.situacao) {
                     Ext.create('Illi.view.usuario.configuracao.JanelaGAuth', {
-                        url: '../usuario/usuario/qrcode_gauth/' + janelaConfiguracaoUsuario.id_usuario
+                        url: '../usuario/usuario/qrcode_gauth/' + janela.id_usuario
                     }).show();
                 } else {
                     Ext.Msg.show({
@@ -155,11 +164,15 @@ Ext.define('Illi.controller.Usuario', {
     desativarGAuth: function (btn, evt, opt) {
         Ext.MessageBox.wait('Desativando GAuth...', 'Aguarde!');
         var me = this;
-        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
-        var listaUsuario = me.getListaUsuario();
+        var janela = me.getJanelaUsuario();
+        var lista = false;
+        if (!janela) {
+            janela = me.getJanelaConfiguracaoUsuario();
+            lista = me.getListaUsuario();
+        }
         var fields = {
             data: Ext.JSON.encode({
-                id: janelaConfiguracaoUsuario.id_usuario
+                id: janela.id_usuario
             })
         };
         Ext.Ajax.request({
@@ -170,13 +183,17 @@ Ext.define('Illi.controller.Usuario', {
                 Ext.MessageBox.hide();
                 var retorno = Ext.JSON.decode(response.responseText);
                 if (retorno.situacao) {
-                    listaUsuario.store.load();
-                    janelaConfiguracaoUsuario.close();
-                    me.setFocusLista(listaUsuario, 0);
-                    Ext.ux.Msg.flash({
-                        msg: retorno.msg,
-                        type: 'success'
-                    });
+                    if (lista) {
+                        lista.store.load();
+                        janela.close();
+                        me.setFocusLista(lista, 0);
+                        Ext.ux.Msg.flash({
+                            msg: retorno.msg,
+                            type: 'success'
+                        });
+                    } else {
+                        me.salvar(btn, evt, opt);
+                    }
                 } else {
                     Ext.Msg.show({
                         title: 'Alerta',
@@ -187,6 +204,24 @@ Ext.define('Illi.controller.Usuario', {
                 }
             }
         });
+    },
+    fecharConfiguracaoGAuth: function (btn, evt, opt) {
+        var me = this;
+        var janela = me.getJanelaUsuario();
+        var lista = false;
+        if (!janela) {
+            janela = me.getJanelaConfiguracaoUsuario();
+            lista = me.getListaUsuario();
+        }
+        var gauth = me.getJanelaConfiguracaoGAuthUsuario();
+        gauth.close();
+        if (lista) {
+            lista.store.load();
+            janela.close();
+            me.setFocusLista(lista, 0);
+        } else {
+            me.salvar(btn, evt, opt);
+        }
     },
     gerarConfiguracao: function () {
         Ext.MessageBox.wait('Carregando...', 'Aguarde!');
@@ -235,17 +270,6 @@ Ext.define('Illi.controller.Usuario', {
         var me = this;
         var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
         janelaConfiguracaoUsuario.close();
-    },
-    fecharConfiguracaoGAuth: function () {
-        var me = this;
-        var me = this;
-        var listaUsuario = me.getListaUsuario();
-        var janelaConfiguracaoUsuario = me.getJanelaConfiguracaoUsuario();
-        var janelaConfiguracaoGAuthUsuario = me.getJanelaConfiguracaoGAuthUsuario();
-        janelaConfiguracaoGAuthUsuario.close();
-        listaUsuario.store.load();
-        janelaConfiguracaoUsuario.close();
-        me.setFocusLista(listaUsuario, 0);
     },
     salvarConfiguracao: function (button) {
         var janelaConfiguracaoUsuario = this.getJanelaConfiguracaoUsuario();
@@ -334,6 +358,7 @@ Ext.define('Illi.controller.Usuario', {
         });
     },
     salvar: function (btn, evt, opt) {
+        alert("aqui? 2");
         var janela = this.getJanelaUsuario();
         var form = janela.down('form').getForm();
         var validou = form.isValid();

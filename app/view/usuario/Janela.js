@@ -82,22 +82,22 @@ Ext.define('Illi.view.usuario.Janela', {
                 items: [
                     {
                         iconCls: 'icon-usuario',
-                        text: 'Avatar',
+                        tooltip: 'Avatar',
                         action: 'gravatar'
                     },
                     {
                         iconCls: 'icon-atualizar',
-                        text: 'Limpar Perfil',
+                        tooltip: 'Limpar Perfil',
                         action: 'redefinir'
                     },
                     {
                         iconCls: 'icon-dispositivo',
-                        text: 'Dispositivo',
+                        tooltip: 'Dispositivo',
                         action: 'dispositivo'
                     },
                     {
                         iconCls: me.iconCache,
-                        text: 'Cache',
+                        tooltip: 'Cache',
                         handler: function(btn) {
                             btn.setDisabled(true);
                             Ext.Ajax.request({
@@ -109,6 +109,20 @@ Ext.define('Illi.view.usuario.Janela', {
                             });
                         }
                     },
+                    {
+                        iconCls: 'icon-dispositivo',
+                        tooltip: 'Dispositivo',
+                        action: 'dispositivo'
+                    },
+                    (me.segredo ? {
+                        iconCls: 'icon-gauthdesativo',
+                        text: 'Desativar GAuth',
+                        action: 'gauth-desativar'
+                    } : {
+                        iconCls: 'icon-gauthativo',
+                        text: 'Ativar GAuth',
+                        action: 'gauth-ativar'
+                    }),
                     '->',
                     {
                         iconCls: 'icon-salvar',

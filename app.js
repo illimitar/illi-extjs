@@ -142,7 +142,6 @@ Ext.onReady(function () {
             "Illi.controller.PDV",
 //            "Illi.controller.paf.Ecf",
 //            "Illi.controller.paf.Menu",
-            "Illi.controller.Perfil",
             "Illi.controller.Pessoa",
             "Illi.controller.Prazo",
             "Illi.controller.TipoTitulo",

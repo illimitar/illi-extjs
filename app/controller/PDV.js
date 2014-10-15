@@ -1418,9 +1418,9 @@ Ext.define('Illi.controller.PDV', {
             if (impressoraConcomitante) {
                 var doFalha = function (response) {
                     if (response) {
-                        error("Falha comunicar com o ECF", response);
+                        error("Falha ao Conectar ao ECF, Verifique as Configurações!", params, response);
                     }
-                    control.MSG("Falha comunicar com o ECF", falha);
+                    control.MSG("Falha ao Conectar ao ECF, Verifique as Configurações!", falha);
                 };
                 try {
                     var doSucesso = function (data) {
