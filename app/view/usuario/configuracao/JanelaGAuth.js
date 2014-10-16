@@ -11,15 +11,15 @@ Ext.define('Illi.view.usuario.configuracao.JanelaGAuth', {
         var me = this;
         Ext.apply(me, {
             scope: me,
-            width: 195,
-            height: 260,
+            width: 600,
+            height: 340,
             items: [
                 {
                     border: false,
                     bodyStyle: 'background: transparent;',
-                    padding: '0 0 5 5',
+                    padding: '5 5 5 5',
                     layout: {
-                        type: 'vbox',
+                        type: 'hbox',
                         align: 'stretch'
                     },
                     items: [
@@ -28,7 +28,14 @@ Ext.define('Illi.view.usuario.configuracao.JanelaGAuth', {
                             border: false,
                             url: me.url,
                             bodyStyle: 'background: transparent;',
-                            flex: 1
+                            width: 250
+                        },
+                        {
+                            border: false,
+                            bodyStyle: 'background: transparent;',
+                            padding: '5 5 5 5',
+                            flex: 1,
+                            html: '<h1>Códigos de Segurança</h1><p>Os códigos abaixos foram gerados automaticamente para você usar caso necessário, salve-os em um lugar seguro.</p>' + me.codigos + '<p>Sua senha atual foi desativada por segurança.</p>'
                         }
                     ]
                 }

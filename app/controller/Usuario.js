@@ -148,7 +148,8 @@ Ext.define('Illi.controller.Usuario', {
                 var retorno = Ext.JSON.decode(response.responseText);
                 if (retorno.situacao) {
                     Ext.create('Illi.view.usuario.configuracao.JanelaGAuth', {
-                        url: '../usuario/usuario/qrcode_gauth/' + janela.id_usuario
+                        url: '../usuario/usuario/qrcode_gauth/' + janela.id_usuario,
+                        codigos: retorno.data.codigos
                     }).show();
                 } else {
                     Ext.Msg.show({

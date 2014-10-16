@@ -27,11 +27,11 @@ $(function () {
         $("#mensagem-retorno").removeClass("alert-warning");
         $("#mensagem-retorno").removeClass("alert-info");
         $("#mensagem-retorno").addClass("alert-warning");
-        $("#mensagem-retorno-texto").html("É necessário entrar com o código GAuth gerado pelo aplicativo!");
+        $("#mensagem-retorno-texto").html("É necessário entrar com o token gerado pelo aplicativo!");
         $("#gauth-cancelar").removeClass("hide");
         $("#mensagem-retorno").removeClass("hide");
         $("#box-input-usuario").addClass("hide");
-        $("#senha").attr("placeholder", "Código GAuth").val("");
+        $("#senha").attr("placeholder", "Token").val("");
         $("#painel-login").fadeTo('fast', 1);
         $("#senha").focus();
 

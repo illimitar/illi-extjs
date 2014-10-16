@@ -49,11 +49,11 @@ Ext.define('Illi.view.financeiro.pdv.JanelaVendaRapida', {
                 }
             ]
         });
-        if (pdv) {
-            me.bodyStyle = "background-image: url(/" + PATH_FRONTEND + "/resources/images/pdv/fundo_pdv.jpg) !important; background-size: cover; background-repeat: no-repeat;";
-        } else {
-            me.bodyStyle = "background-image: url(/" + PATH_FRONTEND + "/resources/images/pdv/fundo.jpg) !important; background-size: cover; background-repeat: no-repeat;";
-        }
+//        if (pdv) {
+//            me.bodyStyle = "background-image: url(/" + PATH_FRONTEND + "/resources/images/pdv/fundo_pdv.jpg) !important; background-size: cover; background-repeat: no-repeat;";
+//        } else {
+            me.bodyStyle = "background-image: url(" + PATH_PDV_WALLPAPER + ") !important; background-size: cover; background-repeat: no-repeat;";
+//        }
         me.callParent(arguments);
     }
 });
