@@ -341,6 +341,7 @@ Ext.define('Illi.controller.Usuario', {
                                 Ext.Ajax.request({
                                     url: '../illi/redefinir_sessao/',
                                     success: function (response) {
+                                        Illi.app.Util.MSG('Atualizando Sistema...');
                                         closepage = true;
                                         window.location.reload(true);
                                     }
@@ -358,12 +359,12 @@ Ext.define('Illi.controller.Usuario', {
         });
     },
     salvar: function (btn, evt, opt) {
-        alert("aqui? 2");
         var janela = this.getJanelaUsuario();
         var form = janela.down('form').getForm();
         var validou = form.isValid();
         if (validou) {
             var formulario = form.getFieldValues();
+            Illi.app.Local.set("suporte", formulario.suporte);
             var jsonForm = Ext.JSON.encode(formulario);
             Ext.MessageBox.wait('Salvando', 'Aguarde...');
             Ext.Ajax.request({
@@ -404,6 +405,7 @@ Ext.define('Illi.controller.Usuario', {
                                     Ext.Ajax.request({
                                         url: '../illi/redefinir_sessao/',
                                         success: function (response) {
+                                            Illi.app.Util.MSG('Atualizando Sistema...');
                                             closepage = true;
                                             window.location.reload(true);
                                         }

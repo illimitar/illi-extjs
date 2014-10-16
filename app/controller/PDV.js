@@ -781,6 +781,7 @@ Ext.define('Illi.controller.PDV', {
         var control = this;
         if (control.janelaVendaRapida.typeComponent === "FULLSCREEN") {
             var doSucessoCache = function () {
+                control.MSG('Atualizando Sistema...');
                 closepage = true;
                 window.location.reload(true);
             };

@@ -53,6 +53,7 @@ Ext.define('Illi.store.AbstractStore', {
                                 buttons: Ext.Msg.OK,
                                 fn: function(btn, ev) {
                                     if (btn === 'ok') {
+                                        Illi.app.Util.MSG('Encerrando Sistema...');
                                         var redirect = "http://" + window.document.location.host;
                                         window.location = redirect;
                                     }
