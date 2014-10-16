@@ -31,14 +31,19 @@ $(function () {
         $("#gauth-cancelar").removeClass("hide");
         $("#mensagem-retorno").removeClass("hide");
         $("#box-input-usuario").addClass("hide");
+        $("#senha").attr("placeholder", "Código GAuth").val("");
         $("#painel-login").fadeTo('fast', 1);
+        $("#senha").focus();
+
     };
     $("#gauth-cancelar").click(function () {
         $("#painel-login").fadeTo('fast', 0, function () {
             $("#gauth-cancelar").addClass("hide");
             $("#mensagem-retorno").addClass("hide");
             $("#box-input-usuario").removeClass("hide");
+            $("#senha").attr("placeholder", "Senha").val("");
             $("#painel-login").fadeTo('fast', 1);
+            $("#senha").focus();
         });
     });
     $("#form-login").submit(function () {
